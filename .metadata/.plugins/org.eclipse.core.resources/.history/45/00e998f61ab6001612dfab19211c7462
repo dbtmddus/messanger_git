@@ -1,0 +1,18 @@
+package client;
+
+import java.io.IOException;
+import java.net.Socket;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+
+public class client {
+
+	public static void main(String[] args) throws SocketException{
+		Socket s = new Socket("127.0.0.1", 1245);
+		s.setReuseAddress(false);
+		while(true){
+
+		}
+	}
+
+}

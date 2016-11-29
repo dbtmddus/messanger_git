@@ -1,0 +1,33 @@
+package server;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.nio.channels.SocketChannel;
+
+public class server {
+
+	public static void main(String[] args) throws IOException {
+
+		int n=0; 
+		ServerSocket server_socket = null;
+		Socket soc = null;
+
+		while (true){
+			server_socket = new ServerSocket(1245);//9000번 포트로 통신하기위해 서버소켓생성
+			soc = server_socket.accept();//기다리다 연결되면 accept통해 만들어지는 것이 클라이언트 소켓 
+
+			if (server_socket !=null){
+				//BufferedReader br = new BufferedReader(new InputStreamReader(null, server_socket.toString()));
+				//String str_from_client="";
+				while(str_from_client != ".exit\n"){
+					String str_from_client= server_socket.toString();
+					//str_from_client = br.readLine();		//입력될때까지 여기서  대기
+					System.out.println(str_from_client);
+				}
+			}
+		}
+	}
+}

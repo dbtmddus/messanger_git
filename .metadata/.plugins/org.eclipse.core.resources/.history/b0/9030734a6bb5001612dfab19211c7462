@@ -1,0 +1,52 @@
+package server_obj;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.nio.channels.SocketChannel;
+
+public class server {
+
+	static ServerSocket server_socket = null;
+	static Socket soc = null;
+	static int open_socket_num = 1245;
+	static BufferedReader br;
+	public server(int port_n) throws IOException{
+		open_socket_num = port_n;
+		System.out.println("server is made");
+		server_socket = new ServerSocket(open_socket_num);
+	}
+	
+	public void wait_client() throws IOException{
+		while (true){
+			soc = server_socket.accept();//기다리다 연결되면 accept통해 만들어지는 것이 클라이언트 소켓 
+
+			System.out.println("client is admitted");
+			System.out.println("server 정보 : "+soc.getLocalSocketAddress());
+			System.out.println("client 정보 : "+soc.getRemoteSocketAddress());
+
+			if (soc !=null){
+				System.out.println("server socket 정보 : " + server_socket.toString());
+				
+				while(true){
+					BufferedReader br = new BufferedReader(new InputStreamReader(soc.getInputStream()));
+					String str_from_client= br.readLine();
+					System.out.println("client message : "+str_from_client);
+					switch(str_from_client){
+						case "login":
+							login();
+							break;
+						default:
+							break;
+					}
+				}
+			}
+		}
+	}
+	public void login(){
+		System.out.println("login handling");
+	}
+}

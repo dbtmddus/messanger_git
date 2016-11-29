@@ -1,0 +1,14 @@
+package test;
+
+public class obj extends Thread{
+
+	public obj(){
+		
+	}
+	public void run(){
+
+	
+	}
+
+}
+

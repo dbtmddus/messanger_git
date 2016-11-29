@@ -1,0 +1,9 @@
+package server_obj;
+
+public class main_obj {
+
+	public static void main(String[] args) {
+		server
+		
+	}//end main
+}

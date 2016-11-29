@@ -1,0 +1,21 @@
+package client;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+
+public class client {
+
+	public static void main(String[] args) throws UnknownHostException, IOException{
+		Socket s = new Socket("127.0.0.1", 1245);
+		outputStreamReader is
+		BufferedWriter bw = new BufferedWriter()
+		while(true){
+
+		}
+	}
+
+}

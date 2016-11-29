@@ -1,0 +1,19 @@
+1480325997469	Rename local variable 'ss'
+1480328204991	Delete element
+1480328209284	Delete element
+1480328217941	Rename type 'swing'
+1480332997336	Rename local variable 'connected_socket'
+1480333021231	Rename field 'server_soc'
+1480337685468	Rename field 'port_num'
+1480337739072	Move compilation unit
+1480337953977	Copy compilation unit
+1480338615581	Rename compilation unit 'main.java'
+1480338625126	Rename compilation unit 'main_obj.java'
+1480338723101	Rename type 'server'
+1480338776171	Rename method 'wait_client'
+1480338850317	Move package
+1480338854402	Move package
+1480340160239	Rename field 'login_id'
+1480340167840	Rename field 'login_password'
+1480341183169	Copy compilation unit
+1480411332537	Rename field 'open_socket_num'

@@ -1,0 +1,14 @@
+package server_obj;
+
+import java.io.IOException;
+
+public class main {
+	server_obj[] servers =new server_obj[1000];
+	public static void main(String[] args) throws IOException {
+		
+		server_obj server = new server_obj(1245);
+		//server.wait_new_client();
+		server.start();
+		
+	}//end main
+}

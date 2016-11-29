@@ -1,0 +1,26 @@
+package server;
+
+import java.io.IOException;
+import java.net.DatagramSocket;
+import java.net.ServerSocket;
+
+public class server {
+
+	public static void main(String[] args) throws IOException {
+		
+		ServerSocket ss = null;
+		DatagramSocket ds = null;
+		try {
+			ss = new ServerSocket(1245);
+			ss.setReuseAddress(true);
+			ds = new DatagramSocket(1245);
+			ds.setReuseAddress(true);
+			return true;
+		}
+
+		while(true){
+
+		}
+	}
+
+}
