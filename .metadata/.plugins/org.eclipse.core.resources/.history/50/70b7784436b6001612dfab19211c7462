@@ -83,5 +83,5 @@ public class server_obj extends Thread {
 		String password = br.readLine();
 
 		System.out.println("id : "+id+ ", password : "+password+"\n");
-	}//¡÷ºÆ
+	}
 }
