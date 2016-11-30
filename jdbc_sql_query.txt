@@ -1,0 +1,13 @@
+create table login_test
+(name varchar(20) not null,
+password numeric not null,
+primary key (name))
+
+
+
+select *
+from login_test;
+
+
+insert into login_test
+values(client1, 1234)

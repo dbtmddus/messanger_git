@@ -1,0 +1,82 @@
+public class EmpDAO {
+
+	private Connection conn;
+
+	private PreparedStatement pstmt;
+
+	private ResultSet rs;
+
+	
+
+	private Connection getConn() throws Exception {
+
+		String jdbc_driver = "oracle.jdbc.OracleDriver";
+
+		String db_url = "jdbc:oracle:thin:@localhost:1521:xe";
+
+
+
+
+		Class.forName(jdbc_driver);
+
+ // 위에서 lib폴더안에 oracleDriver를 로드하였다. 
+
+    그 드라이버를 클래스로 로드하는 것이다.
+
+
+
+
+		conn = DriverManager.getConnection(db_url, "scott", "TIGER");
+
+		return conn;
+
+	} 
+
+	public EmpVO checkEmp(EmpVO empVO){
+
+		try {
+
+			conn = getConn();
+
+  // 드라이버 연결위한 준비  conn객체 생성.
+
+			Statement st = conn.createStatement();
+
+
+
+
+			String sql = String.format
+
+  ("SELECT * FROM EMPLOYEE WHERE EMPNO='%d'",empVO.getEmpId());  
+
+			rs = st.executeQuery(sql);
+
+			EmpVO vo = new EmpVO(empVO.getEmpId());
+
+			
+
+			while(rs.next()){
+
+				vo.setEmpName(rs.getString("EMPNAME"));
+
+				vo.setDeptName(rs.getString("DEPTNAME"));
+
+			}
+
+			
+
+			System.out.println(vo.getEmpName());
+
+			return vo;
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return null;
+
+	}
+
+}
