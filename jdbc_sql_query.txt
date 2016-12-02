@@ -10,4 +10,5 @@ from login_test;
 
 
 insert into login_test
-values(client1, 1234)
+values('client1', 1234);
+

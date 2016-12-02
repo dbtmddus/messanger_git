@@ -1,3 +1,10 @@
+/**
+ *  12/02
+ *  oracle 연동 직전 버전
+ * 
+ */
+
+
 package server_obj;
 
 import java.io.BufferedReader;
@@ -81,6 +88,8 @@ public class server_obj extends Thread {
 		System.out.println("sign-in handling");
 		String id = br.readLine();
 		String password = br.readLine();
+		
+		
 
 		System.out.println("id : "+id+ ", password : "+password+"\n");
 	}//주석

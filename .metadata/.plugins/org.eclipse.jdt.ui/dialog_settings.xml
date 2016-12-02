@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<item value="C:\Program Files\Java\jdk1.8.0_111\jre\lib\ext" key="org.eclipse.jdt.ui.lastextjar"/>
+	<item value="C:\Program Files\Java\jdk1.8.0_101\jre\lib\ext" key="org.eclipse.jdt.ui.lastextjar"/>
 	<section name="org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart">
 		<item value="2" key="layout"/>
 		<item value="true" key="group_libraries"/>
