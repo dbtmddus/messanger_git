@@ -1,0 +1,18 @@
+package server_obj;
+
+import java.sql.SQLException;
+
+public class test_main {
+
+	public static void main(String[] args) throws SQLException {
+		DB_obj db = new DB_obj();
+		db.connect();
+		
+		String str ="SELECT * FROM login_test";
+		db.exec(str);
+		
+		db.disconnect();
+		
+	}
+
+}

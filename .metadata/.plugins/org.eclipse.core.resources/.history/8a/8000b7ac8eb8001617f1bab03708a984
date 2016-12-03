@@ -1,0 +1,12 @@
+package wndsusrltk;
+
+public class test {
+
+	public static void main(String[] args) {
+		String str ="a";
+		char ch = str.charAt(0);
+		
+		System.out.println((int)ch);
+	}
+
+}

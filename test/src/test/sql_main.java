@@ -23,17 +23,29 @@ public class sql_main {
 				
 				/*********************************************************************************/
 				try{
-					String sql = "SELECT * FROM login_test";
+					//String sql = "select * from login_test";
+					//String sql="insert into login_test values('client15', 222);";
+					//String sql="insert into login_test values('client200', 222)";
+					
+					String sql="insert into login_test2 values(?, ?)";
+					
+					System.out.println(sql);
 					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, "client10000");
+					pstmt.setInt(2, 500);
+					
+					pstmt.executeUpdate();
 					//pstmt.setString(1, x);
-					rs = pstmt.executeQuery();
+					/*rs = pstmt.executeQuery();
 					//System.out.println(rs.next());
 					while (rs.next()){
 						System.out.println("name : " + rs.getString("NAME"));
 						System.out.println("name : " + rs.getInt("password"));
 					}
 					rs.close();
+					*/
 					pstmt.close();					
+					
 				}
 				catch (SQLException e){
 					e.printStackTrace();

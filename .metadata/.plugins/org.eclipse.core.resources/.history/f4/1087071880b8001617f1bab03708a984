@@ -1,0 +1,19 @@
+package wndsusrltk;
+
+import java.util.Scanner;
+
+public class main {
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+
+		System.out.print("십자가 - 현재 %: ");
+		int 십자가_현재 =in.nextInt();
+		System.out.println("십자가 - 1업 당 %: ");
+		int 십자가_1업당 =in.nextInt();
+		System.out.println();
+		
+		
+		
+		
+	}//end main
+}

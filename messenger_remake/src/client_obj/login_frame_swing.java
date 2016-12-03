@@ -2,6 +2,7 @@ package client_obj;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -17,8 +18,8 @@ import javax.swing.JTextField;
 public class login_frame_swing extends JFrame{
 
 	private Socket connected_socket;
-	private PrintWriter out ;		//추가
-
+	private PrintWriter send ;		//추가
+	private BufferedReader listen;
 	
 	private JLabel Password_label; 
 	private JLabel Id_label;
@@ -30,11 +31,12 @@ public class login_frame_swing extends JFrame{
 	static String id;
 	static String password;
 	
-	public login_frame_swing(Socket _connected_socket) throws IOException
+	public login_frame_swing(Socket _connected_socket, BufferedReader _in, PrintWriter _out ) throws IOException
 	{
 		super("로그인");
-		connected_socket = _connected_socket;
-		out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(connected_socket.getOutputStream()))); //추가
+		connected_socket = _connected_socket;		
+		listen = _in;
+		send = _out;
 		
 		//swing
 		getContentPane().setLayout(null);
@@ -77,25 +79,23 @@ public class login_frame_swing extends JFrame{
 			Object obj = e.getSource();
 
 			if (obj==login_button){
-				out.println("login");
+				send.println("login");
 				id = ID_textfield.getText();
 				password = password_textfield.getText();
-				out.println(id);
-				out.println(password);
-				out.flush();
+				send.println(id);
+				send.println(password);
+				send.flush();
 			}
 			else if (obj==signin_button){
-				out.println("signin");
+				send.println("signin");
 				id = ID_textfield.getText();
 				password = password_textfield.getText();
-				out.println(id);
-				out.println(password);
-				out.flush();
+				send.println(id);
+				send.println(password);
+				send.flush();
 			}
 		}
 	};
-
-
 
 }//end
 

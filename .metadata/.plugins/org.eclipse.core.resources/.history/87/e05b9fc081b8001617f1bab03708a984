@@ -1,0 +1,10 @@
+package wndsusrltk;
+
+public class test {
+
+	public static void main(String[] args) {
+		String str ="A";
+		System.out.println();
+	}
+
+}

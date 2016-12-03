@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commands>
+	<addCategory
+		id="custom_1480676919974"
+		name="f2"
+		description="&#13;&#10;"
+		visible="true"
+		open="true"
+		nextCategory="org.eclipse.wb.swing.components"/>
+</commands>

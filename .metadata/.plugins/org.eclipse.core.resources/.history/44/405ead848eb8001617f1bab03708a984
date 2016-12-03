@@ -1,0 +1,63 @@
+package wndsusrltk;
+
+import java.math.BigInteger;
+import java.util.Scanner;
+
+public class main_final {
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+
+		//System.out.println("십자가 ");
+		//System.out.println("현재 %: / 1업 폭 / 1업 비용");
+		BigInteger bi_십자가_현재 =in.nextBigInteger();
+		BigInteger bi_십자가_1업폭 = in.nextBigInteger();
+		String 십자가_1업비용 =in.nextLine();
+		System.out.println("???????????????????"+십자가_1업비용);
+		BigInteger bi_십자가_1업비용 = new BigInteger( Integer.toString
+				(Integer.parseInt(십자가_1업비용.substring(0, 십자가_1업비용.length()-1))));
+		for (int i=0; i< (십자가_1업비용.charAt(십자가_1업비용.length()-1)-96); i++)
+			{bi_십자가_1업비용 = bi_십자가_1업비용.multiply(BigInteger.valueOf(1000));}
+		//System.out.println();
+		//System.out.println();
+////////////////////////////////////////////////////////////////////////////////////////////////////
+		//System.out.println("진힘반 ");
+		//System.out.println("현재 %: / 1업 폭 / 1업 비용");
+		BigInteger bi_진힘반_현재 =in.nextBigInteger();
+		BigInteger bi_진힘반_1업폭 = in.nextBigInteger();
+		String 진힘반_1업비용 =in.nextLine();
+		BigInteger bi_진힘반_1업비용 = new BigInteger( Integer.toString(Integer.parseInt(진힘반_1업비용.substring(0, 진힘반_1업비용.length()-1))));
+		for (int i=0; i< (진힘반_1업비용.charAt(진힘반_1업비용.length()-1)-96); i++)
+			{bi_진힘반_1업비용 = bi_진힘반_1업비용.multiply(BigInteger.valueOf(1000));}
+		//System.out.println();
+		//System.out.println();
+////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		//System.out.println("폭칼날 ");
+		//System.out.println("현재 %: / 1업 폭 / 1업 비용");
+		BigInteger bi_폭칼날_현재 =in.nextBigInteger();
+		BigInteger bi_폭칼날_1업폭 = in.nextBigInteger();
+		String 폭칼날_1업비용 =in.nextLine();
+		BigInteger bi_폭칼날_1업비용 = new BigInteger( Integer.toString(Integer.parseInt(폭칼날_1업비용.substring(0, 폭칼날_1업비용.length()-1))));
+		for (int i=0; i< (폭칼날_1업비용.charAt(폭칼날_1업비용.length()-1)-96); i++)
+			{bi_폭칼날_1업비용 = bi_폭칼날_1업비용.multiply(BigInteger.valueOf(1000));}
+		//System.out.println();
+		//System.out.println();
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+		System.out.println("("+bi_십자가_1업폭+"+"+bi_십자가_현재+")/"+bi_십자가_현재 +"/"+bi_십자가_1업비용);
+		System.out.println("("+bi_진힘반_1업폭+"+"+bi_진힘반_현재+")/"+bi_진힘반_현재 +"/"+bi_진힘반_1업비용);
+		System.out.println("("+bi_폭칼날_1업폭+"+"+bi_폭칼날_현재+")/"+bi_폭칼날_현재 +"/"+bi_폭칼날_1업비용);
+
+		BigInteger temp = new BigInteger("100000000000000");
+		BigInteger 십자가효율 = (bi_십자가_1업폭.add(bi_십자가_현재)).multiply(temp).divide(bi_십자가_현재).divide(bi_십자가_1업비용);
+		BigInteger 진힘반효율 = (bi_진힘반_1업폭.add(bi_진힘반_현재)).multiply(temp).divide(bi_진힘반_현재).divide(bi_진힘반_1업비용);
+		BigInteger 폭칼날효율 = (bi_폭칼날_1업폭.add(bi_폭칼날_현재)).multiply(temp).divide(bi_폭칼날_현재).divide(bi_폭칼날_1업비용);
+		
+		
+		System.out.println("십자가 효율: "+십자가효율);
+		System.out.println("진힘반 효율: "+진힘반효율);
+		System.out.println("폭칼날 효율: "+폭칼날효율);
+				
+	}//end main
+}

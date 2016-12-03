@@ -1,0 +1,18 @@
+1480670981365	Rename type 'sql_main'
+1480671528549	Rename method 'connect_account'
+1480672065361	Rename method 'exec'
+1480686308166	Copy package
+1480686313215	Delete element
+1480686330847	Copy compilation unit
+1480686337268	Move compilation unit
+1480686435743	Delete element
+1480686568353	Rename local variable 'password'
+1480686666543	Rename type 'test_main'
+1480750601161	Rename field 'br'
+1480750931337	Rename field 'br'
+1480751060513	Rename field 'in'
+1480751067577	Rename field 'out'
+1480751082663	Rename field 'out'
+1480751087503	Rename field 'in'
+1480751098499	Rename field 'out'
+1480751104328	Rename field 'in'

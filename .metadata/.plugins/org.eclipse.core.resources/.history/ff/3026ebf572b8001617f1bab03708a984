@@ -1,0 +1,11 @@
+package server_obj;
+
+public class test_main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		DB_obj db = new DB_obj();
+		
+	}
+
+}
