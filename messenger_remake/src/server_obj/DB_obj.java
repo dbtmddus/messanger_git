@@ -1,5 +1,10 @@
 package server_obj;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
 
 public class DB_obj {
 
@@ -136,4 +141,26 @@ public class DB_obj {
 		return false;
 	}
 
+	public Vector<String> get_friend_list(String input_id){
+		Vector<String> friend_list = new Vector<String>();
+		try{
+			String sql = "select login.id from login, friend_list where login.id = ?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, input_id);
+			rs = pstmt.executeQuery();
+			for (int i=0; rs.next(); i++){
+				friend_list.addElement(rs.getString("id"));
+			}
+			rs.close();
+			pstmt.close();					
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+		System.out.println(friend_list.elementAt(0));
+		System.out.println(friend_list.toString());
+		return friend_list;
+
+	}
 }

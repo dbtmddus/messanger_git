@@ -37,8 +37,7 @@ public class client_obj {
 				break;
 			} catch (IOException e) {
 				System.out.println(server_port+" is used, connect with other port");
-				System.exit(1);
-				break;				
+				server_port++;
 			}
 		}
 		/************************************************************************************/
@@ -49,6 +48,7 @@ public class client_obj {
 	public void open_login_frame() throws IOException{
 		login_frame_swing lf = new login_frame_swing(connected_socket, listen, send );
 	}
+	
 	public void show_info(){
 		System.out.println("client 정보 : "+connected_socket.getLocalSocketAddress());
 		System.out.println("server 정보 : "+connected_socket.getRemoteSocketAddress());

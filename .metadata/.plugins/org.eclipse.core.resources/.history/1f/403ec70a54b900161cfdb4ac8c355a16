@@ -1,0 +1,5 @@
+package server_obj;
+
+public class connected_client {
+
+}

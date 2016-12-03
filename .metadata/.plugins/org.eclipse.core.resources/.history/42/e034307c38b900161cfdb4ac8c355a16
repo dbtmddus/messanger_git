@@ -1,0 +1,19 @@
+package client_obj;
+
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.JDesktopPane;
+
+public class friend_panel extends JPanel {
+
+	/**
+	 * Create the panel.
+	 */
+	public friend_panel() {
+		
+	
+	}
+
+	
+	
+}

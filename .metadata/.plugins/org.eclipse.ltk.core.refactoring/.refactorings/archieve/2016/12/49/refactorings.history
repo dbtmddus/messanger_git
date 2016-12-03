@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;friend_panel&apos; to &apos;basic_swing&apos;&#x0D;&#x0A;- Original project: &apos;archieve&apos;&#x0D;&#x0A;- Original element: &apos;friend_panel&apos;&#x0D;&#x0A;- Renamed element: &apos;basic_swing&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;friend_panel&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{friend_panel.java[friend_panel" matchStrategy="1" name="basic_swing" qualified="false" references="true" similarDeclarations="false" stamp="1480758300468" textual="false" version="1.0"/>
+</session>

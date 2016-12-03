@@ -1,0 +1,91 @@
+package client_swing;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JButton;
+import java.awt.Panel;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class main_frame extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					main_frame frame = new main_frame();
+					frame.setVisible(true);
+					
+					frame.getContentPane().setLayout(null);
+					frame.setVisible(true);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public main_frame() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 395, 650);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JButton b_friend = new JButton("\uCE5C\uAD6C\uBAA9\uB85D");
+		b_friend.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		b_friend.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+			}
+		});
+		menuBar.add(b_friend);
+		
+		JButton b_chat = new JButton("\uB300\uD654\uBAA9\uB85D");
+		b_chat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		menuBar.add(b_chat);
+		
+		JButton b_configuration = new JButton("\uC124\uC815");
+		menuBar.add(b_configuration);
+		
+		JButton b_add_friend = new JButton("\uCE5C\uAD6C\uCD94\uAC00");
+		b_add_friend.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		menuBar.add(b_add_friend);
+		
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		
+		Panel p_main = new Panel();
+		contentPane.add(p_main, BorderLayout.CENTER);
+		
+		
+	}
+
+}

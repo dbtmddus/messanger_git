@@ -15,29 +15,31 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import client_swing.main_frame;
+
 public class login_frame_swing extends JFrame{
 
 	private Socket connected_socket;
 	private PrintWriter send ;		//추가
 	private BufferedReader listen;
-	
+
 	private JLabel Password_label; 
 	private JLabel Id_label;
 	private JTextField ID_textfield;
 	private JTextField password_textfield;
 	private JButton login_button;
 	private JButton signin_button;
-	
+
 	static String id;
 	static String password;
 	
-	public login_frame_swing(Socket _connected_socket, BufferedReader _in, PrintWriter _out ) throws IOException
+	public login_frame_swing(Socket _connected_socket, BufferedReader _listen, PrintWriter _send ) throws IOException
 	{
 		super("로그인");
 		connected_socket = _connected_socket;		
-		listen = _in;
-		send = _out;
-		
+		listen = _listen;
+		send = _send;
+
 		//swing
 		getContentPane().setLayout(null);
 		setVisible(true);
@@ -69,7 +71,9 @@ public class login_frame_swing extends JFrame{
 		signin_button.setBounds(324, 135, 87, 32);
 		getContentPane().add(signin_button);
 		signin_button.addActionListener(action);
-
+		
+		ID_textfield.setText("dbtmddus112");
+		password_textfield.setText("1234");
 	}//end creator
 
 	ActionListener action = new ActionListener() {
@@ -85,6 +89,19 @@ public class login_frame_swing extends JFrame{
 				send.println(id);
 				send.println(password);
 				send.flush();
+
+				String res = null;
+				try {
+					res = listen.readLine();
+					System.out.println(res);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				if (res.equals("true")){
+					System.out.println("??????????????????????");
+					main_frame mf = new main_frame(connected_socket, listen, send );
+					setVisible(false);
+				}
 			}
 			else if (obj==signin_button){
 				send.println("signin");
