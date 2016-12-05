@@ -1,17 +1,23 @@
 create table login
-(id varchar(20) not null,
+(id_n int not null,
+id varchar(20) not null unique,
 password int not null,
-primary key (id))
+primary key (id_n))
 
 create table friend_list
-(id varchar(20) not null,
-f_id varchar(20) not null,
-primary key (id))
+(id_n int,
+id varchar(20),
+f_id_n int,
+f_id varchar(20),
+primary key (id_n, f_id))
 
-create table imformatin
-(id varchar(20) not null,
+create table detail_imf(
+id_n int,
+id varchar(20) not null,
 password int not null,
-image blob)
+image blob,
+stm_messge varchar(30), 
+primary key(id_n))
 
 select *
 from login_test;

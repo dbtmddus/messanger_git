@@ -1,5 +1,3 @@
-
-
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,36 +24,34 @@ public class basic_swing extends ScrollPane{
 
 	private JTextField ID_textfield;
 
-	public basic_swing(Socket _connected_socket, BufferedReader _in, PrintWriter _out ) throws IOException{		super("·Î±×ÀÎ");
-		connected_socket = _connected_socket;		
-		listen = _in;
-		send = _out;
+	public basic_swing() throws IOException{		
+		super();
 
-		//swing
 		setLayout(null);
 		setVisible(true);
-		setSize(460, 226);
+		setSize(260, 226);
 
-		ID_textfield = new JTextField();
-		ID_textfield.setBounds(123, 36, 202, 22);
-		
-		add(ID_textfield);
+		txtAa.setText("aa");
+		txtAa.setColumns(10);
+
 	}//end creator
 
 	ActionListener action = new ActionListener() {
-
 		public void actionPerformed(ActionEvent e) {
 
 			Object obj = e.getSource();
 
-			if (obj==login_button){
-				
+			/*if (obj==login_button){
 			}
 			else if (obj==signin_button){
 				
-			}
+			}*/
 		}
 	};
+	/**
+	 * @wbp.nonvisual location=110,84
+	 */
+	private final JTextField txtAa = new JTextField();
 
 }//end
 

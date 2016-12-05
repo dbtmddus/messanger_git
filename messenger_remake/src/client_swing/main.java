@@ -15,7 +15,6 @@ public class main {
 	
 	public static void main(String[] args) {
 		
-		main_frame mf = new main_frame(connected_socket, listen, send);
-	
+		main_frame mf = new main_frame(connected_socket, listen, send, 0);
 	}//end main
 }

@@ -14,6 +14,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.awt.event.ActionEvent;
@@ -21,7 +22,7 @@ import java.awt.event.ActionEvent;
 public class main_frame extends JFrame {
 
 	private static friend_panel p_friend;
-	
+
 	private JPanel contentPane;
 
 	private JMenuBar menuBar;
@@ -29,13 +30,22 @@ public class main_frame extends JFrame {
 	private JButton b_chat;
 	private JButton b_configuration;
 	private JButton b_add_friend;
-	
+
 	private Panel p_main;
-	
-	public main_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send ) {
-		
-		p_friend = new friend_panel(_connected_socket, _listen, _send);
-		
+
+	private Socket connected_socket;
+	private BufferedReader listen;
+	private PrintWriter send;
+	private int n_id;
+
+	public main_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _n_id ) {
+
+		connected_socket = _connected_socket;
+		listen = _listen;
+		send = _send;
+		n_id = _n_id;
+
+		p_friend = new friend_panel(_connected_socket, _listen, _send, _n_id);
 		//
 		getContentPane().setLayout(null);
 		setVisible(true);
@@ -45,7 +55,7 @@ public class main_frame extends JFrame {
 
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		b_friend = new JButton("친구 목록");
 		b_friend.addActionListener(action);
 		menuBar.add(b_friend);
@@ -69,6 +79,7 @@ public class main_frame extends JFrame {
 
 		p_main = new Panel();
 		contentPane.add(p_main, BorderLayout.CENTER);
+
 		JButton b10 = new JButton("ddddd");
 		p_main.add(b10);
 	}
@@ -81,9 +92,15 @@ public class main_frame extends JFrame {
 				p_friend.setLayout(new BorderLayout(0, 0));
 				contentPane.removeAll();
 				contentPane.add(p_friend, BorderLayout.CENTER);
+				try {
+					p_friend.get_friend_db();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
-			//else if (obj==signin_button){
-			//}
+			else if (obj==b_add_friend){
+				add_friend_frame frame_add_friends = new add_friend_frame(connected_socket, listen, send, n_id);
+			}
 		}
 	};
 

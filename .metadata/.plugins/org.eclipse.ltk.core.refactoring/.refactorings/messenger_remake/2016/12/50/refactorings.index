@@ -6,3 +6,13 @@
 1480933326481	Rename method 'inspect_id_n'
 1480933394543	Rename method 'inspectid'
 1480935357614	Copy package
+1480939824645	Rename field 'index_id_n'
+1480943709327	Rename field 'f_id'
+1480944771351	Rename field 'id_n'
+1480944820921	Rename field 'client_id'
+1480944824673	Rename field 'client_id_n'
+1480944876305	Rename field 'id_n'
+1480944977068	Rename field 'logined_id_n'
+1480945069679	Rename field 'signed_in_id_n'
+1480945075873	Rename field 'logined_id'
+1480945479574	Rename method 'get_id_n'

@@ -59,14 +59,15 @@ public class DB_obj {
 		}
 	}
 
-	public void insert_new_client(String new_id, int new_pw, int new_id_n){	//회원가입
+	public void insert_new_client(int new_id_n, String new_id, int new_pw){	//회원가입
 		try{
 			String sql="insert into login values(?,?,?)";
 
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, new_id);
-			pstmt.setInt(2, new_pw);
-			pstmt.setInt(3, new_id_n);
+			
+			pstmt.setInt(1, new_id_n);
+			pstmt.setString(2, new_id);
+			pstmt.setInt(3, new_pw);
 			
 			pstmt.executeUpdate();
 			//rs = pstmt.executeQuery();	//!!!!!!!!!!!!!!!!! 결과물이 없는 쿼리의 경우 쓰면 에러 유말 (쿼리 동작은 함)
@@ -99,7 +100,8 @@ public class DB_obj {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()){
-				System.out.print("id : " + rs.getString("id"));
+				System.out.print("id_n : " + rs.getInt("id_n"));
+				System.out.print("/ id : " + rs.getString("id"));
 				System.out.println(" / password : " + rs.getInt("password"));
 				System.out.println();
 			}
@@ -146,11 +148,13 @@ public class DB_obj {
 	public Vector<String> get_friend_list(String input_id){
 		Vector<String> friend_list = new Vector<String>();
 		try{
-			String sql = "select login.id from login, friend_list where login.id = ?";
+			String sql = "select login.f_id from login, friend_list where login.id = ?";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, input_id);
 			rs = pstmt.executeQuery();
+			
+			friend_list.addElement(Integer.toString(rs.getFetchSize()));
 			for (int i=0; rs.next(); i++){
 				friend_list.addElement(rs.getString("id"));
 			}
@@ -164,7 +168,29 @@ public class DB_obj {
 		return friend_list;
 	}
 
-	public int get_id_n(String input_id){
+	public void add_friend(int _id_n, String _id, String _f_id){
+		int f_id_n= get_id_n_from_id(_f_id);
+		
+		try{
+			String sql = "insert into friend_list values(?,?,?,?)";
+
+			System.out.println(sql);
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, _id_n);
+			pstmt.setString(2, _id);
+			pstmt.setInt(3, f_id_n);
+			pstmt.setString(4, _f_id);
+			pstmt.executeUpdate();
+			
+			pstmt.close();					
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public int get_id_n_from_id(String input_id){
 		int return_v = 0;
 		try{
 			String sql = "select id_n from login where id=?";

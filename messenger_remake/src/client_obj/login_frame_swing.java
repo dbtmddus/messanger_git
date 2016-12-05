@@ -98,9 +98,16 @@ public class login_frame_swing extends JFrame{
 					e1.printStackTrace();
 				}
 				if (res.equals("true")){
-					System.out.println("??????????????????????");
-					main_frame mf = new main_frame(connected_socket, listen, send );
-					setVisible(false);
+					int id_n;
+					try {
+						id_n = Integer.parseInt(listen.readLine());
+						main_frame mf = new main_frame(connected_socket, listen, send, id_n );
+						setVisible(false);
+					} catch (NumberFormatException e1) {
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 			else if (obj==signin_button){
@@ -115,4 +122,3 @@ public class login_frame_swing extends JFrame{
 	};
 
 }//end
-

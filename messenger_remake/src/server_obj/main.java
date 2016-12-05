@@ -1,7 +1,7 @@
 /***
- * 12.03 
- * 이 이후에는 고객의 ip, port정보를 db에 저장해서 매번 삽입,삭제해서 처리할지,
- * 서버 내에서 처리할지 고민해야하며, 회원마다 고유번호 (숫자, 오름차순 저장)을 통해 빠른 접근을 구현하는 게 좋을듯
+ * 12.05 
+ * 친구 추가 기능 구현중, db에 삽입되지 않고 있는 오류.  sql 오류 의심
+ *
  */
 
 package server_obj;
@@ -11,10 +11,13 @@ import java.net.ServerSocket;
 
 public class main {
 
+	static ServerSocket server_socket;
+	static server_obj server0;
+	
 	public static void main(String[] args) throws IOException {
 
-		ServerSocket server_socket = new ServerSocket(1245);
-		server_obj server0 = new server_obj(server_socket);
+		server_socket = new ServerSocket(1245);
+		server0 = new server_obj(server_socket);
 		server0.init_server();
 		//server0.connect_db();
 
@@ -23,18 +26,26 @@ public class main {
 
 		server_obj server2 = new server_obj(server_socket);
 		server2.start();
-
+		
+		server_obj server3 = new server_obj(server_socket);
+		server3.start();
+		
+		show_connected_client();
+		//server1.request_friend_list_test();
+		
+	}//end main
+	
+	static public void show_connected_client(){
 		while(true){
-			server0.show_connected_client();
 			try {
+				server0.show_connected_client();
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		//server1.request_friend_list_test();
-		
-	}//end main
+
+	}
 }
 
 

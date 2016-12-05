@@ -1,23 +1,15 @@
 package client_swing;
 
 import java.awt.Panel;
-import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Vector;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
-
-import client_swing.main_frame;
 
 public class friend_panel extends Panel{
 
@@ -28,7 +20,7 @@ public class friend_panel extends Panel{
 	private JTextField ID_textfield;
 	private Panel[] panel = new Panel[100];
 	
-	public friend_panel(Socket _connected_socket, BufferedReader _listen, PrintWriter _send ){		
+	public friend_panel(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _n_id ){		
 		super();
 		connected_socket = _connected_socket;		
 		listen = _listen;
@@ -41,7 +33,7 @@ public class friend_panel extends Panel{
 
 		ID_textfield = new JTextField();
 		ID_textfield.setBounds(123, 36, 202, 22);
-		ID_textfield.setText("textfield1");
+		ID_textfield.setText(Integer.toString(_n_id));
 		
 		add(ID_textfield);
 	}//end creator
@@ -59,9 +51,20 @@ public class friend_panel extends Panel{
 		}
 	};
 
-	public void get_friend_db(){
-		send.println("request_friend_list");
+	public void get_friend_db() throws IOException{
+		final String request_friend_list = "request_friend_list";
+		send.println(request_friend_list);
 		send.flush();
+		
+		String str_f_list = listen.readLine();
+		str_f_list = str_f_list.substring(1, str_f_list.length()-2);
+		System.out.println("친구 리스트 : "+ str_f_list);
+		String[] f_list_and_size = str_f_list.split(", ");
+		int f_list_size = Integer.parseInt(f_list_and_size[0]);
+		System.out.println("size : " + f_list_and_size);
+		for (int i=1; i<f_list_size; i++){
+			System.out.println(f_list_and_size[i]+", ");
+		}
 	}
 	
 }//end
