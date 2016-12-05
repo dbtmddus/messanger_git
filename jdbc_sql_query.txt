@@ -1,27 +1,35 @@
-create table login_test
-(name varchar(20) not null,
+create table login
+(id varchar(20) not null,
 password int not null,
-primary key (name))
+primary key (id))
 
 create table friend_list
 (id varchar(20) not null,
 f_id varchar(20) not null,
-primary key (name))
+primary key (id))
 
 create table imformatin
 (id varchar(20) not null,
 password int not null,
-statement_message
-image blob(5mb)
-)
-
-
-
+image blob)
 
 select *
 from login_test;
 
-
 insert into login_test
 values('client1', 1234);
 
+
+select login.id
+from login, friend_list
+where login.id = 'dbtmddus112';
+
+insert into friend_list
+values('dbtmddus112', 'db_f1')
+
+alter table login add(identification_number int unique);
+
+
+alter table login 
+drop column identification_number;
+//ªË¡¶

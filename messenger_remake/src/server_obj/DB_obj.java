@@ -59,13 +59,15 @@ public class DB_obj {
 		}
 	}
 
-	public void insert_new_client(String new_id, int new_pw){	//회원가입
+	public void insert_new_client(String new_id, int new_pw, int new_id_n){	//회원가입
 		try{
-			String sql="insert into login values(?,?)";
+			String sql="insert into login values(?,?,?)";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, new_id);
 			pstmt.setInt(2, new_pw);
+			pstmt.setInt(3, new_id_n);
+			
 			pstmt.executeUpdate();
 			//rs = pstmt.executeQuery();	//!!!!!!!!!!!!!!!!! 결과물이 없는 쿼리의 경우 쓰면 에러 유말 (쿼리 동작은 함)
 
@@ -158,9 +160,80 @@ public class DB_obj {
 		catch (SQLException e){
 			e.printStackTrace();
 		}
-		System.out.println(friend_list.elementAt(0));
-		System.out.println(friend_list.toString());
+		//System.out.println(friend_list.toString());
 		return friend_list;
+	}
 
+	public int get_id_n(String input_id){
+		int return_v = 0;
+		try{
+			String sql = "select id_n from login where id=?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, input_id);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()){
+				return_v = rs.getInt("id_n");
+				rs.close();
+				pstmt.close();					
+				return return_v;
+			}else{
+				System.out.println("고유번호 id_n 오류");
+				rs.close();
+				pstmt.close();					
+			}
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+		return return_v;	//에러 경우 리턴값
+	}
+	public boolean inspect_id_n_exist_already(int _id_n){
+		try{
+			String sql = "select id_n from login where id_n=?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, _id_n);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()){
+				rs.close();
+				pstmt.close();					
+				return true;
+			}else{
+				rs.close();
+				pstmt.close();					
+				return false;
+			}
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	public boolean inspect_id_exist_already(String id){
+		try{
+			String sql = "select id_n from login where id_n=?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()){
+				rs.close();
+				pstmt.close();					
+				return false;
+			}else{
+				rs.close();
+				pstmt.close();					
+				return true;
+			}
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

@@ -10,25 +10,30 @@ import java.io.IOException;
 import java.net.ServerSocket;
 
 public class main {
-	static connected_client[] c_client = new connected_client[1000];
-	static int index_c_client=0;		// ip, port정보를 매번 db 에 넣어놓고 삭제, 제거 방식으로 할지,
-										//서버 내에서 관리할지 결정해야함. 회원마다 고유 번호 부여하여 처리속도 향상 가능.
-	
+
 	public static void main(String[] args) throws IOException {
 
 		ServerSocket server_socket = new ServerSocket(1245);
 		server_obj server0 = new server_obj(server_socket);
-		server0.connect_db();
+		server0.init_server();
+		//server0.connect_db();
 
 		server_obj server1 = new server_obj(server_socket);
 		server1.start();
-		c_client[index_c_client] = new connected_client();
-		
 
 		server_obj server2 = new server_obj(server_socket);
 		server2.start();
+
+		while(true){
+			server0.show_connected_client();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		//server1.request_friend_list_test();
 		
-		server1.request_friend_list_test();
 	}//end main
 }
 

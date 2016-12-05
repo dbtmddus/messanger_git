@@ -12,4 +12,14 @@
 <fullyQualifiedTypeName name="java.math.BigInteger"/>
 <fullyQualifiedTypeName name="server_obj.DB_obj"/>
 <fullyQualifiedTypeName name="java.io.BufferedReader"/>
+<fullyQualifiedTypeName name="java.awt.ScrollPane"/>
+<fullyQualifiedTypeName name="client_obj.friend_panel"/>
+<fullyQualifiedTypeName name="client_swing.friend_panel"/>
+<fullyQualifiedTypeName name="client_swing.main_frame"/>
+<fullyQualifiedTypeName name="java.awt.Panel"/>
+<fullyQualifiedTypeName name="javax.swing.JButton"/>
+<fullyQualifiedTypeName name="java.util.Vector"/>
+<fullyQualifiedTypeName name="server_obj.main"/>
+<fullyQualifiedTypeName name="server_obj.connected_client"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
 </qualifiedTypeNameHistroy>
