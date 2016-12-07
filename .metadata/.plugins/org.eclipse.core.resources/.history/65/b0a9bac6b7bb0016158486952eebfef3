@@ -1,0 +1,48 @@
+
+import java.awt.Panel;
+import java.util.Vector;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+
+public class swing_test extends Panel{
+	private JTextField ID_textfield;
+	private Panel[] panel = new Panel[100];
+	
+	static int f_list_size;
+	static String[] f_list;
+
+	static Vector<JPanel> vector_jpanel = new Vector<JPanel>(0); 
+
+	public swing_test() {
+		JFrame frame = new JFrame("dd");
+		frame.setSize(502, 279);
+		frame.setLayout(null);
+		frame.setVisible(true);
+
+		JScrollPane spanel = new JScrollPane(null, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		spanel.setSize(460, 226);
+		frame.getContentPane().add(spanel);
+		spanel.setVisible(true);
+		
+		spanel.setLayout(new BoxLayout(spanel, BoxLayout.Y_AXIS));
+		
+		for(int i=0; i<5; i++){
+			spanel.add(new JButton(""+i));
+		}
+
+	}
+
+	
+	public static void main(String[] args) {
+
+		swing_test s = new swing_test();
+		
+			
+	}
+}//end
+

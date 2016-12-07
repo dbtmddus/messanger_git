@@ -1,0 +1,94 @@
+
+import java.awt.ComponentOrientation;
+import java.awt.GridLayout;
+import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Vector;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class swing_test extends Panel{
+
+	private JTextField ID_textfield;
+	private Panel[] panel = new Panel[100];
+	
+	static int f_list_size;
+	static String[] f_list;
+
+	static Vector<JPanel> vector_jpanel = new Vector<JPanel>(0); 
+	
+	public swing_test(){
+		super();
+		setLayout(new GridLayout(100, 1, 3, 2));
+		setVisible(true);
+		setSize(460, 226);
+
+		//set_friend_db();
+
+		JButton b0= new JButton("dd");
+		JButton b1= new JButton("dd");
+		JButton b2= new JButton("dd");
+		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		add(b0);
+		add(b1);
+		add(b2);
+		
+		/*JPanel panel0 = new JPanel();
+		add(panel0);
+		vector_jpanel.addElement(panel0);	
+		JButton b0= new JButton("dd");
+		panel0.add(b0);
+		*/
+		/*for (int i=0; i<10; i++){
+			make_one_f_room();
+		}*/
+	}//end creator
+
+	public void make_one_f_room(){
+		JPanel panel = new JPanel();
+		add(panel);
+		vector_jpanel.addElement(panel);	
+		JButton b = new JButton("dd");
+		panel.add(b);
+	}
+	
+	ActionListener action = new ActionListener() {
+
+		public void actionPerformed(ActionEvent e) {
+
+			Object obj = e.getSource();
+			/*if (obj==login_button){
+
+			}
+			else if (obj==signin_button){	
+			}*/
+		}
+	};
+	
+	public static void main(String[] args) {
+
+		//swing_test p1 = new swing_test();
+		
+		JFrame frame = new JFrame("dd");
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(460, 226);
+		frame.add(b0);
+		frame.add(b1);
+		frame.add(b2);
+		frame.setLayout(new GridLayout(100, 4, 3, 2));
+		
+		//set_friend_db();
+
+		JButton b0= new JButton("dd");
+		JButton b1= new JButton("dd");
+		JButton b2= new JButton("dd");
+		frame.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		
+	}
+}//end
+

@@ -1,0 +1,31 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+
+public class scrollbar {
+
+	private JTextField ID_textfield;
+	public scrollbar() {		
+		JFrame frame = new JFrame("");
+		
+		frame.setLayout(null);
+		frame.setVisible(true);
+		frame.setSize(260, 226);
+		
+		JScrollPane spanel = new JScrollPane();
+		
+		ID_textfield =new JTextField("aa");
+		ID_textfield.setBounds(112, 128, 116, 24);	//안하면 안나옴 (아마 크기 0인듯)
+		frame.add(ID_textfield);						//안하면 안 나옴
+		ID_textfield.addActionListener(action);	// 안 넣으면 이벤트 ㄴㄴ, 오류 주의
+		
+	}//end creator
+
+
+}//end
+

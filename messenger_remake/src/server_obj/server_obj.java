@@ -28,7 +28,7 @@ public class server_obj extends Thread {
 	static int available_id_n=1;
 	int logged_in_id_n=0;
 	String logged_in_id ="";
-	
+
 	ServerSocket server_socket = null;	//static 선언시 thread끼리 공유
 	Socket soc = null;
 	int open_port_num;
@@ -124,7 +124,7 @@ public class server_obj extends Thread {
 			ip_and_port[logged_in_id_n][0] = soc.getInetAddress().toString().substring(1);
 			ip_and_port[logged_in_id_n][1] = Integer.toString( soc.getPort() );
 			logged_in_id = id;
-			
+
 			send.println(db.get_id_n_from_id(id));
 			send.flush();
 			//open
@@ -146,18 +146,24 @@ public class server_obj extends Thread {
 
 	public void request_friend_list() throws IOException{
 		System.out.println("request friend list handling");
-		String id = listen.readLine();
-		Vector<String> v = db.get_friend_list(id);
+		Vector<String> v = db.get_friend_list(logged_in_id_n);
 		System.out.println(v.toString());
 		send.println(v.toString());
 		send.flush();
 	}
 
-	public void add_friend() throws IOException{
+	public void add_friend() throws IOException {
 		String f_id = listen.readLine();
-		
-		db.add_friend(logged_in_id_n, logged_in_id, f_id);
-		
+		boolean b = db.add_friend(logged_in_id_n, logged_in_id, f_id); 
+		if (b){
+			final String t_str = "confirm_add_friend";
+			send.println(t_str);
+			send.flush();	
+		}else{
+			final String t_str = "refuse_add_friend";
+			send.println(t_str);
+			send.flush();
+		}
 	}
 
 

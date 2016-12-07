@@ -1,6 +1,6 @@
 /***
- * 12.05 
- * 친구 추가 기능 구현중, db에 삽입되지 않고 있는 오류.  sql 오류 의심
+ * 12.07
+ * friend_frame 대규모 변경 직전 저장
  *
  */
 
@@ -39,12 +39,11 @@ public class main {
 		while(true){
 			try {
 				server0.show_connected_client();
-				Thread.sleep(1000);
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-
 	}
 }
 
@@ -52,5 +51,7 @@ public class main {
 
 //http://blog.naver.com/mktcrmer/220854105687 - oracle express 설치
 
-
-
+//println과 print 혼용시 문자열이 합쳐지는 오류
+//swing구현중 이벤트 헨들러 실수로 버튼 하나에 2번 이상 들어가면 해당 횟수만큼 반복 되는듯 (버튼 1번 눌렀는데 2번 이벤트 발생 등)
+//String sql = "select f_id from login, friend_list where login.id_n = ?"; 로 수행 후,
+// rs.getString(friend_list.f_id) 하면 오류남..... ㅂㄷㅂㄷ 그냥 f_id로 불러와야함

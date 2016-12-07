@@ -67,8 +67,7 @@ public class DB_obj {
 			
 			pstmt.setInt(1, new_id_n);
 			pstmt.setString(2, new_id);
-			pstmt.setInt(3, new_pw);
-			
+			pstmt.setInt(3, new_pw);			
 			pstmt.executeUpdate();
 			//rs = pstmt.executeQuery();	//!!!!!!!!!!!!!!!!! 결과물이 없는 쿼리의 경우 쓰면 에러 유말 (쿼리 동작은 함)
 
@@ -145,19 +144,22 @@ public class DB_obj {
 		return false;
 	}
 
-	public Vector<String> get_friend_list(String input_id){
+	public Vector<String> get_friend_list(int _id_n){
 		Vector<String> friend_list = new Vector<String>();
 		try{
-			String sql = "select login.f_id from login, friend_list where login.id = ?";
+			String sql = "select f_id from login, friend_list where login.id_n = ?";
 
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, input_id);
+			pstmt.setInt(1, _id_n);
 			rs = pstmt.executeQuery();
 			
-			friend_list.addElement(Integer.toString(rs.getFetchSize()));
+			friend_list.addElement("0");
+			int rs_size = 0;				//rs 크기를 빠르게 가져오는 함수 없는듯??? resultSet.last() followed by resultSet.getRow() 느리ㄷ
 			for (int i=0; rs.next(); i++){
-				friend_list.addElement(rs.getString("id"));
+				friend_list.addElement(rs.getString("f_id"));			//friend_list.f_id 로 불러오면 오류남
+				rs_size++;
 			}
+			friend_list.set(0, Integer.toString(rs_size));
 			rs.close();
 			pstmt.close();					
 		}
@@ -168,12 +170,11 @@ public class DB_obj {
 		return friend_list;
 	}
 
-	public void add_friend(int _id_n, String _id, String _f_id){
-		int f_id_n= get_id_n_from_id(_f_id);
+	public boolean add_friend(int _id_n, String _id, String _f_id){
 		
+		int f_id_n= get_id_n_from_id(_f_id);
 		try{
-			String sql = "insert into friend_list values(?,?,?,?)";
-
+			String sql = "insert into friend_list values(?,?,?,?)";	
 			System.out.println(sql);
 			
 			pstmt = conn.prepareStatement(sql);
@@ -181,13 +182,18 @@ public class DB_obj {
 			pstmt.setString(2, _id);
 			pstmt.setInt(3, f_id_n);
 			pstmt.setString(4, _f_id);
-			pstmt.executeUpdate();
-			
+			try{
+				pstmt.executeUpdate();
+			}catch(Exception e){
+				e.printStackTrace();
+				return false;
+			}
 			pstmt.close();					
 		}
 		catch (SQLException e){
 			e.printStackTrace();
 		}
+		return true;
 	}
 	
 	public int get_id_n_from_id(String input_id){
@@ -214,7 +220,7 @@ public class DB_obj {
 		catch (SQLException e){
 			e.printStackTrace();
 		}
-		return return_v;	//에러 경우 리턴값
+		return -1;	//에러 경우 리턴값
 	}
 	public boolean inspect_id_n_exist_already(int _id_n){
 		try{

@@ -1,0 +1,40 @@
+
+public class simple_alert{
+
+	private Socket connected_socket;
+	private PrintWriter send ;		//Ãß°¡
+	private BufferedReader listen;
+
+	private JTextField ID_textfield;
+
+	public simple_alert() throws IOException{		
+		super();
+
+		setLayout(null);
+		setVisible(true);
+		setSize(260, 226);
+
+		txtAa.setText("aa");
+		txtAa.setColumns(10);
+
+	}//end creator
+
+	ActionListener action = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+
+			Object obj = e.getSource();
+
+			/*if (obj==login_button){
+			}
+			else if (obj==signin_button){
+				
+			}*/
+		}
+	};
+	/**
+	 * @wbp.nonvisual location=90,124
+	 */
+	private final JTextField txtAa = new JTextField();
+
+}//end
+

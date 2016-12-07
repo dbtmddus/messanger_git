@@ -36,16 +36,16 @@ public class main_frame extends JFrame {
 	private Socket connected_socket;
 	private BufferedReader listen;
 	private PrintWriter send;
-	private int n_id;
+	private int id_n;
 
-	public main_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _n_id ) {
+	public main_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n ) throws IOException {
 
 		connected_socket = _connected_socket;
 		listen = _listen;
 		send = _send;
-		n_id = _n_id;
+		id_n = _id_n;
 
-		p_friend = new friend_panel(_connected_socket, _listen, _send, _n_id);
+		p_friend = new friend_panel(_connected_socket, _listen, _send, _id_n);
 		//
 		getContentPane().setLayout(null);
 		setVisible(true);
@@ -93,13 +93,13 @@ public class main_frame extends JFrame {
 				contentPane.removeAll();
 				contentPane.add(p_friend, BorderLayout.CENTER);
 				try {
-					p_friend.get_friend_db();
+					p_friend.set_friend_db();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 			}
 			else if (obj==b_add_friend){
-				add_friend_frame frame_add_friends = new add_friend_frame(connected_socket, listen, send, n_id);
+				add_friend_frame frame_add_friends = new add_friend_frame(connected_socket, listen, send, id_n);
 			}
 		}
 	};

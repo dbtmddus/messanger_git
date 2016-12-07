@@ -1,0 +1,31 @@
+import javax.swing.JTextField;
+
+public class basic_swing extends ScrollPane{
+
+	private JTextField ID_textfield;
+	public basic_swing() throws IOException{		
+		super();
+
+		setLayout(null);
+		setVisible(true);
+		setSize(260, 226);
+
+		ID_textfield.setText("aa");
+		ID_textfield.setColumns(10);
+
+	}//end creator
+
+	ActionListener action = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+
+			Object obj = e.getSource();
+
+			/*if (obj==login_button){
+			}
+			else if (obj==signin_button){
+				
+			}*/
+		}
+	};
+}//end
+

@@ -39,3 +39,11 @@ alter table login add(identification_number int unique);
 alter table login 
 drop column identification_number;
 //昏力
+
+// 模备 格废 龋免
+select friend_list.f_id 
+from login,friend_list 
+where login.id_n = 1;
+
+
+

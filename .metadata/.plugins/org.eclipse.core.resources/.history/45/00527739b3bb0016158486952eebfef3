@@ -1,0 +1,56 @@
+
+import java.awt.BorderLayout;
+import java.awt.ComponentOrientation;
+import java.awt.GridLayout;
+import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Vector;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+
+public class swing_test extends Panel{
+
+	private JTextField ID_textfield;
+	private Panel[] panel = new Panel[100];
+	
+	static int f_list_size;
+	static String[] f_list;
+
+	static Vector<JPanel> vector_jpanel = new Vector<JPanel>(0); 
+	
+	public static void main(String[] args) {
+
+		//swing_test p1 = new swing_test();
+		
+		JFrame frame = new JFrame("dd");
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(460, 226);
+		frame.getContentPane().setLayout(null);
+
+		JScrollPane spanel = new JScrollPane(null, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		spanel.setVisible(true);
+		spanel.setSize(460, 226);
+		frame.getContentPane().add(spanel);
+		
+		JButton b0= new JButton("dd");
+		JButton b1= new JButton("dd");
+		JButton b2= new JButton("dd");
+		JButton b3= new JButton("dd");
+		JButton b4= new JButton("dd");
+		JButton b5= new JButton("dd");
+		spanel.add(b0,"NORTH");
+		spanel.add(b1,BorderLayout.AFTER_LAST_LINE);
+		spanel.add(b2,BorderLayout.AFTER_LAST_LINE);
+		spanel.add(b3,BorderLayout.AFTER_LAST_LINE);
+		spanel.add(b4,BorderLayout.AFTER_LAST_LINE);
+			
+	}
+}//end
+

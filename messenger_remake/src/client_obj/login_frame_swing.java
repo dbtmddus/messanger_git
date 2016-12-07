@@ -84,6 +84,7 @@ public class login_frame_swing extends JFrame{
 
 			if (obj==login_button){
 				send.println("login");
+				send.flush();
 				id = ID_textfield.getText();
 				password = password_textfield.getText();
 				send.println(id);
@@ -112,6 +113,7 @@ public class login_frame_swing extends JFrame{
 			}
 			else if (obj==signin_button){
 				send.println("signin");
+				send.flush();
 				id = ID_textfield.getText();
 				password = password_textfield.getText();
 				send.println(id);
