@@ -42,7 +42,7 @@ public class login_frame_swing extends JFrame{
 
 		//swing
 		getContentPane().setLayout(null);
-		setVisible(true);
+		//setVisible(true);		//다른 컴포넌트 설정 전에 호출 시 frame resize시에 뒤늦게 제대로 표시될 수 있음
 		setSize(460, 226);
 
 		Id_label = new JLabel("ID :");
@@ -74,6 +74,9 @@ public class login_frame_swing extends JFrame{
 		
 		ID_textfield.setText("dbtmddus112");
 		password_textfield.setText("1234");
+		
+		setVisible(true);
+//		getContentPane().repaint();
 	}//end creator
 
 	ActionListener action = new ActionListener() {

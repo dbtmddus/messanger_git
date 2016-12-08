@@ -21,7 +21,7 @@ import java.awt.event.ActionEvent;
 
 public class main_frame extends JFrame {
 
-	private static friend_panel p_friend;
+	private static friend_panel fp;
 
 	private JPanel contentPane;
 
@@ -37,6 +37,7 @@ public class main_frame extends JFrame {
 	private BufferedReader listen;
 	private PrintWriter send;
 	private int id_n;
+	private JFrame main_frame;
 
 	public main_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n ) throws IOException {
 
@@ -44,12 +45,12 @@ public class main_frame extends JFrame {
 		listen = _listen;
 		send = _send;
 		id_n = _id_n;
-
-		p_friend = new friend_panel(_connected_socket, _listen, _send, _id_n);
+		main_frame = this;
+		
+		fp = new friend_panel(_connected_socket, _listen, _send, _id_n, this);
 		//
 		getContentPane().setLayout(null);
-		setVisible(true);
-
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 395, 650);
 
@@ -82,27 +83,29 @@ public class main_frame extends JFrame {
 
 		JButton b10 = new JButton("ddddd");
 		p_main.add(b10);
+		
+		setVisible(true);
 	}
 
 	ActionListener action = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			Object obj = e.getSource();
 
-			if (obj==b_friend){
-				p_friend.setLayout(new BorderLayout(0, 0));
+			if(obj==b_friend){
 				contentPane.removeAll();
-				contentPane.add(p_friend, BorderLayout.CENTER);
 				try {
-					p_friend.set_friend_db();
+					fp = new friend_panel(connected_socket, listen, send, id_n, main_frame);
 				} catch (IOException e1) {
 					e1.printStackTrace();
-				}
+				}	// 친구 목록 많을시 시간 걸림, 새로고침 키 추가 시 이 줄만 없애면 됨
+				
+				contentPane.add(fp.get_spanel());
+				revalidate();
+				repaint();		//2개 같이 쓰기 권장
 			}
-			else if (obj==b_add_friend){
+			else if(obj==b_add_friend){
 				add_friend_frame frame_add_friends = new add_friend_frame(connected_socket, listen, send, id_n);
 			}
 		}
 	};
-
 }
-

@@ -1,7 +1,5 @@
 package client_swing;
 
-import java.awt.BorderLayout;
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -11,11 +9,9 @@ import java.net.Socket;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
 
 public class add_friend_frame extends JFrame {
@@ -43,10 +39,9 @@ public class add_friend_frame extends JFrame {
 		///////////////////////////////////////////////////////////////
 
 		getContentPane().setLayout(null);
-		setVisible(true);
 		setSize(368, 219);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);		//종료시 해당 frame만 종료
+											//EXIT_ON_CLOSE		//종료 시 프로그램 전체 종료
 
 		text_field1 = new JTextField("친구 id");
 		//f_id.setColumns(5);	??
@@ -58,6 +53,9 @@ public class add_friend_frame extends JFrame {
 		b_add.setBounds(178, 113, 128, 37);
 		getContentPane().add(b_add);
 		b_add.addActionListener(action);
+		
+		setVisible(true);
+		
 	}
 
 	ActionListener action = new ActionListener() {
@@ -85,14 +83,16 @@ public class add_friend_frame extends JFrame {
 			response = listen.readLine();
 			if(response.equals("confirm_add_friend")){
 				JOptionPane.showMessageDialog(null, "추가되었습니다", "친구추가", JOptionPane.INFORMATION_MESSAGE);
+				this.setVisible(false);
 			}else{
 				JOptionPane.showMessageDialog(null, "이미 추가된 친구입니다", "친구추가", JOptionPane.INFORMATION_MESSAGE);
+				this.setVisible(false);
 			}
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
-	
+
 }
 

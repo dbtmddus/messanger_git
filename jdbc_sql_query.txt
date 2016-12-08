@@ -40,10 +40,17 @@ alter table login
 drop column identification_number;
 //삭제
 
-// 친구 목록 호출
+// 친구 목록 호출	-> 오류
 select friend_list.f_id 
 from login,friend_list 
 where login.id_n = 1;
 
 
+//
+select friend_list.f_id 
+from login,friend_list 
+where login.id_n = friend_list.id_n and login.id_n = 1;
 
+
+insert into detail_imf(stm_message)
+values('abcd');

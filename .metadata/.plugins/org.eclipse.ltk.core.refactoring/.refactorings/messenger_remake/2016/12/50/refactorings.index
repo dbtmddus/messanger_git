@@ -27,3 +27,8 @@
 1481015996436	Rename local variable 'str'
 1481019686726	Rename method 'get_friend_db'
 1481022027002	Rename local variable 'p'
+1481113189749	Rename field 'p_friend'
+1481186289185	Rename field 'p'
+1481186298676	Rename field 'sp'
+1481187931521	Rename local variable 'panel'
+1481188776280	Delete element

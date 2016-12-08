@@ -1,7 +1,8 @@
 /***
  * 12.07
- * friend_frame 대규모 변경 직전 저장
- *
+ * friend_frame 변경 완료
+ *	구현 부분까지 모두 정상 동작 확인
+ *	상태메세지 정상 구동 확인 후 채팅창 구현 예정
  */
 
 package server_obj;
@@ -55,3 +56,6 @@ public class main {
 //swing구현중 이벤트 헨들러 실수로 버튼 하나에 2번 이상 들어가면 해당 횟수만큼 반복 되는듯 (버튼 1번 눌렀는데 2번 이벤트 발생 등)
 //String sql = "select f_id from login, friend_list where login.id_n = ?"; 로 수행 후,
 // rs.getString(friend_list.f_id) 하면 오류남..... ㅂㄷㅂㄷ 그냥 f_id로 불러와야함
+//DISPOSE_ON_CLOSE exit_ON_CLOSE	 -> JFrame 종료시 해당 프레임만 종료할지, 프로그램 자체 종료할지 설정
+// setVisible(true); -> 너무 앞에서 호출 시 frame내의 컴포넌트 들이 frame을 resize했을때 뒤늦게 표시될 수 있음. 제일 마지막에 호출 권장
+// revalidate(), repaint();		//2개 같이 쓰기 권장

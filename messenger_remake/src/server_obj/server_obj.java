@@ -39,7 +39,8 @@ public class server_obj extends Thread {
 	final String signin = "signin";
 	final String request_friend_list = "request_friend_list";
 	final String add_friend = "add_friend";
-
+	final String request_friend_ip = "request_friend_ip";
+	
 	public server_obj(ServerSocket ss) throws IOException{
 		server_socket = ss;
 		System.out.println(server_socket + "is made");
@@ -91,6 +92,9 @@ public class server_obj extends Thread {
 					break;
 				case add_friend:
 					add_friend();
+					break;
+				case request_friend_ip:
+					request_friend_ip();
 					break;
 
 				default:
@@ -165,7 +169,19 @@ public class server_obj extends Thread {
 			send.flush();
 		}
 	}
-
+	
+	public void request_friend_ip() throws IOException{
+		String f_id = listen.readLine();
+		System.out.println("f_id : ----------------------- "+f_id);
+		int f_id_n = db.get_id_n_from_id(f_id);
+		String f_ip = ip_and_port[f_id_n][0];
+		String f_port = ip_and_port[f_id_n][1];
+		System.out.println(f_ip + "////////////"+f_port);
+		send.println(f_ip);
+		send.println(f_port);
+		send.flush();
+				
+	}
 
 	public void connect_db(){
 		db.connect();

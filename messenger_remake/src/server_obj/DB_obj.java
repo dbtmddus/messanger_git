@@ -145,9 +145,9 @@ public class DB_obj {
 	}
 
 	public Vector<String> get_friend_list(int _id_n){
-		Vector<String> friend_list = new Vector<String>();
+		Vector<String> friend_list = new Vector<String>(0);
 		try{
-			String sql = "select f_id from login, friend_list where login.id_n = ?";
+			String sql = "select friend_list.f_id from login,friend_list where login.id_n = friend_list.id_n and login.id_n = ?";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, _id_n);

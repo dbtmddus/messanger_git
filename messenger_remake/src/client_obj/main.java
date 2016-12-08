@@ -8,6 +8,7 @@ public class main {
 		
 		client_obj cl = new client_obj("127.0.0.1");//, 1246);
 		cl.enter();
-		cl.open_login_frame();
+		cl.open_login_frame();		
 	}//end main
 }
+

@@ -11,3 +11,6 @@
 1481104229610	Rename local variable 'arr'
 1481104255251	Rename field 'arr'
 1481108126392	Rename local variable 'panel'
+1481186496233	Rename type 'main'
+1481186503636	Copy compilation unit
+1481186558657	Rename local variable 'o_panel'

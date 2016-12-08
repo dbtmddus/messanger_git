@@ -10,10 +10,17 @@ import javax.swing.JScrollPane;
 class scrollbar{
        public static void main(String args[]){
              JFrame f = new JFrame("ScrollPaneTest");
+ 
+             f.setVisible(true);             
              f.setSize(300, 200);
              
              JScrollPane sp = new JScrollPane();
+             sp.setBounds(f.getContentPane().getBounds());
+       
              JPanel p = new JPanel();
+             
+             sp.setViewportView(p);
+             
              p.setLayout(new GridLayout(5, 2));
              p.add(new JButton("첫번째"));
              p.add(new JButton("두번째"));      
@@ -21,13 +28,10 @@ class scrollbar{
              p.add(new JButton("네번째"));
              
              p.setBounds(f.getContentPane().getBounds());
-             sp.setViewportView(p);
-
-             //sp.add(p);
-             sp.setBounds(f.getContentPane().getBounds());
-             f.add(sp);
              
-             f.setVisible(true);
+             f.add(sp);    
+             
+//             f.setVisible(true);             
              
        }
 }

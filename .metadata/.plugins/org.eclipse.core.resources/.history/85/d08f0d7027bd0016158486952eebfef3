@@ -1,0 +1,27 @@
+package client_swing;
+
+import java.awt.BorderLayout;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+public class one_friend_panel {
+	public JPanel one_friend_panel(String f_id){
+		
+		JPanel o_panel = new JPanel();
+		o_panel.setLayout(new BorderLayout());
+		o_panel.setBounds(0,0, 500,500);
+		o_panel.setVisible(true);
+		
+		JButton b1 = new JButton("profile image isn't set");
+		o_panel.add(b1, BorderLayout.WEST);
+
+		JButton b2 = new JButton(f_id);
+		o_panel.add(b2, BorderLayout.CENTER);
+
+		JButton b3 = new JButton("here isn't set");
+		o_panel.add(b3, BorderLayout.SOUTH);
+		
+		return o_panel;
+	}
+}
