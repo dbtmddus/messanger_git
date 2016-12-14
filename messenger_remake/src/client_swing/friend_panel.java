@@ -72,7 +72,7 @@ public class friend_panel {
 		spanel.setVisible(true);
 	}//end creator
 
-	public void set_friend_db() throws IOException{
+	public void set_friend_db() throws IOException{ gygbl
 		final String request_friend_list = "request_friend_list";
 		send.println(request_friend_list);
 		send.flush();
@@ -159,7 +159,7 @@ public class friend_panel {
 				System.out.println("friend ip : "+ listen.readLine());
 				System.out.println("friend port : "+ listen.readLine());
 				if (!main_frame.already_exist_chat_v.contains(clicked_friend_id)){
-					chat_frame chat_f = new chat_frame(connected_socket, listen, send, id_n);
+					chat_frame chat_f = new chat_frame(connected_socket, listen, send, id_n, 0);
 					main_frame.already_exist_chat_v.addElement(clicked_friend_id);
 				}
 			} catch (IOException e1) {

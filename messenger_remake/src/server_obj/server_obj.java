@@ -40,6 +40,7 @@ public class server_obj extends Thread {
 	final String request_friend_list = "request_friend_list";
 	final String add_friend = "add_friend";
 	final String request_friend_ip = "request_friend_ip";
+	final String normal_message = "normal_message";
 	
 	public server_obj(ServerSocket ss) throws IOException{
 		server_socket = ss;
@@ -88,7 +89,7 @@ public class server_obj extends Thread {
 					signin();
 					break;
 				case request_friend_list:
-					get_friend_list_from_id_n();
+					get_client_friend_id_list_from_id_n();
 					break;
 				case add_friend:
 					add_friend();
@@ -96,7 +97,10 @@ public class server_obj extends Thread {
 				case request_friend_ip:
 					get_ip_from_id();
 					break;
-
+				case normal_message:
+					normal_message();
+						break;
+	
 				default:
 					break;
 				}
@@ -148,7 +152,13 @@ public class server_obj extends Thread {
 		db.insert_new_client(available_id_n, id, pw);
 	}//¡÷ºÆ
 
-	public void get_friend_list_from_id_n() throws IOException{
+	public void normal_message() throws NumberFormatException, IOException{
+		int temp_id_n= Integer.parseInt(listen.readLine());
+		String m = listen.readLine();
+		
+		System.out.println("to "+ temp_id_n+" - " + m);
+	}
+	public void get_client_friend_id_list_from_id_n() throws IOException{
 		System.out.println("request friend list handling");
 		Vector<String> v = db.get_friend_list(logged_in_id_n);
 		System.out.println(v.toString());

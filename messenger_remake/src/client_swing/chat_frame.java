@@ -28,14 +28,19 @@ public class chat_frame extends JFrame {
 	private JButton b_send_file;
 	private JButton b_configuration;
 
+	private JScrollPane chat_recode_sp;
 	private Panel chat_recode_p;
 
+	private JPanel writting_p;	//
+	private JTextArea ta;
+	private JButton b_send;
+	
 	private Socket connected_socket;
 	private BufferedReader listen;
 	private PrintWriter send;
 	private int id_n;
 
-	public chat_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n ) throws IOException {
+	public chat_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n, int _f_id_n ) throws IOException {
 
 		connected_socket = _connected_socket;
 		listen = _listen;
@@ -58,8 +63,7 @@ public class chat_frame extends JFrame {
 		menuBar.add(b_configuration);
 		/***********************************************************************/
 
-		//getContentPane().setLayout(null);
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 410, 638);
 
 		contentPane = new JPanel();
@@ -75,23 +79,26 @@ public class chat_frame extends JFrame {
 		first_tp.setText("대화가 시작되었습니다.");
 		chat_recode_p.add(first_tp);
 		
-		JScrollPane chat_recode_sp = new JScrollPane();
+		chat_recode_sp = new JScrollPane();
 		chat_recode_sp.setViewportView(chat_recode_p);
 		chat_recode_sp.setBounds(getContentPane().getBounds());
 		contentPane.add(chat_recode_sp, BorderLayout.CENTER);
 		/****************************************************************///
 		
 		/****************************************************************/// 메세지 전송 판넬
-		JPanel writting_p = new JPanel();
+		
+		writting_p = new JPanel();
 		contentPane.add(writting_p, BorderLayout.SOUTH);
 		writting_p.setLayout(new BorderLayout());
 		
-		JTextArea ta = new JTextArea();
+		ta = new JTextArea();
 		ta.setText("dddddddddddd");
 		writting_p.add(ta, BorderLayout.CENTER);
 		
-		JButton b_send = new JButton("전송");
+		b_send = new JButton("전송");
 		writting_p.add(b_send, BorderLayout.EAST);
+		b_send.addActionListener(action);
+		
 		/****************************************************************/
 		
 		setVisible(true);
@@ -102,9 +109,6 @@ public class chat_frame extends JFrame {
 			Object obj = e.getSource();
 
 			if (obj==b_send_file){
-				//p_friend.setLayout(new BorderLayout(0, 0));
-				contentPane.removeAll();
-				contentPane.add(fp.get_spanel());
 				/*try {
 					fp.set_friend_db();
 				} catch (IOException e1) {
@@ -114,6 +118,15 @@ public class chat_frame extends JFrame {
 			else if (obj==b_configuration){
 				add_friend_frame frame_add_friends = new add_friend_frame(connected_socket, listen, send, id_n);
 			}
+			else if (obj==b_send){
+				send.println("normal_message");
+				send.flush();
+				send.println(id_n);
+				send.println(ta.getText());
+				send.flush();
+				ta.setText("");
+			}
+			
 		}
 	};
 
