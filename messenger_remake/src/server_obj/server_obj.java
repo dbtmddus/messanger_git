@@ -6,18 +6,15 @@
 
 package server_obj;
 
+import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.channels.SocketChannel;
-import javax.sound.sampled.Port;
-import java.sql.*;
 import java.util.Vector;
 
 public class server_obj extends Thread {
@@ -89,7 +86,7 @@ public class server_obj extends Thread {
 					signin();
 					break;
 				case request_friend_list:
-					get_client_friend_id_list_from_id_n();
+					get_f_info_from_id_n();
 					break;
 				case add_friend:
 					add_friend();
@@ -158,11 +155,17 @@ public class server_obj extends Thread {
 		
 		System.out.println("to "+ temp_id_n+" - " + m);
 	}
-	public void get_client_friend_id_list_from_id_n() throws IOException{
+	public void get_f_info_from_id_n() throws IOException{
 		System.out.println("request friend list handling");
-		Vector<String> v = db.get_friend_list(logged_in_id_n);
-		System.out.println(v.toString());
-		send.println(v.toString());
+		
+		Vector[] temp_f_info = db.get_friend_list2(logged_in_id_n);
+		Vector<String> v_f_id = temp_f_info[0];
+		Vector<Integer> v_f_id_n = temp_f_info[1];
+		Vector<String> v_f_stmt_message = temp_f_info[2];
+		Vector<Image> v_f_image = temp_f_info[3];
+		
+		System.out.println(v_f_id.toString());
+		send.println(v_f_id.toString());
 		send.flush();
 	}
 

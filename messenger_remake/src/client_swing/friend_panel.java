@@ -2,6 +2,7 @@ package client_swing;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,13 +27,16 @@ public class friend_panel {
 	private BufferedReader listen;
 	private int id_n;
 
-	private JTextField ID_textfield;
-	private Panel[] panel = new Panel[100];
-
 	static int f_list_size;
+	static Vector<friend_info> f_info;
+	/*
 	static String[] fid_list;
 	static String[] fimg_list;
 	static String[] fm_list;
+	 */
+
+	private JTextField ID_textfield;
+	private Panel[] panel = new Panel[100];
 
 	private JScrollPane spanel;
 	private JPanel big_panel;
@@ -46,6 +50,10 @@ public class friend_panel {
 		listen = _listen;
 		send = _send;
 		id_n = _id_n;
+		
+		f_list_size=0;
+		f_info = new Vector<friend_info>(0);
+		
 		/***************************************************************///
 
 		/***************************************************************///swing
@@ -60,9 +68,10 @@ public class friend_panel {
 		set_friend_db();
 
 		for (int i=0; i<f_list_size; i++){
+			String temp_f_id= f_info.elementAt(i).id;
 			JPanel each_panel = new JPanel();
-			each_panel = one_friend_panel(fid_list[i]);
-			each_panel.setName(fid_list[i]);
+			each_panel = one_friend_panel(temp_f_id);
+			each_panel.setName(temp_f_id);
 			big_panel.add(each_panel);
 			//	each_panel.addMouseListener(ml);
 		}
@@ -76,16 +85,21 @@ public class friend_panel {
 		final String request_friend_list = "request_friend_list";
 		send.println(request_friend_list);
 		send.flush();
-
-		String str_f_list = listen.readLine();
-		str_f_list = str_f_list.substring(1, str_f_list.length()-1);
-		String[] f_list_and_size = str_f_list.split(", ");
+		
+		int f_info_size = listen.readLine();
+		
+		for(int i=0; i<f_info_size; i++){	수정 필요
+			String str_f_list = listen.readLine();
+			str_f_list = str_f_list.substring(1, str_f_list.length()-1);
+			String[] f_list_and_size = str_f_list.split(", ");			
+		}
+	/*
 		try{
 			f_list_size = Integer.parseInt(f_list_and_size[0]);
 		}catch (NumberFormatException e){
 			System.out.println("친구 0명");
 			f_list_size=0;
-		}
+		}*/
 		fid_list = new String[f_list_size];
 		for (int i=0; i<f_list_size; i++){
 			fid_list[i] = f_list_and_size[i+1];
@@ -199,5 +213,21 @@ public class friend_panel {
 
 		}
 	};
+	
+	class friend_info{
+		
+		public String id;
+		public int id_n;
+		public String stmt_message;
+		public Image image;
+		
+		public friend_info(String _id, int _id_n, String _stmt_message, Image _image){
+			id = _id;
+			id_n = _id_n;
+			stmt_message = _stmt_message;
+			image = _image;
+		}
+		
+	}
 }//end
 

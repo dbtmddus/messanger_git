@@ -173,11 +173,14 @@ public class DB_obj {
 
 	
 	///
-	/*
-	public Vector[] get_friend_info(int _id_n){
-		Vector<String> fid_list = new Vector<String>(0);
-		Vector<String> fm_list = new Vector<String>(0);
-		Vector<Image> fimg_list = new Vector<Image>(0);
+	
+	public Vector[] get_friend_info2(int _id_n){
+		
+		Vector[] f_info = new Vector[4];
+		f_info[0] = new Vector<String>(0);	//f_id
+		f_info[1] = new Vector<Integer>(0);	//f_id_n
+		f_info[2] = new Vector<String>(0);	//f_stmt_message
+		f_info[3] = new Vector<Image>(0);	//f_image
 		
 		try{
 			String sql = "select friend_list.f_id from login,friend_list where login.id_n = friend_list.id_n and login.id_n = ?";
@@ -186,13 +189,12 @@ public class DB_obj {
 			pstmt.setInt(1, _id_n);
 			rs = pstmt.executeQuery();
 			
-			fimg_list.addElement("0");
-			int rs_size = 0;				//rs 크기를 빠르게 가져오는 함수 없는듯??? resultSet.last() followed by resultSet.getRow() 느리ㄷ
 			for (int i=0; rs.next(); i++){
-				fimg_list.addElement(rs.getString("f_id"));			//friend_list.f_id 로 불러오면 오류남
-				rs_size++;
+				f_info[0].addElement(rs.getString("f_id"));			//friend_list.f_id 로 불러오면 오류남
+				f_info[1].addElement(rs.getString("f_id_n"));
+				f_info[2].addElement(rs.getString("f_stmt_message"));
+				f_info[3].addElement(rs.getString("f_image"));
 			}
-			fimg_list.set(0, Integer.toString(rs_size));
 			rs.close();
 			pstmt.close();					
 		}
@@ -200,10 +202,10 @@ public class DB_obj {
 			e.printStackTrace();
 		}
 		//System.out.println(friend_list.toString());
-		return fimg_list;
+		return f_info;
 	}
 
-	*/
+	
 	//
 	public boolean add_friend(int _id_n, String _id, String _f_id){
 		

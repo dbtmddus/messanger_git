@@ -11,3 +11,6 @@
 1481719999977	Rename method 'request_friend_ip'
 1481720123337	Rename method 'request_friend_list'
 1481721845002	Rename method 'get_friend_list_from_id_n'
+1481722952092	Rename method 'get_client_friend_id_list_from_id_n'
+1481723032328	Rename local variable 'v'
+1481723239689	Rename local variable 'return_v'
