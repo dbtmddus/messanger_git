@@ -31,7 +31,9 @@ public class friend_panel {
 
 	static int f_list_size;
 	static String[] fid_list;
-
+	static String[] fimg_list;
+	static String[] fm_list;
+	
 	private JScrollPane spanel;
 	private JPanel big_panel;
 
@@ -89,10 +91,10 @@ public class friend_panel {
 		for (int i=0; i<f_list_size; i++){
 			fid_list[i] = f_list_and_size[i+1];
 		}	
-		System.out.println("size:"+f_list_size);
+		/*System.out.println("size:"+f_list_size);
 		for (int i=0; i<f_list_size ; i++){
 			System.out.print(fid_list[i]+ ", ");
-		}System.out.println();
+		}System.out.println();*/
 	}
 
 	public JScrollPane get_spanel(){
@@ -156,6 +158,7 @@ public class friend_panel {
 			try {
 				System.out.println("friend ip : "+ listen.readLine());
 				System.out.println("friend port : "+ listen.readLine());
+				chat_frame chat_f = new chat_frame(connected_socket, listen, send, id_n);
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -171,6 +174,7 @@ public class friend_panel {
 			try {
 				System.out.println("friend ip : "+ listen.readLine());
 				System.out.println("friend port : "+ listen.readLine());
+				chat_frame chat_f = new chat_frame(connected_socket, listen, send, id_n);
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}

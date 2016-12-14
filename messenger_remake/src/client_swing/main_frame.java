@@ -41,6 +41,7 @@ public class main_frame extends JFrame {
 
 	public main_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n ) throws IOException {
 
+		/*********************************************************//
 		connected_socket = _connected_socket;
 		listen = _listen;
 		send = _send;
@@ -48,12 +49,9 @@ public class main_frame extends JFrame {
 		main_frame = this;
 		
 		fp = new friend_panel(_connected_socket, _listen, _send, _id_n, this);
-		//
-		getContentPane().setLayout(null);
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 395, 650);
+		/*********************************************************//
 
+		/*********************************************************//
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -73,8 +71,14 @@ public class main_frame extends JFrame {
 		b_add_friend.addActionListener(action);
 		menuBar.add(b_add_friend);
 
+		/*********************************************************//
+
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 395, 650);
+		
+		//getContentPane().setLayout(null);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 

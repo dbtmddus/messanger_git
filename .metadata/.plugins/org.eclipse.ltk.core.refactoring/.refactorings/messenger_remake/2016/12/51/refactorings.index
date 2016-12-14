@@ -1,1 +1,8 @@
 1481711468239	Rename field 'f_list'
+1481712358714	Rename local variable 'friend_list'
+1481712367766	Rename local variable 'friend_list'
+1481712380331	Rename local variable 'friend_list'
+1481714079107	Rename field 'p_main'
+1481714088536	Rename field 'p_chat'
+1481716662328	Rename local variable 'chat_sp'
+1481716670846	Rename field 'chat_p'

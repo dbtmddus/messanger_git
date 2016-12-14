@@ -1,4 +1,5 @@
 package server_obj;
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -170,6 +171,40 @@ public class DB_obj {
 		return friend_list;
 	}
 
+	
+	///
+	/*
+	public Vector[] get_friend_info(int _id_n){
+		Vector<String> fid_list = new Vector<String>(0);
+		Vector<String> fm_list = new Vector<String>(0);
+		Vector<Image> fimg_list = new Vector<Image>(0);
+		
+		try{
+			String sql = "select friend_list.f_id from login,friend_list where login.id_n = friend_list.id_n and login.id_n = ?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, _id_n);
+			rs = pstmt.executeQuery();
+			
+			fimg_list.addElement("0");
+			int rs_size = 0;				//rs 크기를 빠르게 가져오는 함수 없는듯??? resultSet.last() followed by resultSet.getRow() 느리ㄷ
+			for (int i=0; rs.next(); i++){
+				fimg_list.addElement(rs.getString("f_id"));			//friend_list.f_id 로 불러오면 오류남
+				rs_size++;
+			}
+			fimg_list.set(0, Integer.toString(rs_size));
+			rs.close();
+			pstmt.close();					
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+		//System.out.println(friend_list.toString());
+		return fimg_list;
+	}
+
+	*/
+	//
 	public boolean add_friend(int _id_n, String _id, String _f_id){
 		
 		int f_id_n= get_id_n_from_id(_f_id);
