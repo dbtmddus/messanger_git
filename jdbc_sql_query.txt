@@ -54,3 +54,8 @@ where login.id_n = friend_list.id_n and login.id_n = 1;
 
 insert into detail_imf(stm_message)
 values('abcd');
+
+
+INSERT INTO detail_imf  
+VALUES (2, 'dbtmddus113', 1234, utl_raw.cast_to_raw('C:\qkf.png'),' d113_s_message');
+

@@ -30,7 +30,7 @@ public class friend_panel {
 	private Panel[] panel = new Panel[100];
 
 	static int f_list_size;
-	static String[] f_list;
+	static String[] fid_list;
 
 	private JScrollPane spanel;
 	private JPanel big_panel;
@@ -54,8 +54,8 @@ public class friend_panel {
 
 		for (int i=0; i<f_list_size; i++){
 			JPanel each_panel = new JPanel();
-			each_panel = one_friend_panel(f_list[i]);
-			each_panel.setName(f_list[i]);
+			each_panel = one_friend_panel(fid_list[i]);
+			each_panel.setName(fid_list[i]);
 			big_panel.add(each_panel);
 			//	each_panel.addMouseListener(ml);
 		}
@@ -85,13 +85,13 @@ public class friend_panel {
 			System.out.println("Δ£±Έ 0Έν");
 			f_list_size=0;
 		}
-		f_list = new String[f_list_size];
+		fid_list = new String[f_list_size];
 		for (int i=0; i<f_list_size; i++){
-			f_list[i] = f_list_and_size[i+1];
+			fid_list[i] = f_list_and_size[i+1];
 		}	
 		System.out.println("size:"+f_list_size);
 		for (int i=0; i<f_list_size ; i++){
-			System.out.print(f_list[i]+ ", ");
+			System.out.print(fid_list[i]+ ", ");
 		}System.out.println();
 	}
 

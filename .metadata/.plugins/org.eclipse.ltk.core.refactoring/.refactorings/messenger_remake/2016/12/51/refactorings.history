@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename field &apos;f_list&apos; in &apos;client_swing.friend_panel&apos; to &apos;fid_list&apos;&#x0D;&#x0A;- Original project: &apos;messenger_remake&apos;&#x0D;&#x0A;- Original element: &apos;client_swing.friend_panel.f_list&apos;&#x0D;&#x0A;- Renamed element: &apos;client_swing.friend_panel.fid_list&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" delegate="false" deprecate="false" description="Rename field &apos;f_list&apos;" flags="589830" getter="false" id="org.eclipse.jdt.ui.rename.field" input="/src&lt;client_swing{friend_panel.java[friend_panel^f_list" name="fid_list" references="true" setter="false" stamp="1481711468239" textual="false" version="1.0"/>
+</session>

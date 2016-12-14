@@ -3,6 +3,7 @@
  * friend_frame 변경 완료
  *	구현 부분까지 모두 정상 동작 확인
  *	상태메세지 정상 구동 확인 후 채팅창 구현 예정
+ *  get_friend_list 함수 전체 수정 직전 저장본
  */
 
 package server_obj;
@@ -32,8 +33,7 @@ public class main {
 		server3.start();
 		
 		show_connected_client();
-		//server1.request_friend_list_test();
-		
+		//server1.request_friend_list_test();		
 	}//end main
 	
 	static public void show_connected_client(){

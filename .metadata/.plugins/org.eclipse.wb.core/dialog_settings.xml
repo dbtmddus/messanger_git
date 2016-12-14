@@ -6,4 +6,10 @@
 		<item value="187" key="y"/>
 		<item value="477" key="height"/>
 	</section>
+	<section name="org.eclipse.wb.internal.core.model.property.editor.string.StringPropertyDialog">
+		<item value="492" key="x"/>
+		<item value="615" key="width"/>
+		<item value="206" key="y"/>
+		<item value="440" key="height"/>
+	</section>
 </section>
