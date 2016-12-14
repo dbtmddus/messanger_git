@@ -1,23 +1,19 @@
 package client_swing;
 
 import java.awt.BorderLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JButton;
 import java.awt.Panel;
-import javax.swing.event.ChangeListener;
-
-import javax.swing.event.ChangeEvent;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.awt.event.ActionEvent;
+import java.util.Vector;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 
 public class main_frame extends JFrame {
 
@@ -39,9 +35,11 @@ public class main_frame extends JFrame {
 	private int id_n;
 	private JFrame main_frame;
 
+	public static Vector<String> already_exist_chat_v = new Vector<String>(0);
+	
 	public main_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n ) throws IOException {
 
-		/*********************************************************//
+		/*********************************************************///
 		connected_socket = _connected_socket;
 		listen = _listen;
 		send = _send;
@@ -49,9 +47,9 @@ public class main_frame extends JFrame {
 		main_frame = this;
 		
 		fp = new friend_panel(_connected_socket, _listen, _send, _id_n, this);
-		/*********************************************************//
+		/*********************************************************///
 
-		/*********************************************************//
+		/*********************************************************///
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -71,7 +69,7 @@ public class main_frame extends JFrame {
 		b_add_friend.addActionListener(action);
 		menuBar.add(b_add_friend);
 
-		/*********************************************************//
+		/*********************************************************///
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 395, 650);

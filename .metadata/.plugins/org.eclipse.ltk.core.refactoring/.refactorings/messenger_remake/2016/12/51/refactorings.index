@@ -6,3 +6,7 @@
 1481714088536	Rename field 'p_chat'
 1481716662328	Rename local variable 'chat_sp'
 1481716670846	Rename field 'chat_p'
+1481718931739	Rename local variable 'frame'
+1481719923284	Rename method 'get_client_imf'
+1481719999977	Rename method 'request_friend_ip'
+1481720123337	Rename method 'request_friend_list'

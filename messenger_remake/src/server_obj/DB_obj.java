@@ -235,10 +235,8 @@ public class DB_obj {
 		int return_v = 0;
 		try{
 			String sql = "select id_n from login where id=?";
-
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, input_id);
-
 			rs = pstmt.executeQuery();
 
 			if (rs.next()){
@@ -260,7 +258,6 @@ public class DB_obj {
 	public boolean inspect_id_n_exist_already(int _id_n){
 		try{
 			String sql = "select id_n from login where id_n=?";
-
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, _id_n);
 			rs = pstmt.executeQuery();

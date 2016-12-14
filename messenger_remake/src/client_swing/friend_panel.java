@@ -33,24 +33,29 @@ public class friend_panel {
 	static String[] fid_list;
 	static String[] fimg_list;
 	static String[] fm_list;
-	
+
 	private JScrollPane spanel;
 	private JPanel big_panel;
 
 	static Vector<JPanel> arr_jpanel = new Vector<JPanel>(0); 
 
-	public friend_panel(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, 
-			int _id_n, JFrame frame ) throws IOException{		
+	public friend_panel(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n, JFrame m_frame ) throws IOException{		
+
+		/***************************************************************///
 		connected_socket = _connected_socket;		
 		listen = _listen;
 		send = _send;
 		id_n = _id_n;
+		/***************************************************************///
 
-		//swing
+		/***************************************************************///swing
 		spanel = new JScrollPane();
+		//spanel.setViewportView(big_panel);
+		spanel.setBounds(m_frame.getContentPane().getBounds());
 
 		big_panel = new JPanel();
 		big_panel.setLayout(new GridLayout(5, 2));
+		big_panel.setBounds(m_frame.getContentPane().getBounds());
 
 		set_friend_db();
 
@@ -62,13 +67,7 @@ public class friend_panel {
 			//	each_panel.addMouseListener(ml);
 		}
 
-		//p.add(new JButton("첫번째"));
-
-		big_panel.setBounds(frame.getContentPane().getBounds());
-		spanel.setViewportView(big_panel);
-
-		spanel.setBounds(frame.getContentPane().getBounds());
-
+		spanel.setViewportView(big_panel);	// 이것도 앞에 넣으면  반영전 panel값이 출력되는듯
 		big_panel.setVisible(true);
 		spanel.setVisible(true);
 	}//end creator
@@ -150,15 +149,19 @@ public class friend_panel {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
+			String clicked_friend_id = e.getComponent().getParent().getName();
 			send.println("request_friend_ip");
 			send.flush();
-			send.println(e.getComponent().getParent().getName());
+			send.println(clicked_friend_id);
 			send.flush();
 
 			try {
 				System.out.println("friend ip : "+ listen.readLine());
 				System.out.println("friend port : "+ listen.readLine());
-				chat_frame chat_f = new chat_frame(connected_socket, listen, send, id_n);
+				if (!main_frame.already_exist_chat_v.contains(clicked_friend_id)){
+					chat_frame chat_f = new chat_frame(connected_socket, listen, send, id_n);
+					main_frame.already_exist_chat_v.addElement(clicked_friend_id);
+				}
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -166,15 +169,19 @@ public class friend_panel {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			String clicked_friend_id = e.getComponent().getParent().getName();
 			send.println("request_friend_ip");
 			send.flush();
-			send.println(e.getComponent().getParent().getName());
+			send.println(clicked_friend_id);
 			send.flush();
 
 			try {
 				System.out.println("friend ip : "+ listen.readLine());
 				System.out.println("friend port : "+ listen.readLine());
-				chat_frame chat_f = new chat_frame(connected_socket, listen, send, id_n);
+				if (!main_frame.already_exist_chat_v.contains(clicked_friend_id)){
+					chat_frame chat_f = new chat_frame(connected_socket, listen, send, id_n);
+					main_frame.already_exist_chat_v.addElement(clicked_friend_id);
+				}
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}

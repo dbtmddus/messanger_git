@@ -88,13 +88,13 @@ public class server_obj extends Thread {
 					signin();
 					break;
 				case request_friend_list:
-					request_friend_list();
+					get_friend_list_from_id_n();
 					break;
 				case add_friend:
 					add_friend();
 					break;
 				case request_friend_ip:
-					request_friend_ip();
+					get_ip_from_id();
 					break;
 
 				default:
@@ -148,7 +148,7 @@ public class server_obj extends Thread {
 		db.insert_new_client(available_id_n, id, pw);
 	}//¡÷ºÆ
 
-	public void request_friend_list() throws IOException{
+	public void get_friend_list_from_id_n() throws IOException{
 		System.out.println("request friend list handling");
 		Vector<String> v = db.get_friend_list(logged_in_id_n);
 		System.out.println(v.toString());
@@ -170,7 +170,7 @@ public class server_obj extends Thread {
 		}
 	}
 	
-	public void request_friend_ip() throws IOException{
+	public void get_ip_from_id() throws IOException{
 		String f_id = listen.readLine();
 		System.out.println("f_id : ----------------------- "+f_id);
 		int f_id_n = db.get_id_n_from_id(f_id);
@@ -180,13 +180,12 @@ public class server_obj extends Thread {
 		send.println(f_ip);
 		send.println(f_port);
 		send.flush();
-				
 	}
 
 	public void connect_db(){
 		db.connect();
 	}
-	public void get_client_imf(){
+	public void get_client_info(){
 		System.out.println( soc.getRemoteSocketAddress());
 	}
 
