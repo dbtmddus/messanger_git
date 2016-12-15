@@ -4,58 +4,55 @@ id varchar(20) not null unique,
 password int not null,
 primary key (id_n))
 
-create table friend_list
-(id_n int,
+create table friend_relation(
+id_n int,
 id varchar(20),
 f_id_n int,
 f_id varchar(20),
 primary key (id_n, f_id))
 
-create table detail_imf(
+create table detail_info(
 id_n int,
 id varchar(20) not null,
 password int not null,
 image blob,
-stm_messge varchar(30), 
+stmt_msg varchar(30), 
 primary key(id_n))
 
-select *
-from login_test;
+////////////////////////////////////////////////
 
+//삽입
 insert into login_test
 values('client1', 1234);
 
 
+//table 곱연산(where문 필요 주의 or natural join)
 select login.id
 from login, friend_list
 where login.id = 'dbtmddus112';
 
-insert into friend_list
-values('dbtmddus112', 'db_f1')
-
-alter table login add(identification_number int unique);
-
-
-alter table login 
-drop column identification_number;
 //삭제
+drop column identification_number;
 
-// 친구 목록 호출	-> 오류
-select friend_list.f_id 
-from login,friend_list 
-where login.id_n = 1;
-
-
-//
-select friend_list.f_id 
-from login,friend_list 
-where login.id_n = friend_list.id_n and login.id_n = 1;
-
-
-insert into detail_imf(stm_message)
-values('abcd');
-
-
+//detail info 삽입
 INSERT INTO detail_imf  
 VALUES (2, 'dbtmddus113', 1234, utl_raw.cast_to_raw('C:\qkf.png'),' d113_s_message');
 
+
+//alter 
+alter table login add(identification_number int unique); //새 속성 삽입
+alter table detail_info rename column stm_messge to stmt_msg;	//속성 이름 재설정 rename
+alter table friend_list rename to friend_relation	//테이블 이름 변경
+
+
+with F(id_n) as(
+ select f_id_n
+ from friend_relation
+ where f_id=1)
+select D.id, D.id_n, D.stmt_message, D.image
+from detail_info D, F
+where D.id_n=F.id_n;
+
+//as 사용! -> 오라클에서 as 사용법이 좀 다른듯, 그냥 아래처럼 써도 됨
+select D.password
+from detail_info D;

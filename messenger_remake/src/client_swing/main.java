@@ -16,7 +16,7 @@ public class main {
 
 	public static void main(String[] args) throws IOException {
 
-		main_frame mf = new main_frame(connected_socket, listen, send, frame);
+	//	main_frame mf = new main_frame(connected_socket, listen, send, frame);
 
 	}//end main
 }

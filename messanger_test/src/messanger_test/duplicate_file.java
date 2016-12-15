@@ -9,19 +9,18 @@ public class duplicate_file {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 
-		FileInputStream inputStream= new FileInputStream("a.jpg");
-		FileInputStream inputStream2= new FileInputStream("a.jpg");
-		FileOutputStream outputStream = new FileOutputStream("a_duplicated.jpg");
+		FileInputStream in= new FileInputStream("a.jpg");
+		FileOutputStream out = new FileOutputStream("a_duplicated5.jpg");
 		
-		int input_size;
-		byte input_data;
+		int data;
+		byte byte_data;
 		
-		while ( (input_size = inputStream2.read() ) != -1) {
-			input_data = (byte)inputStream.read();
-			outputStream.write(input_data);
+		while ((data=in.read()) != -1) {
+			byte_data = (byte)data;
+			out.write(byte_data);
 		}
 		
-		inputStream.close();
-		outputStream.close();
+		in.close();
+		out.close();
 	}//end main
 }// end

@@ -1,8 +1,9 @@
 /***
  * 12.14
  * 상태메세지 정상 구동 확인 후 채팅창 구현 예정
- * get_friend_list 전격 수전 직전 
- *  
+ * 수정 성공적 완료된듯. 추가 확인 필요
+ *  현제 detail_info 안에 데이터가 없어 친구 1명정도로 축소되어 되는 오류 존재,
+ *  트리거 생성 필요
  */
 
 package server_obj;
@@ -40,7 +41,7 @@ public class main {
 			try {
 				server0.show_connected_client();
 				Thread.sleep(2000);
-			} catch (InterruptedException e) {
+			} catch (InterruptedException e) { 
 				e.printStackTrace();
 			}
 		}

@@ -1,0 +1,9 @@
+1481803001649	Rename local variable 'inputStream2'
+1481803008669	Rename local variable 'inputStream'
+1481803013165	Rename local variable 'outputStream'
+1481803062992	Rename local variable 'input_size'
+1481803092538	Rename local variable 'byte_data'
+1481803096562	Rename local variable 'int_data'
+1481803102560	Rename local variable 'input_data'
+1481803109079	Rename local variable 'i_data'
+1481803207939	Copy compilation unit

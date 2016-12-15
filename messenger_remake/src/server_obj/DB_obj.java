@@ -1,5 +1,5 @@
 package server_obj;
-import java.awt.Image;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -148,7 +148,7 @@ public class DB_obj {
 	public Vector<String> get_friend_list(int _id_n){
 		Vector<String> friend_list = new Vector<String>(0);
 		try{
-			String sql = "select friend_list.f_id from login,friend_list where login.id_n = friend_list.id_n and login.id_n = ?";
+			String sql = "select friend_relation.f_id from login,friend_relation where login.id_n = friend_relation.id_n and login.id_n = ?";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, _id_n);
@@ -179,21 +179,21 @@ public class DB_obj {
 		Vector[] f_info = new Vector[4];
 		f_info[0] = new Vector<String>(0);	//f_id
 		f_info[1] = new Vector<Integer>(0);	//f_id_n
-		f_info[2] = new Vector<String>(0);	//f_stmt_message
-		f_info[3] = new Vector<Image>(0);	//f_image
+		f_info[2] = new Vector<File>(0);	//f_image
+		f_info[3] = new Vector<String>(0);	//f_stmt_message
 		
 		try{
-			String sql = "select friend_list.f_id from login,friend_list where login.id_n = friend_list.id_n and login.id_n = ?";
-
+			String sql = "with F(id_n) as(select f_id_n from friend_relation where id_n=?) select D.id, D.id_n, D.image, D.stmt_msg from detail_info D, F where D.id_n=F.id_n";
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, _id_n);
 			rs = pstmt.executeQuery();
 			
 			for (int i=0; rs.next(); i++){
-				f_info[0].addElement(rs.getString("f_id"));			//friend_list.f_id 로 불러오면 오류남
-				f_info[1].addElement(rs.getString("f_id_n"));
-				f_info[2].addElement(rs.getString("f_stmt_message"));
-				f_info[3].addElement(rs.getString("f_image"));
+				f_info[0].addElement(rs.getString("id"));			//friend_relation.f_id 로 불러오면 오류남
+				f_info[1].addElement(rs.getInt("id_n"));
+				f_info[2].addElement(rs.getBytes("image"));
+				f_info[3].addElement(rs.getString("stmt_msg"));
 			}
 			rs.close();
 			pstmt.close();					
@@ -211,7 +211,7 @@ public class DB_obj {
 		
 		int f_id_n= get_id_n_from_id(_f_id);
 		try{
-			String sql = "insert into friend_list values(?,?,?,?)";	
+			String sql = "insert into friend_relation values(?,?,?,?)";	
 			System.out.println(sql);
 			
 			pstmt = conn.prepareStatement(sql);

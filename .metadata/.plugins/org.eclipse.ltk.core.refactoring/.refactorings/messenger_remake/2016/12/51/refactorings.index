@@ -14,3 +14,4 @@
 1481722952092	Rename method 'get_client_friend_id_list_from_id_n'
 1481723032328	Rename local variable 'v'
 1481723239689	Rename local variable 'return_v'
+1481807621829	Rename local variable 'temp_f_id'

@@ -6,9 +6,11 @@
 
 package server_obj;
 
-import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -38,7 +40,7 @@ public class server_obj extends Thread {
 	final String add_friend = "add_friend";
 	final String request_friend_ip = "request_friend_ip";
 	final String normal_message = "normal_message";
-	
+
 	public server_obj(ServerSocket ss) throws IOException{
 		server_socket = ss;
 		System.out.println(server_socket + "is made");
@@ -96,8 +98,8 @@ public class server_obj extends Thread {
 					break;
 				case normal_message:
 					normal_message();
-						break;
-	
+					break;
+
 				default:
 					break;
 				}
@@ -152,21 +154,42 @@ public class server_obj extends Thread {
 	public void normal_message() throws NumberFormatException, IOException{
 		int temp_id_n= Integer.parseInt(listen.readLine());
 		String m = listen.readLine();
-		
+
 		System.out.println("to "+ temp_id_n+" - " + m);
 	}
 	public void get_f_info_from_id_n() throws IOException{
 		System.out.println("request friend list handling");
-		
-		Vector[] temp_f_info = db.get_friend_list2(logged_in_id_n);
-		Vector<String> v_f_id = temp_f_info[0];
-		Vector<Integer> v_f_id_n = temp_f_info[1];
-		Vector<String> v_f_stmt_message = temp_f_info[2];
-		Vector<Image> v_f_image = temp_f_info[3];
-		
-		System.out.println(v_f_id.toString());
-		send.println(v_f_id.toString());
+		Vector[] temp_f_info = db.get_friend_info2(logged_in_id_n);
+
+		for (int i=0; i<4; i++){
+			System.out.println( "친구 detail info : " + temp_f_info[i].toString());
+		}
+
+		int num_of_friend = temp_f_info[0].size();
+		send.println(num_of_friend);
 		send.flush();
+
+		for(int i=0; i<num_of_friend; i++){
+			send.println(temp_f_info[0].elementAt(i));
+			send.println(temp_f_info[1].elementAt(i));
+
+			/*
+			// file전송 시작 (프로필 사진 전송)
+			FileInputStream in= new FileInputStream((File)temp_f_info[2].elementAt(i));
+			int data;
+			byte byte_data;
+			while ((data=in.read()) != -1) {
+				byte_data = (byte)data;
+				send.println(byte_data);
+			}
+			send.println("end");
+			send.flush();
+			in.close();
+			// file 전송 완료
+			 */
+			send.println(temp_f_info[3].elementAt(i));
+			send.flush();
+		}
 	}
 
 	public void add_friend() throws IOException {
@@ -182,7 +205,7 @@ public class server_obj extends Thread {
 			send.flush();
 		}
 	}
-	
+
 	public void get_ip_from_id() throws IOException{
 		String f_id = listen.readLine();
 		System.out.println("f_id : ----------------------- "+f_id);
