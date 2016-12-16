@@ -158,6 +158,10 @@ public class server_obj extends Thread {
 		System.out.println("to "+ temp_id_n+" - " + m);
 	}
 	public void get_f_info_from_id_n() throws IOException{
+		
+		db.insert_image();		//////////////////////////////// test
+		db.download_image();
+		
 		System.out.println("request friend list handling");
 		Vector[] temp_f_info = db.get_friend_info2(logged_in_id_n);
 

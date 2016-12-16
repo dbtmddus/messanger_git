@@ -1,5 +1,14 @@
 package server_obj;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -40,7 +49,6 @@ public class DB_obj {
 		}
 	}
 
-
 	public void exec_quety(String str_query){
 		try{
 			String sql = str_query;
@@ -65,7 +73,7 @@ public class DB_obj {
 			String sql="insert into login values(?,?,?)";
 
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setInt(1, new_id_n);
 			pstmt.setString(2, new_id);
 			pstmt.setInt(3, new_pw);			
@@ -153,7 +161,7 @@ public class DB_obj {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, _id_n);
 			rs = pstmt.executeQuery();
-			
+
 			friend_list.addElement("0");
 			int rs_size = 0;				//rs 크기를 빠르게 가져오는 함수 없는듯??? resultSet.last() followed by resultSet.getRow() 느리ㄷ
 			for (int i=0; rs.next(); i++){
@@ -171,24 +179,21 @@ public class DB_obj {
 		return friend_list;
 	}
 
-	
-	///
-	
 	public Vector[] get_friend_info2(int _id_n){
-		
+
 		Vector[] f_info = new Vector[4];
 		f_info[0] = new Vector<String>(0);	//f_id
 		f_info[1] = new Vector<Integer>(0);	//f_id_n
 		f_info[2] = new Vector<File>(0);	//f_image
 		f_info[3] = new Vector<String>(0);	//f_stmt_message
-		
+
 		try{
 			String sql = "with F(id_n) as(select f_id_n from friend_relation where id_n=?) select D.id, D.id_n, D.image, D.stmt_msg from detail_info D, F where D.id_n=F.id_n";
-			
+
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, _id_n);
 			rs = pstmt.executeQuery();
-			
+
 			for (int i=0; rs.next(); i++){
 				f_info[0].addElement(rs.getString("id"));			//friend_relation.f_id 로 불러오면 오류남
 				f_info[1].addElement(rs.getInt("id_n"));
@@ -205,34 +210,29 @@ public class DB_obj {
 		return f_info;
 	}
 
-	
-	//
 	public boolean add_friend(int _id_n, String _id, String _f_id){
-		
 		int f_id_n= get_id_n_from_id(_f_id);
-		try{
-			String sql = "insert into friend_relation values(?,?,?,?)";	
-			System.out.println(sql);
-			
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, _id_n);
-			pstmt.setString(2, _id);
-			pstmt.setInt(3, f_id_n);
-			pstmt.setString(4, _f_id);
-			try{
+
+		if (f_id_n !=-1){
+			try {
+				String sql = "insert into friend_relation values(?,?,?,?)";	
+				System.out.println(sql);
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, _id_n);
+				pstmt.setString(2, _id);
+				pstmt.setInt(3, f_id_n);
+				pstmt.setString(4, _f_id);
 				pstmt.executeUpdate();
-			}catch(Exception e){
+				pstmt.close();					
+				return true;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return false;
 			}
-			pstmt.close();					
 		}
-		catch (SQLException e){
-			e.printStackTrace();
-		}
-		return true;
+		return false;
 	}
-	
+
 	public int get_id_n_from_id(String input_id){
 		int return_v = 0;
 		try{
@@ -302,4 +302,53 @@ public class DB_obj {
 		}
 		return false;
 	}
-}
+
+	public void insert_image() throws IOException{
+
+		try{
+			String sql = "update detail_info set image = ? where id_n = 3";
+
+			pstmt = conn.prepareStatement(sql);
+			File f = new File("C:\\messanger_image\\qkf.png");
+			FileInputStream file_in = new FileInputStream(f);
+			pstmt.setBinaryStream(1, file_in, (int)f.length());
+			pstmt.executeUpdate();
+			
+			pstmt.close();
+			file_in.close();
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+
+	public void download_image() throws IOException{
+
+		try{
+			String sql = "select image from detail_info where id_n = 3";
+			pstmt = conn.prepareStatement(sql);			
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Blob blob_image = rs.getBlob("image");
+				InputStream file_in = blob_image.getBinaryStream();
+				//String image_name = 
+				File file_from_db = new File("image_from_db.jpg");
+				FileOutputStream file_out = new FileOutputStream(file_from_db);
+
+				int b=0;
+				while ( (b=file_in.read()) != -1 ) {
+					file_out.write((byte)b);
+				}
+				file_in.close();
+				file_out.close();
+			}
+			pstmt.close();
+			rs.close();
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+
+}// end 

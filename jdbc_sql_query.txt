@@ -44,15 +44,29 @@ alter table login add(identification_number int unique); //새 속성 삽입
 alter table detail_info rename column stm_messge to stmt_msg;	//속성 이름 재설정 rename
 alter table friend_list rename to friend_relation	//테이블 이름 변경
 
-
 with F(id_n) as(
  select f_id_n
  from friend_relation
- where f_id=1)
-select D.id, D.id_n, D.stmt_message, D.image
+ where id_n=1)
+select D.id, D.id_n, D.stmt_msg, D.image
 from detail_info D, F
 where D.id_n=F.id_n;
 
 //as 사용! -> 오라클에서 as 사용법이 좀 다른듯, 그냥 아래처럼 써도 됨
 select D.password
 from detail_info D;
+
+
+
+id_n, id, password , image, stmt_msg 
+
+// trigger 트리거 (insert 트리거)
+create or replace TRIGGER  "insert_login"
+BEFORE INSERT ON login
+FOR EACH ROW
+DECLARE
+  cust_id number;
+BEGIN
+  insert into detail_info
+  values(:new.id_n, :new.id, :new.password , null, null);
+END;
