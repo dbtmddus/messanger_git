@@ -179,7 +179,7 @@ public class DB_obj {
 		return friend_list;
 	}
 
-	public Vector[] get_friend_info2(int _id_n){
+	public Vector[] get_friend_info2(int _id_n) throws IOException{
 
 		Vector[] f_info = new Vector[4];
 		f_info[0] = new Vector<String>(0);	//f_id
@@ -194,11 +194,18 @@ public class DB_obj {
 			pstmt.setInt(1, _id_n);
 			rs = pstmt.executeQuery();
 
+			//Vector<File> f_images = download_image(_id_n);
+
 			for (int i=0; rs.next(); i++){
-				f_info[0].addElement(rs.getString("id"));			//friend_relation.f_id 로 불러오면 오류남
-				f_info[1].addElement(rs.getInt("id_n"));
-				f_info[2].addElement(rs.getBytes("image"));
-				f_info[3].addElement(rs.getString("stmt_msg"));
+				String id_temp = rs.getString("id");
+				int id_n_temp = rs.getInt("id_n");
+				Blob blob_temp = rs.getBlob("image");
+				String stmt_msg_temp = rs.getString("stmt_msg");
+
+				f_info[0].addElement(id_temp);			//friend_relation.f_id 로 불러오면 오류남
+				f_info[1].addElement(id_n_temp);
+				f_info[2].addElement(blob_to_file(blob_temp, id_temp+".jpg"));
+				f_info[3].addElement(stmt_msg_temp);
 			}
 			rs.close();
 			pstmt.close();					
@@ -306,14 +313,14 @@ public class DB_obj {
 	public void insert_image() throws IOException{
 
 		try{
-			String sql = "update detail_info set image = ? where id_n = 3";
+			String sql = "update detail_info set image = ? where id_n = 2";
 
 			pstmt = conn.prepareStatement(sql);
 			File f = new File("C:\\messanger_image\\qkf.png");
 			FileInputStream file_in = new FileInputStream(f);
 			pstmt.setBinaryStream(1, file_in, (int)f.length());
 			pstmt.executeUpdate();
-			
+
 			pstmt.close();
 			file_in.close();
 		}
@@ -322,18 +329,19 @@ public class DB_obj {
 		}
 	}
 
-	public void download_image() throws IOException{
+	public Vector<File> download_image(int _id_n) throws IOException{
+		Vector<File> v_f_images = new Vector<File>(0);
 
 		try{
-			String sql = "select image from detail_info where id_n = 3";
+			String sql = "select image from detail_info where id_n = ?";
 			pstmt = conn.prepareStatement(sql);			
+			pstmt.setInt(1, _id_n);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				Blob blob_image = rs.getBlob("image");
 				InputStream file_in = blob_image.getBinaryStream();
-				//String image_name = 
-				File file_from_db = new File("image_from_db.jpg");
+				File file_from_db = new File(_id_n+"image_from_db.jpg");
 				FileOutputStream file_out = new FileOutputStream(file_from_db);
 
 				int b=0;
@@ -342,6 +350,7 @@ public class DB_obj {
 				}
 				file_in.close();
 				file_out.close();
+				v_f_images.addElement(file_from_db);
 			}
 			pstmt.close();
 			rs.close();
@@ -349,6 +358,25 @@ public class DB_obj {
 		catch (SQLException e){
 			e.printStackTrace();
 		}
+		return v_f_images;
 	}
 
+	public File blob_to_file(Blob _blob, String _name) throws SQLException, IOException{
+		if (_blob !=null){
+			InputStream file_in = _blob.getBinaryStream();
+			File f = new File(_name);
+			FileOutputStream file_out = new FileOutputStream(f);
+
+			int b=0;
+			while ( (b=file_in.read()) != -1 ) {
+				file_out.write((byte)b);
+			}
+			file_in.close();
+			file_out.close();		
+			return f;
+		}
+		else{
+			return null;
+		}
+	}
 }// end 

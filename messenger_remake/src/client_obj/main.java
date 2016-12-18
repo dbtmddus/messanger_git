@@ -9,4 +9,3 @@ public class main {
 		cl.open_login_frame();
 	}//end main
 }
-

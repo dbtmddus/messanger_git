@@ -6,13 +6,15 @@
 
 package server_obj;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -88,7 +90,7 @@ public class server_obj extends Thread {
 					signin();
 					break;
 				case request_friend_list:
-					get_f_info_from_id_n();
+					response_f_info();
 					break;
 				case add_friend:
 					add_friend();
@@ -157,11 +159,15 @@ public class server_obj extends Thread {
 
 		System.out.println("to "+ temp_id_n+" - " + m);
 	}
-	public void get_f_info_from_id_n() throws IOException{
-		
-		db.insert_image();		//////////////////////////////// test
-		db.download_image();
-		
+
+	public void response_f_info() throws IOException{
+
+		db.insert_image();
+		/*db.insert_image();		//////////////////////////////// test
+		db.download_image(2);
+		db.download_image(3);
+		 */
+
 		System.out.println("request friend list handling");
 		Vector[] temp_f_info = db.get_friend_info2(logged_in_id_n);
 
@@ -176,24 +182,61 @@ public class server_obj extends Thread {
 		for(int i=0; i<num_of_friend; i++){
 			send.println(temp_f_info[0].elementAt(i));
 			send.println(temp_f_info[1].elementAt(i));
-
-			/*
-			// file전송 시작 (프로필 사진 전송)
-			FileInputStream in= new FileInputStream((File)temp_f_info[2].elementAt(i));
-			int data;
-			byte byte_data;
-			while ((data=in.read()) != -1) {
-				byte_data = (byte)data;
-				send.println(byte_data);
-			}
-			send.println("end");
 			send.flush();
-			in.close();
-			// file 전송 완료
-			 */
+
+			File file_temp = (File)temp_f_info[2].elementAt(i);
+			send_file(file_temp, listen, send);
+
 			send.println(temp_f_info[3].elementAt(i));
 			send.flush();
 		}
+	}
+
+	public void send_file(File _file, BufferedReader _listen, PrintWriter _send) throws IOException{
+		BufferedWriter send2 = new BufferedWriter(new OutputStreamWriter(soc.getOutputStream()));
+
+		if (_file == null){
+			send2.write(-1);	//println으로 수정 주의
+			send2.flush();
+		}
+		/*else{
+			long length = _file.length();
+			byte[] bytes = new byte[16 * 1024];
+			InputStream in = new FileInputStream(_file);
+			OutputStream out = soc.getOutputStream();
+
+			int count;
+			while ((count = in.read(bytes)) > 0) {
+				out.write(bytes, 0, count);
+			}
+
+			in.close();
+		}
+		 */
+
+
+		else{
+			FileInputStream in= new FileInputStream(_file);
+
+			int data;
+			byte byte_data;
+			while(true) {
+				data = in.read();
+				System.out.println(data+"           S");
+				if (data==-1){
+					send2.write("end");
+					break;
+				}else{
+					send2.write(data);
+				}
+			}
+			send2.flush();
+			in.close();
+		}
+		send2.write("file send finish");
+		send2.flush();
+		// file 전송 완료
+
 	}
 
 	public void add_friend() throws IOException {

@@ -21,6 +21,7 @@ public class main {
 		server_socket = new ServerSocket(1245);
 		server0 = new server_obj(server_socket);
 		server0.init_server();
+		//server0.db.insert_image();
 		//server0.connect_db();
 
 		server_obj server1 = new server_obj(server_socket);
@@ -50,7 +51,7 @@ public class main {
 
 
 
-//http://blog.naver.com/mktcrmer/220854105687 - oracle express 설치
+//http://blog.naver.com/mktcrmer/220854105687 - oracle express 설치(계정 명 sys 설정 등 기억)
 
 //println과 print 혼용시 문자열이 합쳐지는 오류
 //swing구현중 이벤트 헨들러 실수로 버튼 하나에 2번 이상 들어가면 해당 횟수만큼 반복 되는듯 (버튼 1번 눌렀는데 2번 이벤트 발생 등)

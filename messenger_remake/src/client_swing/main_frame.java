@@ -47,6 +47,7 @@ public class main_frame extends JFrame {
 		main_frame = this;
 		
 		fp = new friend_panel(_connected_socket, _listen, _send, _id_n, this);
+		System.out.println("¿©±â???????????? 1");
 		/*********************************************************///
 
 		/*********************************************************///
