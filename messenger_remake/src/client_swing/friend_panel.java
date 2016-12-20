@@ -10,10 +10,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -29,29 +33,25 @@ import javax.swing.JTextField;
 
 public class friend_panel {
 
-	private Socket connected_socket;
-	private PrintWriter send ;		//추가
-	private BufferedReader listen;
-	private int id_n;
+	private static Socket connected_socket;
+	private static PrintWriter send ;		//추가
+	private static BufferedReader listen;
+	private static int id_n;
 
-	static int num_of_friend;
-	static Vector<friend_info> f_info;
-	//static friend_info[] f_info;
-	/*
-	static String[] fid_list;
-	static String[] fimg_list;
-	static String[] fm_list;
-	 */
+	//private static ObjectInputStream obj_in;			///55
+	
+	private static int num_of_friend;
+	private static Vector<friend_info> f_info;
 
-	private JTextField ID_textfield;
-	private Panel[] panel = new Panel[100];
+	private static JTextField ID_textfield;
+	private static Panel[] panel = new Panel[100];
 
-	private JScrollPane spanel;
-	private JPanel big_panel;
+	private static JScrollPane spanel;
+	private static JPanel big_panel;
 
-	static Vector<JPanel> arr_jpanel = new Vector<JPanel>(0); 
+	private static Vector<JPanel> arr_jpanel = new Vector<JPanel>(0); 
 
-	public friend_panel(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n, JFrame m_frame ) throws IOException{		
+	public friend_panel(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n, JFrame m_frame ) throws IOException, ClassNotFoundException{		
 
 		/***************************************************************///
 		connected_socket = _connected_socket;		
@@ -60,9 +60,11 @@ public class friend_panel {
 		id_n = _id_n;
 		num_of_friend=0;
 
-		System.out.println("여기???????????? 2");
+		//obj_in = new ObjectInputStream(connected_socket.getInputStream());
+		
+		System.out.println("set info 진입 직전");
 		set_f_info();
-		System.out.println("여기???????????? 3");
+		System.out.println("set info 종료 직후");
 		/***************************************************************///
 
 		/***************************************************************///swing
@@ -89,7 +91,7 @@ public class friend_panel {
 		spanel.setVisible(true);
 	}//end creator
 
-	public void set_f_info() throws IOException{ 
+	public void set_f_info() throws IOException, ClassNotFoundException{ 
 		final String request_friend_list = "request_friend_list";
 		send.println(request_friend_list);
 		send.flush();
@@ -99,55 +101,87 @@ public class friend_panel {
 		}catch(Exception e){
 			num_of_friend = 0;
 		}
-		f_info = new Vector<friend_info>(0);
 
+		f_info = new Vector<friend_info>(0);
 		for(int i=0; i<num_of_friend; i++){
 			friend_info f_info_ele = new friend_info();
-
+			
 			f_info_ele.id = listen.readLine();
-			f_info_ele.id_n = Integer.parseInt(listen.readLine());
-
-			System.out.println("------------------" + f_info_ele.id+" / "+ f_info_ele.id_n);
-
-			/*
-			InputStream in = connected_socket.getInputStream();
-			OutputStream out = new FileOutputStream("c_"+f_info_ele.id+".jpg");
-
-			byte[] bytes = new byte[16*1024];
-			int count;
-			while ((count = in.read(bytes)) > 0) {
-				out.write(bytes, 0, count);
+			System.out.println("id : "+f_info_ele.id);
+			String test="";
+			try{
+				test = listen.readLine();
+				f_info_ele.id_n = Integer.parseInt(test);
+			}catch(Exception e){
+				System.out.println("이게 왜 여기있나????  test : "+test);
 			}
-			out.close();
-			 */
+			System.out.println("id_n : "+f_info_ele.id_n);
 
-
-			//
-			FileOutputStream out = new FileOutputStream("c_"+f_info_ele.id+".jpg");
-			while (true){
-				try{
-					int data = listen.read();
-					System.out.println(data+"       c");
-					Byte byte_data = (byte)data;
-					out.write(byte_data);
-				}catch(Exception e){
-					break;
-				}
-			}
-			out.close();
-			System.out.println("final read :"+listen.readLine()); 		// 없으면 어떻게 되는 지 추후 확인 (read와 readline 혼용문제)
-			//
-
+			f_info_ele.image = receive_file("c_"+f_info_ele.id+".jpg");	// !!!!!!!!!!!!!이후 파일 형식 처리 따로 필요
+			System.out.println("file : "+f_info_ele.image.getName());
 
 			f_info_ele.stmt_msg = listen.readLine();
-			System.out.println("------------------" + f_info_ele.stmt_msg);
-			f_info.add(f_info_ele);
+			System.out.println("msg : "+ f_info_ele.stmt_msg);
+
+			f_info.addElement(f_info_ele);
 		}
 
 		System.out.println("size:"+num_of_friend);
 		for (int i=0; i<num_of_friend ; i++){
 			System.out.println(f_info.elementAt(i).id+"/"+f_info.elementAt(i).id_n+"/"+f_info.elementAt(i).stmt_msg);
 		}
+	}
+
+	public static File receive_file(String file_name) throws IOException, ClassNotFoundException{
+		connected_socket.getOutputStream().write(1);
+		connected_socket.getOutputStream().flush();			
+		ObjectInputStream fromServer = new ObjectInputStream(connected_socket.getInputStream());
+		File file = (File)fromServer.readObject();
+		if (file != null){
+			FileInputStream fis = new FileInputStream(file);
+			File newFile = new File(file_name);
+			FileOutputStream fos = new FileOutputStream(newFile);
+			int i = 0;
+			while ((i = fis.read()) != -1) {
+				fos.write((char) i);
+			}
+			fos.close();
+			fis.close();
+			return newFile;
+		}else{
+			System.out.println("file is not exist");
+			return null;
+		}
+	}
+
+	public static File receive_file_trash(String received_file_name) throws IOException{	// 이것도 동일. 하나 전송용이며, send_file 프로젝트 참고.
+		File received_file = new File(received_file_name);
+
+		final int FILE_SIZE = 6022386;					// file's maximum size
+		byte [] mybytearray  = new byte[FILE_SIZE];
+
+		InputStream is = connected_socket.getInputStream();		//이것도 listen 대신 사용 (성능 면)
+		FileOutputStream fos = new FileOutputStream(received_file);
+		BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+		//int bytesRead = is.read(mybytearray,0,mybytearray.length);	//?? 왜 수행?? 비어있는지 확인하려고? 어차피 아래서 0부터 다시 읽기때문에 문제는 없으나 왜 수행하는지
+		//System.out.println("first byeread : " + bytesRead);
+		//int current = bytesRead;		//1번안. 어디까지 읽었는지 저장할 값임		//?? 이것도 왜수행??
+		int bytesRead =0;
+		int current = 0;				//2번안. 가독성 위해 위 2줄 대신 직접 넣은 부분. 사실 필요는 없으나 초기화 해주자.
+		while( (bytesRead=is.read(mybytearray, current, 2000))  > -1) {
+			current += bytesRead;	// read하면서 실제 파일 길이 측정, 값 저장
+			System.out.println(bytesRead +"      c");
+		}
+		bos.write(mybytearray, 0 , current);		//실제 길이만큼 write
+		bos.flush();
+
+		System.out.println("File " + received_file_name + " downloaded (" + current + " bytes read)");
+
+		fos.close();
+		bos.close();
+
+		return received_file;	
 	}
 
 	public JScrollPane get_spanel(){
@@ -166,11 +200,12 @@ public class friend_panel {
 		o_panel.setBounds(0,0, 500,500);
 		o_panel.addMouseListener(ml);
 
-		JButton b_image = new JButton("default");
+		JButton b_image = new JButton();
 		if(f_image_temp!=null){
 			//File f = new File("C:\\messanger_image\\qkf.png");
 			Image image_temp = ImageIO.read(f_image_temp);
 			ImageIcon icon_temp = new ImageIcon(image_temp);
+			b_image.setSize(100, 100);
 			b_image.setIcon(icon_temp);
 		}else{
 			b_image.setText("profile image isn't set");
@@ -237,6 +272,9 @@ public class friend_panel {
 				}
 			} catch (IOException e1) {
 				e1.printStackTrace();
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
 
@@ -256,6 +294,9 @@ public class friend_panel {
 					main_frame.already_exist_chat_v.addElement(clicked_friend_id);
 				}
 			} catch (IOException e1) {
+				e1.printStackTrace();
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}

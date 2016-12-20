@@ -17,7 +17,8 @@ public class duplicate_file {
 		
 		while ((data=in.read()) != -1) {
 			byte_data = (byte)data;
-			out.write(byte_data);
+			//out.write(byte_data);
+			out.write(data);
 		}
 		
 		in.close();

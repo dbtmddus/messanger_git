@@ -194,8 +194,6 @@ public class DB_obj {
 			pstmt.setInt(1, _id_n);
 			rs = pstmt.executeQuery();
 
-			//Vector<File> f_images = download_image(_id_n);
-
 			for (int i=0; rs.next(); i++){
 				String id_temp = rs.getString("id");
 				int id_n_temp = rs.getInt("id_n");
@@ -213,7 +211,6 @@ public class DB_obj {
 		catch (SQLException e){
 			e.printStackTrace();
 		}
-		//System.out.println(friend_list.toString());
 		return f_info;
 	}
 
@@ -310,15 +307,16 @@ public class DB_obj {
 		return false;
 	}
 
-	public void insert_image() throws IOException{
+	public void insert_image(int _id_n, String str_file) throws IOException{
 
 		try{
-			String sql = "update detail_info set image = ? where id_n = 2";
+			String sql = "update detail_info set image = ? where id_n = ?";
 
 			pstmt = conn.prepareStatement(sql);
-			File f = new File("C:\\messanger_image\\qkf.png");
+			File f = new File(str_file);
 			FileInputStream file_in = new FileInputStream(f);
 			pstmt.setBinaryStream(1, file_in, (int)f.length());
+			pstmt.setInt(2, _id_n);
 			pstmt.executeUpdate();
 
 			pstmt.close();

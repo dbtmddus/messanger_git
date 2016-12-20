@@ -6,22 +6,29 @@
 
 package server_obj;
 
-import java.io.BufferedOutputStream;
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class server_obj extends Thread {
+
+	static ReentrantLock locker = new ReentrantLock();				// 동기화
 
 	static DB_obj db = new DB_obj();
 	static final int max_size_ip_and_port = 100000;
@@ -30,11 +37,11 @@ public class server_obj extends Thread {
 	int logged_in_id_n=0;
 	String logged_in_id ="";
 
-	ServerSocket server_socket = null;	//static 선언시 thread끼리 공유
-	Socket soc = null;
-	int open_port_num;
-	BufferedReader listen;
-	PrintWriter send;
+	static ServerSocket server_socket = null;	//static 선언시 thread끼리 공유
+	static Socket soc = null;
+	static int open_port_num;
+	static BufferedReader listen;
+	static PrintWriter send;
 
 	final String login = "login";	//!! switch용도, system 버전에 따라 오류날 수 있음
 	final String signin = "signin";
@@ -58,6 +65,8 @@ public class server_obj extends Thread {
 	public void run(){
 		try {
 			soc = server_socket.accept(); //새 고객 접속 대기
+			listen = new BufferedReader(new InputStreamReader(soc.getInputStream()));
+			send = new PrintWriter(new BufferedWriter(new OutputStreamWriter(soc.getOutputStream())));
 		} catch (IOException e) {
 			System.out.println("e_num3 - 고객 접속 오류");
 			e.printStackTrace();
@@ -67,13 +76,6 @@ public class server_obj extends Thread {
 		System.out.println("server 정보 : "+soc.getLocalSocketAddress());
 		System.out.println("client 정보 : "+soc.getRemoteSocketAddress());
 		System.out.println("server socket 정보 : " + server_socket.toString());
-
-		try {
-			listen = new BufferedReader(new InputStreamReader(soc.getInputStream()));
-			send = new PrintWriter(new BufferedWriter(new OutputStreamWriter(soc.getOutputStream())));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
 
 		while (soc !=null){		// 이동 등으로 ip주소가 바뀌는 경우 (일시적으로 인터넷이 끊기는 경우) 
 			//위 listen, send 포함 함수화 하고 catch 부분에서 해당 함수 계속 다시 시도하도록 변경
@@ -90,7 +92,9 @@ public class server_obj extends Thread {
 					signin();
 					break;
 				case request_friend_list:
+					//locker.lock();
 					response_f_info();
+					//locker.unlock();
 					break;
 				case add_friend:
 					add_friend();
@@ -113,28 +117,29 @@ public class server_obj extends Thread {
 				}
 				e.printStackTrace();
 				break;
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
 			}
 		}
 	}
 
 	public void login() throws IOException{
-		System.out.println("log-in handling");
+		System.out.println("enter log-in func");
 		String id = listen.readLine();
 		int password = Integer.parseInt(listen.readLine());
 
 		System.out.println("id : "+id+ ", password : "+password+"\n");
 		System.out.println("log-in is " +db.confirm_login(id, password));
 
-		boolean confirm = db.confirm_login(id, password);
-		send.println(confirm);	//make client open main_frame
+		boolean b_approved = db.confirm_login(id, password);
+		send.println(b_approved);	//make client open main_frame
 		send.flush();
-		if (confirm == true){
+		if (b_approved == true){
+			logged_in_id = id;
 			logged_in_id_n = db.get_id_n_from_id(id);			
 			ip_and_port[logged_in_id_n][0] = soc.getInetAddress().toString().substring(1);
 			ip_and_port[logged_in_id_n][1] = Integer.toString( soc.getPort() );
-			logged_in_id = id;
-
-			send.println(db.get_id_n_from_id(id));
+			send.println(logged_in_id_n);
 			send.flush();
 			//open
 		}
@@ -160,15 +165,9 @@ public class server_obj extends Thread {
 		System.out.println("to "+ temp_id_n+" - " + m);
 	}
 
-	public void response_f_info() throws IOException{
+	public void response_f_info() throws IOException, ClassNotFoundException{
 
-		db.insert_image();
-		/*db.insert_image();		//////////////////////////////// test
-		db.download_image(2);
-		db.download_image(3);
-		 */
-
-		System.out.println("request friend list handling");
+		System.out.println("enter friend list func");
 		Vector[] temp_f_info = db.get_friend_info2(logged_in_id_n);
 
 		for (int i=0; i<4; i++){
@@ -183,60 +182,42 @@ public class server_obj extends Thread {
 			send.println(temp_f_info[0].elementAt(i));
 			send.println(temp_f_info[1].elementAt(i));
 			send.flush();
-
+		
 			File file_temp = (File)temp_f_info[2].elementAt(i);
-			send_file(file_temp, listen, send);
-
+			send_file(file_temp);
+		
 			send.println(temp_f_info[3].elementAt(i));
 			send.flush();
 		}
 	}
 
-	public void send_file(File _file, BufferedReader _listen, PrintWriter _send) throws IOException{
-		BufferedWriter send2 = new BufferedWriter(new OutputStreamWriter(soc.getOutputStream()));
-
-		if (_file == null){
-			send2.write(-1);	//println으로 수정 주의
-			send2.flush();
+	public void send_file(File _file) throws IOException, ClassNotFoundException{
+		soc.getInputStream().read();	//이 부분 없으면, 서버가 대기하지 않고 클라이언트가 정보를 하나씩 받아오기 전에 파일 전부 보내버리는데, 그 후 클라이언트가 값을 가져와도 비어있게 되어 값 입력을 대기하는 현상 존재.
+		ObjectOutputStream toClient = new ObjectOutputStream(soc.getOutputStream());
+		toClient.reset();
+		if (_file.exists()){
+			toClient.writeObject(_file);
 		}
-		/*else{
-			long length = _file.length();
-			byte[] bytes = new byte[16 * 1024];
-			InputStream in = new FileInputStream(_file);
-			OutputStream out = soc.getOutputStream();
-
-			int count;
-			while ((count = in.read(bytes)) > 0) {
-				out.write(bytes, 0, count);
-			}
-
-			in.close();
-		}
-		 */
-
-
 		else{
-			FileInputStream in= new FileInputStream(_file);
-
-			int data;
-			byte byte_data;
-			while(true) {
-				data = in.read();
-				System.out.println(data+"           S");
-				if (data==-1){
-					send2.write("end");
-					break;
-				}else{
-					send2.write(data);
-				}
-			}
-			send2.flush();
-			in.close();
+			File null_file = null;
+			toClient.writeObject(null_file);
 		}
-		send2.write("file send finish");
-		send2.flush();
-		// file 전송 완료
+		toClient.flush();
+	}
+	public void send_file_trashed(File _file, BufferedReader _listen, PrintWriter _send) throws IOException{	// 수정 예정. 이는 파일 1개 전용이며, 여러개 전용은 send_file project참고. 
 
+		OutputStream os = soc.getOutputStream();	//send로 보내도 되지만, 아마 printwriter는 좀 느릴듯
+		FileInputStream fis = new FileInputStream(_file);
+		BufferedInputStream bis = new BufferedInputStream(fis);
+
+		byte[] mybytearray  = new byte [(int)_file.length()];
+		bis.read(mybytearray,0,mybytearray.length);
+		System.out.println("Sending " + _file.getName() + "(" + mybytearray.length + " bytes)");
+		os.write(mybytearray,0,mybytearray.length);
+		os.flush();       
+
+		fis.close();
+		bis.close();
 	}
 
 	public void add_friend() throws IOException {

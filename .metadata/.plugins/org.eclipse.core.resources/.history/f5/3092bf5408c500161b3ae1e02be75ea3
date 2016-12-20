@@ -1,0 +1,16 @@
+import java.util.Vector;
+
+public class test {
+
+	public static void main(String[] args) {
+		
+		int a = 5;
+		Byte b;
+		
+		b = (byte)a;
+		
+		System.out.println( b );
+		
+//		System.out.println(str.substring(0, str.length()-1));
+	}
+}

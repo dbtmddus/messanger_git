@@ -36,8 +36,8 @@ public class main_frame extends JFrame {
 	private JFrame main_frame;
 
 	public static Vector<String> already_exist_chat_v = new Vector<String>(0);
-	
-	public main_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n ) throws IOException {
+
+	public main_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n ) throws IOException, ClassNotFoundException {
 
 		/*********************************************************///
 		connected_socket = _connected_socket;
@@ -45,9 +45,8 @@ public class main_frame extends JFrame {
 		send = _send;
 		id_n = _id_n;
 		main_frame = this;
-		
-		fp = new friend_panel(_connected_socket, _listen, _send, _id_n, this);
-		System.out.println("여기???????????? 1");
+
+		//fp = new friend_panel(_connected_socket, _listen, _send, _id_n, this);
 		/*********************************************************///
 
 		/*********************************************************///
@@ -74,7 +73,7 @@ public class main_frame extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 395, 650);
-		
+
 		//getContentPane().setLayout(null);
 		contentPane = new JPanel();
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -86,7 +85,7 @@ public class main_frame extends JFrame {
 
 		JButton b10 = new JButton("ddddd");
 		p_main.add(b10);
-		
+
 		setVisible(true);
 	}
 
@@ -97,11 +96,14 @@ public class main_frame extends JFrame {
 			if(obj==b_friend){
 				contentPane.removeAll();
 				try {
-					fp = new friend_panel(connected_socket, listen, send, id_n, main_frame);
+					fp = new friend_panel(connected_socket, listen, send, id_n, main_frame);	// 친구 목록 많을시 시간 걸림, 새로고침 키 추가 시 이 줄만 없애면 됨
 				} catch (IOException e1) {
 					e1.printStackTrace();
-				}	// 친구 목록 많을시 시간 걸림, 새로고침 키 추가 시 이 줄만 없애면 됨
-				
+				}
+				catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				}
+
 				contentPane.add(fp.get_spanel());
 				revalidate();
 				repaint();		//2개 같이 쓰기 권장

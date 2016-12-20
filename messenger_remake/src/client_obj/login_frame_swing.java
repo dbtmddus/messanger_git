@@ -13,6 +13,7 @@ import java.net.Socket;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import client_swing.main_frame;
@@ -94,14 +95,14 @@ public class login_frame_swing extends JFrame{
 				send.println(password);
 				send.flush();
 
-				String res = null;
+				boolean b_approved = false;
 				try {
-					res = listen.readLine();
-					System.out.println(res);
+					b_approved = Boolean.parseBoolean(listen.readLine());
+					System.out.println(b_approved);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				if (res.equals("true")){
+				if (b_approved){	//when login is approved
 					int id_n;
 					try {
 						id_n = Integer.parseInt(listen.readLine());
@@ -111,7 +112,12 @@ public class login_frame_swing extends JFrame{
 						e1.printStackTrace();
 					} catch (IOException e1) {
 						e1.printStackTrace();
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
+				}else{
+					JOptionPane.showMessageDialog(null, "일치하는 정보가 없습니다.", "로그인", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 			else if (obj==signin_button){

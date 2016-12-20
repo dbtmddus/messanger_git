@@ -40,7 +40,7 @@ public class chat_frame extends JFrame {
 	private PrintWriter send;
 	private int id_n;
 
-	public chat_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n, int _f_id_n ) throws IOException {
+	public chat_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n, int _f_id_n ) throws IOException, ClassNotFoundException {
 
 		connected_socket = _connected_socket;
 		listen = _listen;

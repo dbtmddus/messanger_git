@@ -32,7 +32,6 @@ public class client_obj {
 				break;
 			} catch (UnknownHostException e) {
 				e.printStackTrace();
-				System.out.println("unknown host error : "+ e);
 				System.exit(1);
 				break;
 			} catch (IOException e) {
@@ -44,6 +43,8 @@ public class client_obj {
 
 		System.out.println("입장되셨습니다");
 		show_info();
+		
+		open_login_frame();
 	}
 	public void open_login_frame() throws IOException{
 		login_frame_swing lf = new login_frame_swing(connected_socket, listen, send );

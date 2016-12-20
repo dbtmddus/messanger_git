@@ -1,0 +1,72 @@
+package send_file_basic.copy;
+import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class server {
+
+	public final static int SOCKET_PORT = 13267;  // you may change this
+	
+
+	public static void main (String [] args ) throws IOException {
+
+		FileInputStream fis = null;
+		BufferedInputStream bis = null;
+
+		OutputStream os = null;
+
+		ServerSocket servsock = null;
+		Socket sock = null;
+
+		try {
+			servsock = new ServerSocket(SOCKET_PORT);
+			while (true) {
+				System.out.println("Waiting...");
+				try {
+					sock = servsock.accept();
+					System.out.println("Accepted connection : " + sock);
+					// send file
+
+					for (int i=1; i<3; i++){
+						String FILE_TO_SEND = "C:\\messanger_image\\qkf"+i+".png";  // you may change this
+						File myFile = new File (FILE_TO_SEND);
+						//
+
+						//send file len
+						BufferedWriter send = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+						send.write(Integer.toString((int)myFile.length()));
+						send.newLine();
+						send.flush();
+						System.out.println("server file len : "+ Integer.toString((int)myFile.length()));
+
+
+						//
+						fis = new FileInputStream(myFile);
+						bis = new BufferedInputStream(fis);
+						byte [] mybytearray  = new byte [(int)myFile.length()];
+						bis.read(mybytearray,0,mybytearray.length);
+						os = sock.getOutputStream();
+						System.out.println("Sending " + FILE_TO_SEND + "(" + mybytearray.length + " bytes)");
+						os.write(mybytearray,0,mybytearray.length);
+						os.flush();
+						System.out.println("Done.");
+					}
+				}
+				finally {
+					if (bis != null) bis.close();
+					if (os != null) os.close();
+					if (sock!=null) sock.close();
+				}
+			}
+		}
+		finally {
+			if (servsock != null) servsock.close();
+		}
+	}
+}

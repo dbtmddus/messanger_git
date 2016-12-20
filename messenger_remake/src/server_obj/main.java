@@ -1,8 +1,7 @@
 /***
  * 12.14
  * 구현한 기능 모두 정상동작 확인
- * 프로필 사진 전송 부분 구현하면 됨
- * db에서 사진 불러와 저장하는 것 까지 정상 동작 버전
+ * 프로필사진, 상태메세지 모두 정상 출력 확인. 리팩토링 직전 버전
  * 
  */
 
@@ -21,7 +20,8 @@ public class main {
 		server_socket = new ServerSocket(1245);
 		server0 = new server_obj(server_socket);
 		server0.init_server();
-		//server0.db.insert_image();
+		server0.db.insert_image(2,"C:\\messanger_image\\qkf_resize.png");
+		server0.db.insert_image(3,"C:\\messanger_image\\qkf2_resize.png");
 		//server0.connect_db();
 
 		server_obj server1 = new server_obj(server_socket);
@@ -41,7 +41,7 @@ public class main {
 		while(true){
 			try {
 				server0.show_connected_client();
-				Thread.sleep(2000);
+				Thread.sleep(5000);
 			} catch (InterruptedException e) { 
 				e.printStackTrace();
 			}

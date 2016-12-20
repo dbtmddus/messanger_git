@@ -70,3 +70,21 @@ BEGIN
   insert into detail_info
   values(:new.id_n, :new.id, :new.password , null, null);
 END;
+
+
+// update detail_info
+update detail_info  
+set id='dbtmddus113' 
+  ,password = 1234
+  ,image = utl_raw.cast_to_raw('C:\qkf.png')
+  , stmt_msg = 'd113_s_message'
+where id_n = 2;
+
+
+//
+update detail_info  
+set image = ?
+where id_n = 3;
+
+//
+create or replace directory dir_msg as 'C:\messanger_image';
