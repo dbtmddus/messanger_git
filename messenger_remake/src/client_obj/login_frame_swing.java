@@ -17,23 +17,23 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import client_swing.main_frame;
+import common_use.command;
 
 public class login_frame_swing extends JFrame{
 
 	private Socket connected_socket;
 	private PrintWriter send ;		//추가
 	private BufferedReader listen;
+	private String id;
+	private String password;
 
 	private JLabel Password_label; 
 	private JLabel Id_label;
 	private JTextField ID_textfield;
 	private JTextField password_textfield;
 	private JButton login_button;
-	private JButton signin_button;
+	private JButton sign_up_button;
 
-	static String id;
-	static String password;
-	
 	public login_frame_swing(Socket _connected_socket, BufferedReader _listen, PrintWriter _send ) throws IOException
 	{
 		super("로그인");
@@ -41,9 +41,9 @@ public class login_frame_swing extends JFrame{
 		listen = _listen;
 		send = _send;
 
-		//swing
+		//swing configuration
 		getContentPane().setLayout(null);
-		//setVisible(true);		//다른 컴포넌트 설정 전에 호출 시 frame resize시에 뒤늦게 제대로 표시될 수 있음
+		//setVisible(true);		//주의 - 다른 컴포넌트 설정 전에 먼저 호출 시 처음에 안 뜨고 repaint시 뒤늦게 제대로 표시될 수 있음
 		setSize(460, 226);
 
 		Id_label = new JLabel("ID :");
@@ -68,68 +68,69 @@ public class login_frame_swing extends JFrame{
 		getContentPane().add(login_button);
 		login_button.addActionListener(action);
 
-		signin_button = new JButton("sign in");
-		signin_button.setBounds(324, 135, 87, 32);
-		getContentPane().add(signin_button);
-		signin_button.addActionListener(action);
-		
+		sign_up_button = new JButton("sign in");
+		sign_up_button.setBounds(324, 135, 87, 32);
+		getContentPane().add(sign_up_button);
+		sign_up_button.addActionListener(action);
+
 		ID_textfield.setText("dbtmddus112");
 		password_textfield.setText("1234");
-		
+
 		setVisible(true);
-//		getContentPane().repaint();
+		//		getContentPane().repaint();
 	}//end creator
 
 	ActionListener action = new ActionListener() {
-
 		public void actionPerformed(ActionEvent e) {
-
 			Object obj = e.getSource();
 
 			if (obj==login_button){
-				send.println("login");
-				send.flush();
-				id = ID_textfield.getText();
-				password = password_textfield.getText();
-				send.println(id);
-				send.println(password);
-				send.flush();
-
-				boolean b_approved = false;
-				try {
-					b_approved = Boolean.parseBoolean(listen.readLine());
-					System.out.println(b_approved);
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				if (b_approved){	//when login is approved
-					int id_n;
-					try {
-						id_n = Integer.parseInt(listen.readLine());
-						main_frame mf = new main_frame(connected_socket, listen, send, id_n );
-						setVisible(false);
-					} catch (NumberFormatException e1) {
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					} catch (ClassNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}else{
-					JOptionPane.showMessageDialog(null, "일치하는 정보가 없습니다.", "로그인", JOptionPane.INFORMATION_MESSAGE);
-				}
+				f_login_button();
 			}
-			else if (obj==signin_button){
-				send.println("signin");
-				send.flush();
-				id = ID_textfield.getText();
-				password = password_textfield.getText();
-				send.println(id);
-				send.println(password);
-				send.flush();
+			else if (obj==sign_up_button){
+				f_sign_up();
 			}
 		}
 	};
 
+	public void f_login_button(){
+		send.println(command.login);
+		send.flush();
+		id = ID_textfield.getText();
+		password = password_textfield.getText();
+		send.println(id);
+		send.println(password);
+		send.flush();
+
+		try {
+			boolean b_approved = false;
+			b_approved = Boolean.parseBoolean(listen.readLine());
+			System.out.println(b_approved);
+			if (b_approved){	//when login is approved
+				int id_n;
+				id_n = Integer.parseInt(listen.readLine());
+				main_frame mf = new main_frame(connected_socket, listen, send, id_n );
+				setVisible(false);
+			}else{
+				JOptionPane.showMessageDialog(null, "일치하는 정보가 없습니다.", "로그인", JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+		catch (NumberFormatException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	public void f_sign_up(){
+		send.println(command.sign_up);
+		send.flush();
+		id = ID_textfield.getText();
+		password = password_textfield.getText();
+		send.println(id);
+		send.println(password);
+		send.flush();
+	}
 }//end

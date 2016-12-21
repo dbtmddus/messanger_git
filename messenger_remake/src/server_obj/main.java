@@ -2,6 +2,7 @@
  * 12.14
  * 구현한 기능 모두 정상동작 확인
  * 프로필사진, 상태메세지 모두 정상 출력 확인. 리팩토링 직전 버전
+ * thread관련 대규모 수정 중. static으로 관리되면 안되는 변수들 전부 수정해야함. 이게 어떻게 정상동작하고 있었던거지??????????????????
  * 
  */
 
@@ -20,6 +21,7 @@ public class main {
 		server_socket = new ServerSocket(1245);
 		server0 = new server_obj(server_socket);
 		server0.init_server();
+		server0.db.insert_image(1,"C:\\messanger_image\\qkf2_resize.png");
 		server0.db.insert_image(2,"C:\\messanger_image\\qkf_resize.png");
 		server0.db.insert_image(3,"C:\\messanger_image\\qkf2_resize.png");
 		//server0.connect_db();
@@ -40,7 +42,7 @@ public class main {
 	static public void show_connected_client(){
 		while(true){
 			try {
-				server0.show_connected_client();
+				server0.show_connected_client_10();
 				Thread.sleep(5000);
 			} catch (InterruptedException e) { 
 				e.printStackTrace();

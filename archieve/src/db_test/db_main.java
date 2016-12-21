@@ -2,10 +2,7 @@ package db_test;
 
 import java.sql.SQLException;
 
-import server_obj.DB_obj;
-
 public class db_main {
-
 	public static void main(String[] args) throws SQLException {
 		DB_obj db = new DB_obj();
 		db.connect();

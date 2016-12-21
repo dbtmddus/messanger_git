@@ -1,0 +1,10 @@
+package thread_test;
+
+public class obj {
+
+	static int[] arr = new int[10];
+	
+	public obj(){
+		
+	}
+}

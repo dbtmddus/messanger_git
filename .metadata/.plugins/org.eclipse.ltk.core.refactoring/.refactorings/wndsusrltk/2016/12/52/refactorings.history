@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy package &apos;wndsusrltk&apos; to &apos;archieve/src&apos;&#x0D;&#x0A;- Original project: &apos;wndsusrltk&apos;&#x0D;&#x0A;- Destination element: &apos;archieve/src&apos;&#x0D;&#x0A;- Original element: &apos;wndsusrltk/src/wndsusrltk&apos;" description="Copy package" destination="=archieve/src" element1="/src&lt;wndsusrltk" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1482318763981" version="1.0"/>
+</session>

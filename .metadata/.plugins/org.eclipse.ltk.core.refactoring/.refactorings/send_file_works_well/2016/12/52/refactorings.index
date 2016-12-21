@@ -1,0 +1,24 @@
+1482057613459	Move compilation units
+1482057624745	Copy package
+1482061639826	Rename field 'FILE_SIZE'
+1482062044949	Rename field 'one_step'
+1482146852591	Copy package
+1482147805588	Rename local variable 'FILE_TO_RECEIVED'
+1482147858725	Rename local variable 'r_file'
+1482152105562	Delete element
+1482152780330	Copy compilation units
+1482152970420	Rename local variable 'os'
+1482152973436	Rename local variable 'is'
+1482154995385	Rename package 'serveral'
+1482154998964	Copy package
+1482239720689	Rename package 'serveral_basic'
+1482318854346	Copy package
+1482318903598	Delete element
+1482320829829	Copy package
+1482320865981	Rename package 'send_file_basic.copy'
+1482321301427	Rename package 'send_several_files_final'
+1482321317470	Rename package 'send_file_byte_array_final_works_well'
+1482324095441	Delete element
+1482324099698	Copy package
+1482324105947	Copy package
+1482324864842	Rename local variable 'FILE_TO_SEND'

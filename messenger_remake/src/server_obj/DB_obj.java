@@ -307,13 +307,12 @@ public class DB_obj {
 		return false;
 	}
 
-	public void insert_image(int _id_n, String str_file) throws IOException{
-
+	public void insert_image(int _id_n, String _file_path) throws IOException{
 		try{
 			String sql = "update detail_info set image = ? where id_n = ?";
 
 			pstmt = conn.prepareStatement(sql);
-			File f = new File(str_file);
+			File f = new File(_file_path);
 			FileInputStream file_in = new FileInputStream(f);
 			pstmt.setBinaryStream(1, file_in, (int)f.length());
 			pstmt.setInt(2, _id_n);

@@ -13,15 +13,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import common_use.command;
+
 
 public class add_friend_frame extends JFrame {
-
-	private static friend_panel p_friend;
-
-	private JPanel contentPane;
-
-	private JTextField text_field1;
-	private JButton b_add;
 
 
 	private Socket connected_socket;
@@ -29,6 +24,9 @@ public class add_friend_frame extends JFrame {
 	private PrintWriter send;
 	private int id_n;
 
+	private JPanel contentPane;
+	private JTextField text_field1;
+	private JButton b_add;
 
 	public add_friend_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n ) {
 
@@ -36,15 +34,13 @@ public class add_friend_frame extends JFrame {
 		listen = _listen;
 		send = _send;
 		id_n = _id_n;
-		///////////////////////////////////////////////////////////////
-
+		
+		// swing configuration
 		getContentPane().setLayout(null);
 		setSize(368, 219);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);		//종료시 해당 frame만 종료
-											//EXIT_ON_CLOSE		//종료 시 프로그램 전체 종료
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);		// - 해당 frame만 종료 / EXIT_ON_CLOSE - 프로그램 전체 종료
 
 		text_field1 = new JTextField("친구 id");
-		//f_id.setColumns(5);	??
 		text_field1.setBounds(90, 49, 148, 37);
 		getContentPane().add(text_field1);
 		text_field1.addActionListener(action);
@@ -55,7 +51,6 @@ public class add_friend_frame extends JFrame {
 		b_add.addActionListener(action);
 		
 		setVisible(true);
-		
 	}
 
 	ActionListener action = new ActionListener() {
@@ -65,23 +60,19 @@ public class add_friend_frame extends JFrame {
 			if (obj==b_add){
 				b_add_event();
 			}
-			//else if (obj==b_add_friend){
-			//}
 		}
 	};
 
 	public void b_add_event(){
-		//String str = text_field1.getText();	??????????? 에러 유발?????????????? 확인하고 갈것
-		send.println("add_friend");
+		send.println(command.add_friend);
 		send.flush();
-		String str_FID = text_field1.getText();
-		send.println(str_FID);		//println과 print 혼용시 문자열이 합쳐지는 오류
+		String f_id_tf = text_field1.getText();
+		send.println(f_id_tf);		//println과 print 혼용시 문자열이 합쳐지는 문제. 가능하면 통일해서 사용
 		send.flush();
 
-		String response="";
 		try {
-			response = listen.readLine();
-			if(response.equals("confirm_add_friend")){
+			boolean b_approved = Boolean.parseBoolean(listen.readLine());
+			if(b_approved){
 				JOptionPane.showMessageDialog(null, "추가되었습니다", "친구추가", JOptionPane.INFORMATION_MESSAGE);
 				this.setVisible(false);
 			}else{
@@ -89,7 +80,6 @@ public class add_friend_frame extends JFrame {
 				this.setVisible(false);
 			}
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}

@@ -4,15 +4,12 @@ public class test {
 
 	public static void main(String[] args) {
 		
-		int a = 5;
-		byte b = (byte)a;
-		byte b2 = a;
+		int a=5;
+		String str ="0";
 		
-		String str = "abc";
+		a= Integer.parseInt(str);
 		
-		b = str.byt;
-		
-		System.out.println( b );
+		System.out.println(a);
 		
 //		System.out.println(str.substring(0, str.length()-1));
 	}

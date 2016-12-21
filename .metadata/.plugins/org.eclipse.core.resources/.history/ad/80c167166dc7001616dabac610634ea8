@@ -1,0 +1,8 @@
+package messanger_source;
+
+public class Snippet {
+	public static void main(String[] args) {
+		messanger_source
+	}
+}
+

@@ -1,0 +1,15 @@
+package thread_test;
+
+public class obj {
+
+	static int[] arr = new int[10];
+	int a=0;
+	
+	public obj(){
+		a=10;
+	}
+	
+	public int get_a(){
+		return a;
+	}
+}

@@ -35,7 +35,7 @@ public class main_frame extends JFrame {
 	private int id_n;
 	private JFrame main_frame;
 
-	public static Vector<String> already_exist_chat_v = new Vector<String>(0);
+	public static Vector<String> already_exist_chat_v = new Vector<String>(0);	//사용자가 열어둔 채팅창 목록 //얘는 thread가 아니라 static사용 가능
 
 	public main_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n ) throws IOException, ClassNotFoundException {
 

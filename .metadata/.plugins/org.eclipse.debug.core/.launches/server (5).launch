@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/send_file/src/send_file_basic/copy/server.java"/>
+<listEntry value="/send_file_works_well/src/send_several_files_with_byte_array_final_works_well/server.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
 </listAttribute>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="send_file_basic.copy.server"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="send_file"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="send_several_files_with_byte_array_final_works_well.server"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="send_file_works_well"/>
 </launchConfiguration>

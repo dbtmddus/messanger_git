@@ -1,0 +1,10 @@
+package thread_test;
+
+public class main {
+
+	public static void main(String[] args) {
+		obj o1 = new obj();
+		
+	}
+
+}
