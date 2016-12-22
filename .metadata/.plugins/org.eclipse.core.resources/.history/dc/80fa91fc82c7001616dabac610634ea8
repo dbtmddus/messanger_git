@@ -1,0 +1,27 @@
+import java.util.Vector;
+
+public class test {
+
+	private int n1=0;
+	private static int n2=0;
+	
+	public static void main(String[] args) {
+		
+		//n1=0;
+	//	n2=0;
+		f1();
+		f2();
+		//System.out.println(a);		
+	}
+	
+	public void f1(){
+		n1++;
+		n2++;
+		System.out.println(n1);
+		System.out.println(n2);
+	}
+	public void f2(){
+		System.out.println(n1);
+		System.out.println(n2);
+	}
+}

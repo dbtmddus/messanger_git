@@ -1,0 +1,32 @@
+public class obj {
+
+	private int n1=0;
+	private static int n2=0;
+
+	public obj(){
+		//n1=0;
+		//	n2=0;
+		increase_and_show();
+		show();
+		//System.out.println(a);		
+	}
+
+	public void increase_and_show(){
+		n1++;
+		n2++;
+		System.out.println(n1);
+		System.out.println(n2);
+	}
+	public void show(){
+		System.out.println(n1);
+		System.out.println(n2);
+	}
+	public int f(){
+		increase(n1);
+		
+		return n2;
+	}
+	public void increase(int n){
+		n++;
+	}
+}

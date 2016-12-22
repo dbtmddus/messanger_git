@@ -1,0 +1,25 @@
+public class obj {
+
+	private int n1=0;
+	private static int n2=0;
+
+	public obj(){		
+	}
+
+	public void increase_and_show(){
+		n1++;
+		n2++;
+		System.out.println(n1+" / "+n2);
+	}
+	public void show(){
+		System.out.println(n1);
+		System.out.println(n2);
+	}
+	public void f(){
+		increase(n1);
+		increase(n2);		
+	}
+	public void increase(int n){
+		n++;
+	}
+}

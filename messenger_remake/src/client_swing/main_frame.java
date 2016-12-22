@@ -103,7 +103,6 @@ public class main_frame extends JFrame {
 				catch (ClassNotFoundException e1) {
 					e1.printStackTrace();
 				}
-
 				contentPane.add(fp.get_spanel());
 				revalidate();
 				repaint();		//2개 같이 쓰기 권장
@@ -113,4 +112,5 @@ public class main_frame extends JFrame {
 			}
 		}
 	};
-}
+	
+}//end

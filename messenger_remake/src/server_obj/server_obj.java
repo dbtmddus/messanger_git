@@ -33,9 +33,10 @@ public class server_obj extends Thread {
 	//static (thread)
 	static ReentrantLock locker = new ReentrantLock();				// 동기화
 	static DB_obj db = new DB_obj();
-	static final int max_size_ip_and_port = 100000;
-	static String[][] ip_and_port = new String[max_size_ip_and_port][2];
+	static final int max_client_num = 100000;
+	static String[][] ip_and_port = new String[max_client_num][2];
 	static int next_available_id_n=1;	//다음 부여될 고유번호 관리
+	static Socket[] socket_by_id_n = new Socket[max_client_num];
 	///////////////////////
 	int logged_in_id_n=0;
 	String logged_in_id ="";
@@ -56,8 +57,9 @@ public class server_obj extends Thread {
 
 	public void init_server(){
 		connect_db();
-		for (int i=0; i<max_size_ip_and_port ; i++){
-			ip_and_port[i][0] = "blank";
+		for (int i=0; i<max_client_num ; i++){
+			ip_and_port[i][0] = null;
+			socket_by_id_n[i] = null;
 		}
 	}
 
@@ -90,7 +92,7 @@ public class server_obj extends Thread {
 			case command.sign_up:
 				sign_up();
 				break;
-			case command.request_friends_detail_info:
+			case command.friends_detail_info:
 				//locker.lock();
 				send_friend_detail_info();
 				//locker.unlock();
@@ -98,11 +100,14 @@ public class server_obj extends Thread {
 			case command.add_friend:
 				add_friend();
 				break;
-			case command.request_friend_ip:
-				get_ip_from_id();
+			case command.friend_ip_and_port:
+				send_friend_ip_and_port();
 				break;
 			case command.normal_message:
-				normal_message();
+				listen_normal_message();
+				break;
+			case command.id_n_from_id:
+				send_id_n_from_id();
 				break;
 			default:
 				break;
@@ -110,8 +115,9 @@ public class server_obj extends Thread {
 		} catch (IOException e) {
 			System.out.println("client exited");
 			if (logged_in_id_n!=0){
-				ip_and_port[logged_in_id_n][0]="blank";
-				ip_and_port[logged_in_id_n][1]="blank";
+				ip_and_port[logged_in_id_n][0]=null;
+				ip_and_port[logged_in_id_n][1]="0";
+				socket_by_id_n[logged_in_id_n] = null;
 			}
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -132,6 +138,7 @@ public class server_obj extends Thread {
 			logged_in_id_n = db.get_id_n_from_id(id);			
 			ip_and_port[logged_in_id_n][0] = soc.getInetAddress().toString().substring(1);
 			ip_and_port[logged_in_id_n][1] = Integer.toString( soc.getPort() );
+			socket_by_id_n[logged_in_id_n] = soc;
 			send.println(logged_in_id_n);
 			send.flush();
 		}
@@ -223,23 +230,38 @@ public class server_obj extends Thread {
 		}
 	}
 	
-	public void normal_message() throws NumberFormatException, IOException{
-		int temp_id_n= Integer.parseInt(listen.readLine());
+	public void listen_normal_message() throws NumberFormatException, IOException{
+		int _f_id_n= Integer.parseInt(listen.readLine());
 		String m = listen.readLine();
-
-		System.out.println("to "+ temp_id_n+" - " + m);
+		System.out.println("to "+ _f_id_n+" - " + m);
+		
+		send_normal_message(_f_id_n, m);
+	}
+	
+	public void send_normal_message(int _f_id_n, String msg) throws NumberFormatException, IOException{
+		Socket f_soc = socket_by_id_n[_f_id_n];
+		if (f_soc != null){
+			System.out.println("friend being connected");			
+			PrintWriter _f_send = new PrintWriter(new BufferedWriter(new OutputStreamWriter(f_soc.getOutputStream())));
+			_f_send.println(msg);
+		}else{
+			System.out.println("friend being not connected");			
+		}
 	}
 
 
-	public void get_ip_from_id() throws IOException{
+	public void send_friend_ip_and_port() throws IOException{
 		String f_id = listen.readLine();
-		System.out.println("f_id : ----------------------- "+f_id);
 		int f_id_n = db.get_id_n_from_id(f_id);
-		String f_ip = ip_and_port[f_id_n][0];
-		String f_port = ip_and_port[f_id_n][1];
-		System.out.println(f_ip + "////////////"+f_port);
-		send.println(f_ip);
-		send.println(f_port);
+		send.println(ip_and_port[f_id_n][0]);	//friend ip
+		send.println(ip_and_port[f_id_n][1]); 	//firned port
+		send.flush();
+	}
+	
+	public void send_id_n_from_id() throws IOException{
+		String _id = listen.readLine();
+		int _id_n = db.get_id_n_from_id(_id); 
+		send.println(_id_n);
 		send.flush();
 	}
 
@@ -252,7 +274,7 @@ public class server_obj extends Thread {
 	}
 
 	public void show_connected_client_10(){
-		for (int i=0; i<10; i++){
+		for(int i=0; i<10; i++){
 			System.out.print(ip_and_port[i][0] +"/"+ip_and_port[i][1]+", ");
 		}
 		System.out.println();

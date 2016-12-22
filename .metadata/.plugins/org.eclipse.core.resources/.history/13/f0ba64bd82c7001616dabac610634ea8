@@ -1,0 +1,23 @@
+import java.util.Vector;
+
+public class test {
+
+	private int n1=0;
+	private static int n2=0;
+	
+	public static void main(String[] args) {
+		
+		n1=0;
+		n2=0;
+		System.out.println(a);		
+	}
+	
+	public void f1(){
+		n1++;
+		System.out.println(n1);
+	}
+	public void f2(){
+		System.out.println(n1);
+		System.out.println(n2);
+	}
+}

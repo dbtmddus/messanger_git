@@ -54,7 +54,7 @@ public class friend_panel {
 		listen = _listen;
 		send = _send;
 		id_n = _id_n;
-		
+
 		// basic swing configuration
 		spanel = new JScrollPane();
 		spanel.setBounds(m_frame.getContentPane().getBounds());
@@ -79,7 +79,7 @@ public class friend_panel {
 	}//end creator
 
 	public void set_f_info() throws IOException, ClassNotFoundException{ 
-		send.println(command.request_friends_detail_info);
+		send.println(command.friends_detail_info);
 		send.flush();
 
 		num_of_friend = Integer.parseInt(listen.readLine());		//0일 때 에러???
@@ -87,16 +87,16 @@ public class friend_panel {
 		f_info = new Vector<friend_info>(0);
 		for(int i=0; i<num_of_friend; i++){
 			friend_info f_info_ele = new friend_info();
-			
+
 			f_info_ele.id = listen.readLine();
 			System.out.println("id : "+f_info_ele.id);
-			
+
 			f_info_ele.id_n = Integer.parseInt(listen.readLine());
 			System.out.println("id_n : "+f_info_ele.id_n);
-			
+
 			f_info_ele.image = receive_file_fast("c_"+f_info_ele.id+".jpg");	// !!!!!!!!!!!!!이후 파일 형식 처리 따로 필요
 			System.out.println("file : "+f_info_ele.image.getName());
-			
+
 			f_info_ele.stmt_msg = listen.readLine();
 			System.out.println("msg : "+ f_info_ele.stmt_msg);
 
@@ -133,10 +133,10 @@ public class friend_panel {
 	public File receive_file_fast(String _file_name) throws IOException{
 		connected_socket.getOutputStream().write(1);
 		connected_socket.getOutputStream().flush();			
-		
+
 		//get file lengh
 		int file_len = Integer.parseInt(listen.readLine());
-		
+
 		//measure byte size
 		byte [] mybytearray  = new byte [file_len+100];
 		InputStream is = connected_socket.getInputStream();
@@ -149,7 +149,7 @@ public class friend_panel {
 				break;
 			}
 		}
-		
+
 		//byte to file
 		File downloaded_file = new File(_file_name);
 		FileOutputStream fos = new FileOutputStream(downloaded_file);
@@ -161,7 +161,7 @@ public class friend_panel {
 		//close
 		fos.close();
 		bos.close();
-		
+
 		return downloaded_file;
 	}
 
@@ -175,7 +175,7 @@ public class friend_panel {
 		o_panel.setLayout(new BorderLayout());
 		o_panel.setBounds(0,0, 500,500);
 		o_panel.addMouseListener(ml);
-		
+
 		String f_id_temp = f_info.elementAt(_i).id;
 		int f_id_n_temp = f_info.elementAt(_i).id_n;
 		File f_image_temp = f_info.elementAt(_i).image;
@@ -204,7 +204,7 @@ public class friend_panel {
 		b_id.setName(f_id_temp);
 		b_id.addMouseListener(ml);
 		right_panel.add(b_id);
-		
+
 		JButton b_stmt_msg = new JButton("default");
 		if(f_stmt_msg!=null){
 			b_stmt_msg.setText(f_stmt_msg);	
@@ -214,24 +214,23 @@ public class friend_panel {
 		b_stmt_msg.setName(f_id_temp);
 		b_stmt_msg.addMouseListener(ml);
 		right_panel.add(b_stmt_msg);
-		
+
 		o_panel.setVisible(true);
 		return o_panel;
 	}
 
 	public void open_chat_frame(String _clicked_friend_id){
-		String clicked_friend_id = _clicked_friend_id;
-		send.println(command.request_friend_ip);
-		send.flush();
-		send.println(clicked_friend_id);
-		send.flush();
-
+		String f_id = _clicked_friend_id;
 		try {
-			System.out.println("friend ip : "+ listen.readLine());
-			System.out.println("friend port : "+ listen.readLine());
-			if (!main_frame.already_exist_chat_v.contains(clicked_friend_id)){
-				chat_frame chat_f = new chat_frame(connected_socket, listen, send, id_n, 0);
-				main_frame.already_exist_chat_v.addElement(clicked_friend_id);
+			send.println(command.id_n_from_id);
+			send.flush();
+			send.println(f_id);
+			send.flush();
+			int _f_id_n = Integer.parseInt(listen.readLine());
+
+			if (!main_frame.already_exist_chat_v.contains(f_id)){
+				chat_frame chat_f = new chat_frame(connected_socket, listen, send, id_n, _f_id_n);
+				main_frame.already_exist_chat_v.addElement(f_id);
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();

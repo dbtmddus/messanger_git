@@ -1,0 +1,61 @@
+import java.util.Arrays;
+import java.util.Vector;
+
+public class Solution {
+	static String[] arr = {"H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al",
+			"Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe",
+			"Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr", "Rb", "Sr",
+			"Y","Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb",
+			"Te", "I", "Xe", "Cs", "Ba", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au",
+			"Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Rf", "Db", "Sg",
+			"Bh", "Hs", "Mt", "Ds", "Rg", "Cn", "Fl", "Lv", "La", "Ce", "Pr", "Nd",
+			"Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Ac",
+			"Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md",
+			"No", "Lr"};
+
+	static String[] one = {"H", "B", "C", "N", "O", "F", "P", "S", "K", "V",  "Y", "I", "W","U" };
+
+	static String[] two = {"He", "Li", "Be", "Ne", "Na", "Mg", "Al",
+			"Si",  "Cl", "Ar", "Ca", "Sc", "Ti",  "Cr", "Mn", "Fe",
+			"Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr", "Rb", "Sr",
+			"Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb",
+			"Te",  "Xe", "Cs", "Ba", "Hf", "Ta", "Re", "Os", "Ir", "Pt", "Au",
+			"Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Rf", "Db", "Sg",
+			"Bh", "Hs", "Mt", "Ds", "Rg", "Cn", "Fl", "Lv", "La", "Ce", "Pr", "Nd",
+			"Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Ac",
+			"Th", "Pa",  "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md",
+			"No", "Lr"};
+
+	static Vector<String> v_one = new Vector<String>(0);
+	static Vector<String> v_two = new Vector<String>(0);
+
+	public static void main(String[] args) {
+
+
+		System.out.println(Arrays.binarySearch(arr, "Ga"));
+
+		System.out.println(("AaBb".toLowerCase()));
+		System.out.println(("AaBb".toUpperCase()));
+
+
+	}// end main
+
+	public void insert_one(){
+		for (int i=0 ; i<one.length; i++){
+			v_one.addElement(one[i]);
+			v_one.addElement(one[i].toLowerCase());
+		}
+	}
+	public void insert_two(){
+		for (int i=0 ; i<two.length; i++){
+			String str = two[i];
+			v_one.addElement(str.toUpperCase());
+			v_one.addElement(str.toLowerCase());
+			
+			String first = Character.toString(str.charAt(0));
+			String second = Character.toString(str.charAt(1));
+			v_one.addElement(first.toLowerCase() + second.toUpperCase() );
+			v_one.addElement(first.toUpperCase() + second.toLowerCase() );
+		}
+	}
+}

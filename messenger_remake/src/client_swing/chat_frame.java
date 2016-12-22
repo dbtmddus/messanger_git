@@ -18,10 +18,16 @@ import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
+import common_use.command;
+
 public class chat_frame extends JFrame {
 
-	private static friend_panel fp;
-
+	private Socket connected_socket;
+	private BufferedReader listen;
+	private PrintWriter send;
+	private int id_n;
+	private int f_id_n;
+	
 	private JPanel contentPane;
 
 	private JMenuBar menuBar;
@@ -35,22 +41,15 @@ public class chat_frame extends JFrame {
 	private JTextArea ta;
 	private JButton b_send;
 	
-	private Socket connected_socket;
-	private BufferedReader listen;
-	private PrintWriter send;
-	private int id_n;
-
 	public chat_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n, int _f_id_n ) throws IOException, ClassNotFoundException {
 
 		connected_socket = _connected_socket;
 		listen = _listen;
 		send = _send;
 		id_n = _id_n;
+		f_id_n = _f_id_n;
 
-		fp = new friend_panel(_connected_socket, _listen, _send, _id_n, this);
-		//
-			
-		/***********************************************************************/
+		//swing configuration	
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -75,7 +74,7 @@ public class chat_frame extends JFrame {
 		chat_recode_p.setLayout(null);
 		
 		JTextPane first_tp = new JTextPane();
-		first_tp.setBounds(chat_recode_p.getBounds().x-90, 10, 180, 25);
+		first_tp.setBounds(97, 12, 180, 25);
 		first_tp.setText("대화가 시작되었습니다.");
 		chat_recode_p.add(first_tp);
 		
@@ -119,16 +118,21 @@ public class chat_frame extends JFrame {
 				add_friend_frame frame_add_friends = new add_friend_frame(connected_socket, listen, send, id_n);
 			}
 			else if (obj==b_send){
-				send.println("normal_message");
-				send.flush();
-				send.println(id_n);
-				send.println(ta.getText());
-				send.flush();
+				String text = ta.getText();
+				send_message(text);
 				ta.setText("");
 			}
 			
 		}
 	};
-
+	public void send_message(String _text){
+		send.println(command.normal_message);
+		send.flush();
+		
+		send.println(f_id_n);
+		send.println(ta.getText());
+		send.flush();
+		
+	}
 }
 
