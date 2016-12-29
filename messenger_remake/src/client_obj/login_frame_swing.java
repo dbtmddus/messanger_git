@@ -109,7 +109,7 @@ public class login_frame_swing extends JFrame{
 			if (b_approved){	//when login is approved
 				int id_n;
 				id_n = Integer.parseInt(listen.readLine());
-				main_frame mf = new main_frame(connected_socket, listen, send, id_n );
+				main_frame mf = new main_frame(connected_socket, listen, send, id_n );344
 				setVisible(false);
 			}else{
 				JOptionPane.showMessageDialog(null, "일치하는 정보가 없습니다.", "로그인", JOptionPane.INFORMATION_MESSAGE);
