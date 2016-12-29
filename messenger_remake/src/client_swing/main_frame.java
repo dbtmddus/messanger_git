@@ -15,15 +15,15 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
-public class main_frame extends JFrame {
+public class main_frame extends Thread{
 
-	private static friend_panel fp;
-
+	private JFrame main_frame;
 	private JPanel contentPane;
+	private static friend_panel fp;
 
 	private JMenuBar menuBar;
 	private JButton b_friend;
-	private JButton b_chat;
+	private JButton b_chat_record_list;
 	private JButton b_configuration;
 	private JButton b_add_friend;
 
@@ -33,33 +33,31 @@ public class main_frame extends JFrame {
 	private BufferedReader listen;
 	private PrintWriter send;
 	private int id_n;
-	private JFrame main_frame;
 
 	public static Vector<String> already_exist_chat_v = new Vector<String>(0);	//사용자가 열어둔 채팅창 목록 //얘는 thread가 아니라 static사용 가능
 
 	public main_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n ) throws IOException, ClassNotFoundException {
-
 		/*********************************************************///
 		connected_socket = _connected_socket;
 		listen = _listen;
 		send = _send;
 		id_n = _id_n;
-		main_frame = this;
-
+		/*********************************************************///
+	}
+	public void run(){
+		/*********************************************************///
+		main_frame = new JFrame();
 		//fp = new friend_panel(_connected_socket, _listen, _send, _id_n, this);
-		/*********************************************************///
-
-		/*********************************************************///
 		menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
+		main_frame.setJMenuBar(menuBar);
 
 		b_friend = new JButton("친구 목록");
 		b_friend.addActionListener(action);
 		menuBar.add(b_friend);
 
-		b_chat = new JButton("채팅 목록");
-		b_chat.addActionListener(action);
-		menuBar.add(b_chat);
+		b_chat_record_list = new JButton("채팅 목록");
+		b_chat_record_list.addActionListener(action);
+		menuBar.add(b_chat_record_list);
 
 		b_configuration = new JButton("설정");
 		b_configuration.addActionListener(action);
@@ -71,14 +69,14 @@ public class main_frame extends JFrame {
 
 		/*********************************************************///
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 395, 650);
+		main_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		main_frame.setBounds(100, 100, 395, 650);
 
 		//getContentPane().setLayout(null);
 		contentPane = new JPanel();
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+		main_frame.setContentPane(contentPane);
 
 		p_main = new Panel();
 		contentPane.add(p_main, BorderLayout.CENTER);
@@ -86,7 +84,7 @@ public class main_frame extends JFrame {
 		JButton b10 = new JButton("ddddd");
 		p_main.add(b10);
 
-		setVisible(true);
+		main_frame.setVisible(true);
 	}
 
 	ActionListener action = new ActionListener() {
@@ -104,8 +102,8 @@ public class main_frame extends JFrame {
 					e1.printStackTrace();
 				}
 				contentPane.add(fp.get_spanel());
-				revalidate();
-				repaint();		//2개 같이 쓰기 권장
+				main_frame.revalidate();
+				main_frame.repaint();		//2개 같이 쓰기 권장
 			}
 			else if(obj==b_add_friend){
 				add_friend_frame frame_add_friends = new add_friend_frame(connected_socket, listen, send, id_n);

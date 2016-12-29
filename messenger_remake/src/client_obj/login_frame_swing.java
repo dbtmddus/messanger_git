@@ -109,7 +109,8 @@ public class login_frame_swing extends JFrame{
 			if (b_approved){	//when login is approved
 				int id_n;
 				id_n = Integer.parseInt(listen.readLine());
-				main_frame mf = new main_frame(connected_socket, listen, send, id_n );344
+				f_open_main_frame(connected_socket, listen, send, id_n );
+				f_create_chat_socket();
 				setVisible(false);
 			}else{
 				JOptionPane.showMessageDialog(null, "일치하는 정보가 없습니다.", "로그인", JOptionPane.INFORMATION_MESSAGE);
@@ -133,4 +134,15 @@ public class login_frame_swing extends JFrame{
 		send.println(password);
 		send.flush();
 	}
+	public void run(){
+//		main_frame mf = new main_frame(_connected_socket, _listen, _send, _id_n );				
+	}
+	public void f_open_main_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n ) throws ClassNotFoundException, IOException{
+		main_frame mf = new main_frame(_connected_socket, _listen, _send, _id_n);
+		mf.start();
+	}
+	public void f_create_chat_socket(){
+		
+	}
+	
 }//end

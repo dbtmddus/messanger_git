@@ -1,0 +1,15 @@
+package thread_test;
+
+public class thread_implements implements Runnable{
+	public A(){
+		Thread thread=new Thread(this);//A클래스가 프레임이기 때문에 Thread가 일어날 대상을 인자로 넣어
+		//줘야 한다.
+		thread.start()//Thread를 참조하여 start()를 날려줘야 합니다.
+	}
+
+
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+}

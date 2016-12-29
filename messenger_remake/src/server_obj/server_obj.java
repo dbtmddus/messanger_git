@@ -63,7 +63,7 @@ public class server_obj extends Thread {
 		}
 	}
 
-	public void run(){	//메인 기능 함수, 클라리언트 접속 대기하고, 이후 접송 종료까지 고객요청 접수 
+	public void get_new_client_connection(){
 		try {
 			soc = server_socket.accept(); //새 고객 접속 대기
 			System.out.println("client is admitted");
@@ -80,7 +80,10 @@ public class server_obj extends Thread {
 		}
 		catch (IOException e) {
 			e.printStackTrace();
-		}
+		}		
+	}
+	public void run(){	//메인 기능 함수, 클라리언트 접속 대기하고, 이후 접송 종료까지 고객요청 접수 
+		get_new_client_connection();
 	}
 
 	public void call_func(String _client_request){

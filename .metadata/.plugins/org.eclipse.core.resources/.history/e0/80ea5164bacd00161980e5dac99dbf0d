@@ -1,0 +1,20 @@
+package thread_test;
+
+public class main {
+
+	public static void main(String[] args) {
+		obj_extends o1 = new obj_extends(1);
+		o1.start();
+		
+		obj_extends o2 = new obj_extends(2);
+		o2.start();
+		
+		thread_implements t_imp1 = new thread_implements(11);
+		thread_implements t_imp2 = new thread_implements(12);
+		
+		Thread thread1=new Thread(t_imp1);
+		thread1.start();
+		
+	}
+
+}
