@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy package &apos;send_several_files_with_byte_array_final_works_well&apos; to &apos;test/src&apos;&#x0D;&#x0A;- Original project: &apos;send_file_works_well&apos;&#x0D;&#x0A;- Destination element: &apos;test/src&apos;&#x0D;&#x0A;- Original element: &apos;send_file_works_well/src/send_several_files_with_byte_array_final_works_well&apos;" description="Copy package" destination="=test/src" element1="/src&lt;send_several_files_with_byte_array_final_works_well" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1483410018376" version="1.0"/>
+</session>

@@ -10,7 +10,12 @@ public class thread_extends extends Thread{
 		a=0;
 		iden_n= _iden_n;
 	}	
-	public void f(){
+	
+	public void run(){
+		print_a();
+	}
+	
+	public void print_a(){
 		while(true){
 			if (a<100000){
 				try {
@@ -18,17 +23,9 @@ public class thread_extends extends Thread{
 					a++;
 					System.out.println(iden_n +" - "+a);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		}
-	}
-
-	public void run(){
-		f();
-	}
-	public int get_a(){
-		return a;
 	}
 }

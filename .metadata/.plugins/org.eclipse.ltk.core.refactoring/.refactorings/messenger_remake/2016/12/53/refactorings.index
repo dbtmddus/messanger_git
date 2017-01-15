@@ -1,2 +1,3 @@
 1483006985486	Rename field 'b_chat'
 1483007009409	Rename field 'b_chat_list'
+1483016789478	Rename method 'get_new_client_connection'

@@ -1,0 +1,16 @@
+package over_load_ride;
+
+interface v_implements_interface {
+	
+	int a =5;
+	public default void f_default(){
+		System.out.println("origin_f1");
+	}
+	public abstract void f_abstract();
+	public void f_basic();	//abstract
+	
+	public static void f_static() {
+		System.out.println("f_static");
+	}
+	
+}

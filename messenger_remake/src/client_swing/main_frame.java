@@ -5,7 +5,10 @@ import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Vector;
@@ -36,11 +39,12 @@ public class main_frame extends Thread{
 
 	public static Vector<String> already_exist_chat_v = new Vector<String>(0);	//사용자가 열어둔 채팅창 목록 //얘는 thread가 아니라 static사용 가능
 
-	public main_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n ) throws IOException, ClassNotFoundException {
+	public main_frame(Socket _connected_socket, int _id_n ) throws IOException, ClassNotFoundException {
 		/*********************************************************///
 		connected_socket = _connected_socket;
-		listen = _listen;
-		send = _send;
+		listen = new BufferedReader(new InputStreamReader(connected_socket.getInputStream()));
+		send = new PrintWriter(new BufferedWriter(new OutputStreamWriter(connected_socket.getOutputStream())));
+		
 		id_n = _id_n;
 		/*********************************************************///
 	}
@@ -94,7 +98,7 @@ public class main_frame extends Thread{
 			if(obj==b_friend){
 				contentPane.removeAll();
 				try {
-					fp = new friend_panel(connected_socket, listen, send, id_n, main_frame);	// 친구 목록 많을시 시간 걸림, 새로고침 키 추가 시 이 줄만 없애면 됨
+					fp = new friend_panel(connected_socket, id_n, main_frame);	// 친구 목록 많을시 시간 걸림, 새로고침 키 추가 시 이 줄만 없애면 됨
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -106,7 +110,12 @@ public class main_frame extends Thread{
 				main_frame.repaint();		//2개 같이 쓰기 권장
 			}
 			else if(obj==b_add_friend){
-				add_friend_frame frame_add_friends = new add_friend_frame(connected_socket, listen, send, id_n);
+				try {
+					add_friend_frame frame_add_friends = new add_friend_frame(connected_socket, id_n);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 	};

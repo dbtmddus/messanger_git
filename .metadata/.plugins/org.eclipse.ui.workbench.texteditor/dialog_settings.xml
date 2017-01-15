@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="13" key="selection"/>
+		<item value="chat_f" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="13"/>
-			<item value="13\n10"/>
-			<item value="10"/>
-			<item value="file_data"/>
-			<item value="inputstream"/>
-			<item value="f_info"/>
-			<item value="ddd"/>
-			<item value="ddddd"/>
+			<item value="chat_f"/>
+			<item value="127"/>
+			<item value="server_socket"/>
+			<item value="//"/>
+			<item value="send"/>
+			<item value="sned"/>
+			<item value="listen"/>
+			<item value="soc"/>
 		</list>
 		<list key="replacehistory">
 			<item value="num_of_friend"/>

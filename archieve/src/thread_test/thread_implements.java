@@ -8,7 +8,6 @@ public class thread_implements implements Runnable{
 		iden_n = _iden_n;
 	}
 
-
 	public void run(){
 		while(true){
 			if (a<100000){
@@ -23,5 +22,4 @@ public class thread_implements implements Runnable{
 			}
 		}
 	}
-	
 }

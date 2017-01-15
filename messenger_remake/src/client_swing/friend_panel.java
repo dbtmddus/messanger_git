@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,6 +21,7 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Vector;
@@ -48,11 +50,11 @@ public class friend_panel {
 	private JPanel big_panel; 	//each panels add되는 panel
 	private static Vector<JPanel> each_panels = new Vector<JPanel>(0); //친구 1명값 표시되는 panel
 
-	public friend_panel(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n, JFrame m_frame ) throws IOException, ClassNotFoundException{		
+	public friend_panel(Socket _connected_socket, int _id_n, JFrame m_frame ) throws IOException, ClassNotFoundException{		
 
 		connected_socket = _connected_socket;		
-		listen = _listen;
-		send = _send;
+		listen = new BufferedReader(new InputStreamReader(connected_socket.getInputStream()));
+		send = new PrintWriter(new BufferedWriter(new OutputStreamWriter(connected_socket.getOutputStream())));
 		id_n = _id_n;
 
 		// basic swing configuration
@@ -229,7 +231,7 @@ public class friend_panel {
 			int _f_id_n = Integer.parseInt(listen.readLine());
 
 			if (!main_frame.already_exist_chat_v.contains(f_id)){
-				chat_frame chat_f = new chat_frame(connected_socket, listen, send, id_n, _f_id_n);
+				chat_frame chat_f = new chat_frame(connected_socket, id_n, _f_id_n);
 				main_frame.already_exist_chat_v.addElement(f_id);
 			}
 		} catch (IOException e1) {

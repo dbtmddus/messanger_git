@@ -1,0 +1,37 @@
+package extends_and_implements_basic;
+
+
+class implemented_obj implements v_implements_interface{
+	
+	@Override
+	public void f_abstract() {
+		System.out.println("f_abstract_implemented");
+		//v_implements_interface.f_static();
+	}
+
+	@Override
+	public void f_basic() {
+		System.out.println("f_basic_implemented");		
+	}
+
+	@Override
+	public void f_default() {
+		System.out.println("f_default_implemented");		
+	}
+
+	/*@Override	//얘는 수정 불가능
+	public void f_static() {
+		System.out.println("f_default_implemented");		
+	}*/
+
+}
+public class v_implements{
+	public static void main(String[] args) {
+		implemented_obj o1 =new implemented_obj();
+		o1.f_basic();
+		o1.f_abstract();
+		o1.f_default();
+		o1.f_default();
+		
+	}//end main	
+}

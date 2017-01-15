@@ -1,0 +1,27 @@
+package over_load_ride;
+
+
+class implemented_obj implements v_implements_interface{
+	
+	
+	@Override
+	public void f_abstract() {
+		v_implements_interface.f_static();
+	}
+
+	@Override
+	public void f_basic() {
+		
+	}
+
+}
+public class v_implements{
+	public static void main(String[] args) {
+		implemented_obj o1 =new implemented_obj();
+		o1.f_default();
+		o1.f_abstract();
+		o1.f_basic();
+
+		
+	}//end main	
+}

@@ -1,0 +1,8 @@
+package over_load_ride;
+
+interface obj2 {
+	
+	int a =5;
+	public void f1();
+	
+}

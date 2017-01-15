@@ -1,0 +1,24 @@
+package simple_server;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+
+import my_sql_simple.DB_obj;
+
+public class server_main {
+	public static void main(String[] args) throws IOException {
+		ServerSocket server_socket = new ServerSocket(1245);
+		
+		DB_obj db = new DB_obj();
+		db.connect();
+		
+		server_obj s = new server_obj(server_socket);
+		s.run();
+		//receive_new_client_connection();
+		
+		
+		System.out.println(s.listen.readLine());
+		s.send.println("str_from_pc");
+		s.send.flush();
+	}
+}

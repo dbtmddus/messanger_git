@@ -5,7 +5,10 @@ import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -41,11 +44,11 @@ public class chat_frame extends JFrame {
 	private JTextArea ta;
 	private JButton b_send;
 	
-	public chat_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n, int _f_id_n ) throws IOException, ClassNotFoundException {
+	public chat_frame(Socket _connected_socket,int _id_n, int _f_id_n ) throws IOException, ClassNotFoundException {
 
 		connected_socket = _connected_socket;
-		listen = _listen;
-		send = _send;
+		listen = new BufferedReader(new InputStreamReader(connected_socket.getInputStream()));
+		send = new PrintWriter(new BufferedWriter(new OutputStreamWriter(connected_socket.getOutputStream())));
 		id_n = _id_n;
 		f_id_n = _f_id_n;
 
@@ -115,7 +118,12 @@ public class chat_frame extends JFrame {
 				}*/
 			}
 			else if (obj==b_configuration){
-				add_friend_frame frame_add_friends = new add_friend_frame(connected_socket, listen, send, id_n);
+				try {
+					add_friend_frame frame_add_friends = new add_friend_frame(connected_socket,  id_n);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			else if (obj==b_send){
 				String text = ta.getText();
