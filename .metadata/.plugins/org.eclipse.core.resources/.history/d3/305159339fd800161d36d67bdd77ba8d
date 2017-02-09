@@ -1,0 +1,10 @@
+package simple_server;
+
+public class client_main {
+
+	public static void main(String[] args) {
+		client_obj c = new client_obj(, port)
+		
+		
+	}
+}

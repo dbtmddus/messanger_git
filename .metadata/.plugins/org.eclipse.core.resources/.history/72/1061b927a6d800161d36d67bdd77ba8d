@@ -1,0 +1,12 @@
+package simple_server;
+
+import java.io.IOException;
+
+public class client_main_thred {
+
+	public static void main(String[] args) throws IOException {
+		client_obj c = new client_obj("192.168.123.138", 1245);
+		c.enter();
+		
+	}
+}

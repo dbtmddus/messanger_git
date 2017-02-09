@@ -1,0 +1,10 @@
+package simple_server;
+
+public class server_main {
+
+	public static void main(String[] args) {
+		server_obj s = new server_obj();
+		
+	}
+
+}

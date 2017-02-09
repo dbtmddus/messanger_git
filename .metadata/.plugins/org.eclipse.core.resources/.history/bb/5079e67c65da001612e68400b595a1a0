@@ -1,0 +1,20 @@
+package my_sql_simple;
+
+
+
+public class db_main {
+	public static void main(String[] args) throws SQLException {
+		DB_obj db = new DB_obj();
+		db.connect();
+		
+		//db.insert_new_client(1,5,6,7);
+		//db.insert_new_client(2,5,6,7);
+		db.show_all();
+		
+		/*System.out.println("-----------------------------------------");
+		db.delete_all();
+		db.show_all();
+*/		
+		db.disconnect();
+	}
+}

@@ -1,0 +1,11 @@
+package over_load_ride;
+
+interface obj2 {
+	
+	int a =5;
+	public static void f1(){
+		System.out.println("origin_f1");
+	}
+	public void f2();
+	
+}

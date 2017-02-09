@@ -1,0 +1,15 @@
+package simple_server;
+
+import java.net.ServerSocket;
+
+public class server_main {
+
+	public static void main(String[] args) {
+		ServerSocket server_socket = new ServerSocket(1245);
+		server_obj s = new server_obj(server_socket);
+		
+		
+		
+	}
+
+}

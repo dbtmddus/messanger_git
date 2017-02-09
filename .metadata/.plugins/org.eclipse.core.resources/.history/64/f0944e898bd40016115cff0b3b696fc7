@@ -1,0 +1,22 @@
+package over_load_ride;
+
+class e_obj extends obj{
+
+	public e_obj(){
+	}
+	@Override 
+	public void f1(){
+		super();
+		System.out.println("extended f1");
+	}
+
+}
+
+public class v_extends {
+
+	public static void main(String[] args) {
+		e_obj o1 = new e_obj();
+		o1.f1();
+	}
+
+}

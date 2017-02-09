@@ -19,6 +19,7 @@ public class CC {
 	
 	public static String SendIdNFromId__id = "send_id_n_from_id : _id";
 	
+	
 	public static String b_approved = "b_approved";
 	
 	public static String logged_in_id_n ="logged_in_id_n"; 

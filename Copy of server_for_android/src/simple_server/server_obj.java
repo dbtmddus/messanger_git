@@ -36,68 +36,28 @@ public class server_obj extends Thread {
 	}
 
 	public void receive_new_client_connection(){
-		//while(soc!=null){
 		try {
-			System.out.println("waiting new client..");
+			System.out.println("watting new client..");
 			soc = server_socket.accept(); //새 고객 접속 대기
-			reconnect(); //다음 고객 처리 위해 오픈
 			System.out.println("client is admitted");
 			listen = new BufferedReader(new InputStreamReader(soc.getInputStream()));
 			send = new PrintWriter(new BufferedWriter(new OutputStreamWriter(soc.getOutputStream())));
 			show_connection_info(soc);
 
 			System.out.println("first str from client : "+listen.readLine());
+
+			while (soc !=null){		// 이동 등으로 ip주소가 바뀌는 경우 (일시적으로 인터넷이 끊기는 경우 //위 listen, send 포함 함수화 하고 catch 부분에서 해당 함수 계속 다시 시도하도록 변경
+				String client_request;
+				client_request = listen.readLine();
+				System.out.println("client command : "+client_request);
+				call_func(client_request);
+			}
 		}
 		catch (IOException e) {
-			System.out.println("error in connection - 01");
-			close_and_reconnect();
 			e.printStackTrace();
-		}	
-
-		//	while (soc.isConnected()){
-		while (!soc.isClosed()){	//soc.isconnected로는 오작동함.
-			try{
-				String client_request;
-				System.out.println("ready for command..");
-				client_request = listen.readLine();
-				System.out.println("get command..");
-				if (client_request!=null){
-					System.out.println("client command : "+client_request);
-					call_func(client_request);
-				}else{
-					System.out.println("error - null command - 02");
-					close_and_reconnect();
-				}
-			}
-			catch (IOException e) {
-				System.out.println("error in getting command - 03");
-				close_and_reconnect();
-				e.printStackTrace();
-			}		
-		}
-
-		//}
+		}		
 	}
 
-	public void reconnect(){
-		server_obj s = null;
-		try {
-			s = new server_obj(server_socket);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		s.start();
-	}
-
-	public void close_and_reconnect() {
-		try {
-			soc.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		reconnect();
-	}
 
 	public void run(){	//메인 기능 함수, 클라리언트 접속 대기하고, 이후 접송 종료까지 고객요청 접수 
 		receive_new_client_connection();
@@ -108,8 +68,6 @@ public class server_obj extends Thread {
 			send_info_from_id_n();
 		}else if (_client_request.equals("send_all_info")){
 			send_all_info_with_size();
-		}else if (_client_request.equals("expection")){
-			expection();
 		}
 
 		/*switch(_client_request){
@@ -155,7 +113,7 @@ public class server_obj extends Thread {
 	}
 
 	public void send_all_info_with_size(){
-		Vector<int[]> _vec = db.get_all_info();
+		Vector<int[]> _vec = db.send_all_info();
 		int _size = _vec.size();
 		System.out.println("total info size : "+_size);
 
@@ -169,18 +127,7 @@ public class server_obj extends Thread {
 			send.flush();			
 		}
 	}
-	public void set_b_table() throws NumberFormatException, IOException{
-		int b = Integer.parseInt(listen.readLine());
-		db.set_b_table(b);
-	}
-	
-	public void expection(){
-		send.println((db.get_expected_time("CO")));
-		send.println((db.get_expected_time("SMOKE")));
-		//send.println(db.get_value("GAS"));
-		send.flush();
-		System.out.println( db.get_expected_time("CO"));
-		System.out.println( db.get_expected_time("SMOKE"));
-	}
+
+
 }//end class
 

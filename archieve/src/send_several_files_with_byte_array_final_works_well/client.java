@@ -12,12 +12,7 @@ import java.net.Socket;
 public class client {
 
 	public final static int SOCKET_PORT = 13267;      // you may change this
-	//public final static String SERVER = "127.0.0.1";  // localhost
-	
-	public final static String SERVER = "211.202.60.68";  // sk 공유기 외부 ip
-	//public final static String SERVER = "202.68.225.47";  // 고정 ip
-	
-	
+	public final static String SERVER = "127.0.0.1";  // localhost
 	public final static int FILE_SIZE = 602238600; // should bigger than the file to be downloaded
 	
 	public static void main (String [] args ) throws IOException, InterruptedException {

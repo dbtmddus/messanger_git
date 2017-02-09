@@ -19,10 +19,7 @@ public class server {
 			System.out.println("Waiting...");
 			sock = servsock.accept();
 			System.out.println("Accepted connection : " + sock);
-			System.out.println("server : "+sock.getLocalSocketAddress());
-			System.out.println("client : "+sock.getRemoteSocketAddress());
-			
-			
+
 			for (int i=1; i<5; i++){
 				String FILE_TO_SEND = "C:\\messanger_image\\qkf"+i+".png";  // you may change this
 				File myFile = new File (FILE_TO_SEND);
