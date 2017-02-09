@@ -23,6 +23,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Vector;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -47,7 +48,7 @@ public class server_obj extends Thread {
 	private BufferedReader listen;
 	PrintWriter send;
 	//
-	private Socket socket_for_chat;
+	private Socket soc_chat;
 	private PrintWriter send_for_chat ;		//추가
 	private BufferedReader listen_for_chat;
 
@@ -68,31 +69,29 @@ public class server_obj extends Thread {
 
 	public void receive_new_client_connection(){
 		try {
-
 			locker.lock();
 			try{
 				soc = server_socket.accept(); //새 고객 접속 대기
-				System.out.println("client is admitted");
+				System.out.println("\n커맨드 소켓 연결 성공(서버)");
+				
+				soc_chat = server_socket.accept(); //이렇게 열면 완전 새 클라이언트용이랑 이것중 아무거나 선택해서 들어감.
+				System.out.println("채팅 소켓 연결 성공(서버)");
+				
 				listen = new BufferedReader(new InputStreamReader(soc.getInputStream()));
 				send = new PrintWriter(new BufferedWriter(new OutputStreamWriter(soc.getOutputStream())));
+				System.out.println("\n 커맨드 소켓 정보");
 				show_connection_info(soc);
-
-				socket_for_chat = server_socket.accept(); //이렇게 열면 완전 새 클라이언트용이랑 이것중 아무거나 선택해서 들어감.
-				System.out.println("통신 소켓 연결 성공(서버측)");
+				
 			}catch(Exception ee){
+				System.out.println("초기 접속 오류---------------------------------------------");
 				soc.close();
-				socket_for_chat.close();
+				soc_chat.close();
 			}finally{
 				locker.unlock();
 			}
 
-			//set_chat_socket();
 			while (soc !=null){		// 이동 등으로 ip주소가 바뀌는 경우 (일시적으로 인터넷이 끊기는 경우 //위 listen, send 포함 함수화 하고 catch 부분에서 해당 함수 계속 다시 시도하도록 변경
-				String client_request;
-				client_request = listen_and_record(CC.client_command);
-				//client_request = listen.readLine();
-				//System.out.println("client command : "+client_request);
-				call_func(client_request);
+				call_func();
 			}
 		}
 		catch (IOException e) {
@@ -101,14 +100,19 @@ public class server_obj extends Thread {
 	}
 
 	public void set_chat_socket() throws IOException{
-		socket_for_chat = server_socket.accept(); //새 고객 접속 대기
+		soc_chat = server_socket.accept(); //새 고객 접속 대기
 		System.out.println("통신 소켓 연결 성공(서버측)");
 	}
 	public void run(){	//메인 기능 함수, 클라리언트 접속 대기하고, 이후 접송 종료까지 고객요청 접수 
 		receive_new_client_connection();
 	}
 
-	public void call_func(String _client_request){
+	public void call_func() throws IOException{
+		String _client_request;
+		_client_request = listen.readLine();
+		System.out.println("\n--------------------------------------------");
+		System.out.println("client request : " +_client_request+"\n----");
+		
 		try{
 			switch(_client_request){
 			case command.login:
@@ -118,9 +122,7 @@ public class server_obj extends Thread {
 				sign_up();
 				break;
 			case command.friends_detail_info:
-				//locker.lock();
 				send_friend_detail_info();
-				//locker.unlock();
 				break;
 			case command.add_friend:
 				add_friend();
@@ -151,16 +153,13 @@ public class server_obj extends Thread {
 	}
 
 	public void login() throws IOException{
-		System.out.println("enter log-in func");
-		String id = listen_and_record(CC.Login_Id);
-		int password = Integer.parseInt(listen_and_record(CC.Login_Pw));
-		//String id = listen.readLine();	
-		//int password = Integer.parseInt(listen.readLine());
+		//System.out.println("enter log-in func");
+		String id = listen_and_record(CC.id);
+		int password = Integer.parseInt(listen_and_record(CC.pw));
 
 		boolean b_approved = db.confirm_login(id, password);
-		send_and_record(Boolean.toString(b_approved), CC.b_approved+"at login()");
-		//send.println(b_approved);	//make client open main_frame
-		//send.flush();
+		send_and_record(Boolean.toString(b_approved), CC.b_approved);
+		
 		if (b_approved){
 			logged_in_id = id;
 			logged_in_id_n = db.get_id_n_from_id(id);			
@@ -168,49 +167,41 @@ public class server_obj extends Thread {
 			ip_and_port[logged_in_id_n][1] = Integer.toString( soc.getPort() );
 			socket_by_id_n[logged_in_id_n] = soc;
 
-			send_and_record(Integer.toString(logged_in_id_n), CC.logged_in_id_n+"at login()");
-			//send.println(logged_in_id_n);
-			//send.flush();
+			send_and_record(Integer.toString(logged_in_id_n), CC.logged_in_id_n);
+			show_connected_client_10();
 		}
-		System.out.println("finish log-in func");
+		//System.out.println("finish log-in func");
 	}
 
 	public void sign_up() throws IOException{
-		System.out.println("enter sign up func");
+		//System.out.println("enter sign up func");
 		String id = listen_and_record(CC.SignUp_Id);
 		int pw = Integer.parseInt(listen_and_record(CC.SignUp_Pw));
-		//String id = listen.readLine();
-		//int pw = Integer.parseInt(listen.readLine());
-
+		
 		while(db.inspect_id_n_exist_already(next_available_id_n)){		//고유번호 지정 (이미 채워진 고유번호는 넘어감)
 			next_available_id_n++;						//만일 모든 고객 수가 다 찰 경우, 무한루트로 돌 수 있음	(오류 가능성)
 		}
 		db.insert_new_client(next_available_id_n, id, pw);
 		System.out.println("new client signed up : ( "+id+ " / "+pw+" / "+next_available_id_n );
-		System.out.println("finish log-in func");
-	}//주석
+		//System.out.println("finish log-in func");
+	}
 
 	public void add_friend() throws IOException {
-		System.out.println("enter add friend func");
-		String f_id = listen_and_record(CC.AddFriend_Fid);
-		//String f_id = listen.readLine();
-
+		//System.out.println("enter add friend func");
+		String f_id = listen_and_record(CC.fid);
+		
 		boolean b_approved = db.add_friend(logged_in_id_n, logged_in_id, f_id); 
-		send_and_record(Boolean.toString(b_approved), CC.b_approved+" at add_friend");
-		//send.println(b_approved);
-		//send.flush();	
-		System.out.println("finish add friend func");
+		send_and_record(Boolean.toString(b_approved), CC.b_approved);
+		//System.out.println("finish add friend func");
 	}
 
 	public void send_friend_detail_info() throws IOException, ClassNotFoundException{
-		System.out.println("enter friend list func");
+		//System.out.println("enter friend list func");
 		Vector[] temp_f_info = db.get_friend_info2(logged_in_id_n);
 
 		//친구 명수, detail_info 값 전송
 		int num_of_friend = temp_f_info[0].size();
-		send_and_record(Integer.toString(num_of_friend), CC.num_of_friend+"at send_friend_detail_info");
-		//send.println(num_of_friend);
-		//send.flush();
+		send_and_record(Integer.toString(num_of_friend), CC.num_of_friend);
 		for(int i=0; i<num_of_friend; i++){
 			send.println(temp_f_info[0].elementAt(i));
 			send.println(temp_f_info[1].elementAt(i));
@@ -224,7 +215,7 @@ public class server_obj extends Thread {
 		for (int i=0; i<4; i++){
 			System.out.println(logged_in_id + "의 친구 detail info : " + temp_f_info[i].toString());
 		}
-		System.out.println("finish friend list func");
+		//System.out.println("finish friend list func");
 	}
 
 	public void send_file_with_obj_stream(File _file) throws IOException, ClassNotFoundException{//objectstream 버전, 간단하고 잘 동작하나 상당히 많이 느리다.
@@ -268,12 +259,10 @@ public class server_obj extends Thread {
 	}
 
 	public void listen_normal_message() throws NumberFormatException, IOException{
-		int _f_id_n= Integer.parseInt(listen_and_record(CC.ListenNormalMessage_FIdN));
-		String m = listen_and_record("ListenNormalMessage_M");
-		//int _f_id_n= Integer.parseInt(listen.readLine());
-		//String m = listen.readLine();
-
-		System.out.println("from "+ _f_id_n+" - " + m);
+		int _f_id_n= Integer.parseInt(listen_and_record(CC.f_id_n));
+		String m = listen_and_record(CC.chatting_msg);
+		
+		System.out.println(m+" to "+ _f_id_n+" from "+ logged_in_id_n);
 		//send_normal_message(_f_id_n, m);
 	}
 
@@ -290,23 +279,17 @@ public class server_obj extends Thread {
 
 
 	public void send_friend_ip_and_port() throws IOException{
-		String f_id = listen_and_record(CC.SendFriendIpAndPort_FId);
+		String f_id = listen_and_record(CC.f_id);
 		//String f_id = listen.readLine();
 		int f_id_n = db.get_id_n_from_id(f_id);
-		send_and_record(ip_and_port[f_id_n][0], " at send_friend_ip_and_port()");	//friend ip
-		send_and_record(ip_and_port[f_id_n][1], " at send_friend_ip_and_port()"); 	//firned port
-		//send.println(ip_and_port[f_id_n][0]);	//friend ip
-		//send.println(ip_and_port[f_id_n][1]); 	//firned port
-		//send.flush();
+		send_and_record(ip_and_port[f_id_n][0], CC.friend_ip);	//friend ip
+		send_and_record(ip_and_port[f_id_n][1], CC.friend_port); 	//firned port
 	}
 
 	public void send_id_n_from_id() throws IOException{
-		String _id = listen_and_record(CC.SendIdNFromId__id);
-		//String _id = listen.readLine();
+		String _id = listen_and_record(CC._id);
 		int _id_n = db.get_id_n_from_id(_id); 
-		send_and_record(Integer.toString(_id_n), " at send_id_n_from_id()");
-		//send.println(_id_n);
-		//send.flush();
+		send_and_record(Integer.toString(_id_n), CC.f_id_n);
 	}
 
 	public void connect_db(){
@@ -322,24 +305,30 @@ public class server_obj extends Thread {
 			System.out.print(ip_and_port[i][0] +"/"+ip_and_port[i][1]+", ");
 		}
 		System.out.println();
+		System.out.println();
 	}
 
 	public void show_connection_info(Socket _soc){
 		System.out.println("server 정보 : "+_soc.getLocalSocketAddress());
 		System.out.println("client 정보 : "+_soc.getRemoteSocketAddress());
 		System.out.println("server socket 정보 : " + server_socket.toString());
+		System.out.println();
 	}
-	public String listen_and_record(String str_record) throws IOException{
+	public String listen_and_record(String str_var) throws IOException{
 		String str_listen = listen.readLine();
-		//String str = listen.readLine();
-
-		System.out.println("listen : "+str_record +"	/ "+str_record);
+		
+		StackTraceElement[] stack = this.getStackTrace();	
+		System.out.println("listen msg : "+str_listen +"	/	"+str_var+"	/	at "+stack[2]);
+		System.out.println("---------------------------------------------------------");
 		return str_listen;
 	}
-	public void send_and_record(String str_send,String str_record) throws IOException{
+	public void send_and_record(String str_send,String str_var) throws IOException{
 		send.println(str_send);
 		send.flush();
-		System.out.println("send : "+str_send + "	/ " + str_record);
+
+		StackTraceElement[] stack = this.getStackTrace();	
+		System.out.println("send msg : "+str_send +"	/	"+str_var+"	/	at "+stack[2]);
+		System.out.println("---------------------------------------------------------");
 	}
 }
 

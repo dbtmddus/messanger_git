@@ -2,22 +2,23 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="chat_f" key="selection"/>
+		<item value="TestThreadClass2" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="chat_f"/>
-			<item value="127"/>
-			<item value="server_socket"/>
-			<item value="//"/>
+			<item value="TestThreadClass"/>
+			<item value="client is admitted"/>
 			<item value="send"/>
-			<item value="sned"/>
 			<item value="listen"/>
-			<item value="soc"/>
+			<item value="listen_normal_message"/>
+			<item value="f_create_chat_socket"/>
+			<item value="login"/>
+			<item value="chat_f"/>
 		</list>
 		<list key="replacehistory">
+			<item value="TestThreadClass2"/>
 			<item value="num_of_friend"/>
 			<item value="stmt_msg"/>
 			<item value="detail_info"/>
@@ -25,14 +26,13 @@
 			<item value="b2"/>
 			<item value="panel2"/>
 			<item value=""/>
-			<item value="id"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="309" key="DIALOG_WIDTH"/>
 		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
 		<item value="444" key="DIALOG_HEIGHT"/>
-		<item value="1256" key="DIALOG_X_ORIGIN"/>
-		<item value="417" key="DIALOG_Y_ORIGIN"/>
+		<item value="1269" key="DIALOG_X_ORIGIN"/>
+		<item value="328" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

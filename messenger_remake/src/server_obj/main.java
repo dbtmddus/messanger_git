@@ -38,7 +38,7 @@ public class main {
 		server_obj server3 = new server_obj(server_socket);
 		server3.start();
 		
-		show_connected_client();
+		//show_connected_client();
 		//server1.request_friend_list_test();		
 	}//end main
 	
@@ -46,7 +46,7 @@ public class main {
 		while(true){
 			try {
 				server0.show_connected_client_10();
-				Thread.sleep(30000);
+				Thread.sleep(300000);
 			} catch (InterruptedException e) { 
 				e.printStackTrace();
 			} 

@@ -1,0 +1,23 @@
+package print_stack;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.Vector;
+
+public class test {
+
+	public static void main(String[] args) throws UnknownHostException, IOException {
+		f1();
+	}//end main
+
+	public static void f1(){
+		f2();
+	}
+	public static void f2(){
+		StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+		System.out.println(Arrays.toString(stack));
+		System.out.println(stack[2]);
+	}
+
+}

@@ -56,9 +56,9 @@ public class DB_obj {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()){
-				System.out.print("id : " + rs.getString("id"));
-				System.out.println(" / password : " + rs.getInt("password"));
-				System.out.println();
+				//System.out.print("id : " + rs.getString("id"));
+				//System.out.println(" / password : " + rs.getInt("password"));
+				//System.out.println();
 			}
 			rs.close();
 			pstmt.close();					
@@ -220,7 +220,7 @@ public class DB_obj {
 		if (f_id_n !=-1){
 			try {
 				String sql = "insert into friend_relation values(?,?,?,?)";	
-				System.out.println(sql);
+				//System.out.println(sql);
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, _id_n);
 				pstmt.setString(2, _id);

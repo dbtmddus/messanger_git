@@ -250,7 +250,7 @@ public class friend_panel {
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			String clicked_friend_id = e.getComponent().getName();
-			open_chat_frame(clicked_friend_id);
+			//open_chat_frame(clicked_friend_id);
 		}
 
 		@Override
