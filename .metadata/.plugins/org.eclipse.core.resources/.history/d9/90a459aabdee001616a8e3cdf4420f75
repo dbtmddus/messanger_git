@@ -1,0 +1,40 @@
+package thread_locker;
+
+class thread_extends extends Thread{
+
+	private int iden_n=0;
+	private static int n=0;
+
+	public thread_extends(int _iden_n){
+		iden_n= _iden_n;
+	}	
+
+	@Override
+	public void run(){
+		f();
+	}
+
+	public void f(){	//이 경우, class 자체를 혼자 독점하므로 이런 ㅓ방법은 비추천 되는듯(locker가 나음)
+		synchronized(thread_extends.class)
+		{
+			for(int i=0; i<100; i++){
+				System.out.print(iden_n+"aaaaaaaaaaaaaaaaaaaaaaaaaa");			
+				System.out.println(iden_n+"b");
+				System.out.println(i);	
+			}
+		}
+	}
+	//public synchronized void f(){} //이렇게 쓸거면 객체자체를 같은걸 써야함. 
+}
+
+
+public class loker {
+
+	public static void main(String[] args) throws InterruptedException {
+		thread_extends t_extends1 = new thread_extends(1);	//이 자체가 이미 thread 생성임.
+		thread_extends t_extends2 = new thread_extends(2);
+		
+		t_extends1.start();		
+		t_extends2.start();		
+	}
+}

@@ -1,0 +1,12 @@
+package thread_sync;
+
+public class main {
+
+	public static void main(String[] args) throws InterruptedException {
+		thread_extends t_extends1 = new thread_extends(1);	//이 자체가 이미 thread 생성임.
+		thread_extends t_extends2 = new thread_extends(2);
+		
+		t_extends1.start();		
+		t_extends2.start();		
+	}
+}

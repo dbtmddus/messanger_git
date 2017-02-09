@@ -9,18 +9,13 @@ public class test {
 
 	public static void main(String[] args) throws UnknownHostException, IOException {
 
-		Thread t1 = new Thread(new Runnable() {
-			public void run(){f1();}
-		});
-
-
-		Thread t2 = new Thread(new Runnable() {
-			public void run(){f2();}
-		});
-
-		t1.start();
-		t2.start();
-
+		Vector<Integer> v = new Vector<>(0);
+		
+		v.addElement(55);
+		v.addElement(66);
+		
+		//int a = 5020000000;
+		System.out.println(v.elementAt(v.size()-1));
 
 	}//end main
 

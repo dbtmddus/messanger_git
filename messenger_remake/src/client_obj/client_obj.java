@@ -31,6 +31,7 @@ public class client_obj {
 				connected_socket = new Socket(server_ip, server_port);
 				send = new PrintWriter(new BufferedWriter(new OutputStreamWriter(connected_socket.getOutputStream()))); //추가
 				listen = new BufferedReader(new InputStreamReader(connected_socket.getInputStream()));
+				System.out.println("기본 소켓 1 연결 성공");
 				
 				try {
 					Thread.sleep(1000);
@@ -38,6 +39,8 @@ public class client_obj {
 					e.printStackTrace();
 				}
 				socket_for_chat = new Socket(server_ip, server_port);
+				System.out.println("통신용 소켓 1 연결 성공");
+
 				break;
 			} catch (UnknownHostException e) {
 				e.printStackTrace();

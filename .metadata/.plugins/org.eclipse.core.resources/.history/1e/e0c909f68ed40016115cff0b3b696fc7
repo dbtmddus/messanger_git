@@ -1,7 +1,0 @@
-package over_load_ride;
-
-interface obj2 {
-	
-	public void f1();
-	
-}

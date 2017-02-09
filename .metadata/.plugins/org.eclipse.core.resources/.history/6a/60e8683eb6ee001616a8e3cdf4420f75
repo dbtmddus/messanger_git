@@ -1,0 +1,25 @@
+package thread_sync;
+
+public class thread_extends extends Thread{
+
+	public static int[] arr = new int[10];
+	public int iden_n=0;
+	
+	public static int n=0;
+
+	public thread_extends(int _iden_n){
+		iden_n= _iden_n;
+	}	
+
+	@Override
+	public void run(){
+		f();
+	}
+
+	public synchronized void f(){
+		for(int i=0; i<100; i++){
+			n=iden_n;
+			System.out.println(iden_n +"'s n="+n);			
+		}
+	}
+	

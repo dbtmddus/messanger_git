@@ -15,6 +15,7 @@ public class db_main {
 		db.delete_all();
 		db.show_all();
 */		
-		db.disconnect();
+//		db.disconnect();
+		
 	}
 }

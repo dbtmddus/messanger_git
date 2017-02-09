@@ -1,0 +1,17 @@
+1486601628533	Copy package
+1486601660068	Delete element
+1486602037627	Rename package 'thread_sync'
+1486602043541	Rename package 'thread_test'
+1486602968631	Delete element
+1486638213845	Rename type 'TestThreadAnother'
+1486638307510	Copy compilation unit
+1486640548811	Delete element
+1486640619331	Rename type 'test'
+1486640775461	Delete element
+1486640789134	Rename type 'main'
+1486640801470	Rename type 'use_unshared_obj'
+1486640866345	Copy compilation unit
+1486640877867	Rename type 'not_use_shared_obj2'
+1486640896134	Copy compilation unit
+1486640898497	Delete element
+1486640905574	Rename type 'loker'

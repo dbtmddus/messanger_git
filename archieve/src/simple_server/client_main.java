@@ -6,13 +6,11 @@ public class client_main {
 
 	public static void main(String[] args) throws IOException {
 		
-		//client_obj_thread c = new client_obj_thread("192.168.123.138", 1245);
-		//client_obj_thread c = new client_obj_thread("220.88.122.67", 1245);
-		client_obj_thread c = new client_obj_thread("172.30.96.99", 1245);
+		//client_obj_thread c = new client_obj_thread("172.30.96.99", 1245);
+		//c.start();
 		
-		c.start();
-		//client_obj c = new client_obj("192.168.123.138", 1245);
-		//c.enter();
+		client_obj c = new client_obj("127.0.0.1", 1245);
+		c.enter();
 		
 	}
 }

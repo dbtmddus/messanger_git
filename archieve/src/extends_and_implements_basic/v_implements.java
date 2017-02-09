@@ -2,7 +2,7 @@ package extends_and_implements_basic;
 
 import java.util.Arrays;
 
-interface를 super로 받아올수 있는지 확인할것, 용어txt정리할것.
+//interface를 super로 받아올수 있는지 확인할것, 용어txt정리할것.
 class implemented_obj implements v_implements_interface{
 
 	public implemented_obj(){
@@ -13,7 +13,7 @@ class implemented_obj implements v_implements_interface{
 		System.out.println("f_abstract_implemented");
 		//v_implements_interface.f_static();
 	}
-
+ 
 	@Override
 	public void f_basic() {
 		System.out.println("f_basic_implemented");		

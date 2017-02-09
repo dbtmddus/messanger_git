@@ -1,0 +1,48 @@
+package thread_sync;
+
+class f_class{
+	public void f(){
+		synchronized(thread_extends.class)
+		{
+			for(int i=0; i<100; i++){
+				System.out.print("aaaaaaaaaaaaaaaaaaaaaaaaaa");			
+				System.out.println("b");
+				System.out.println(i);
+				
+
+				//n=iden_n;
+				//System.out.println(iden_n +"'s n="+n);			
+			}
+		}
+	}
+}
+
+public class thread_extends extends Thread{
+
+	private int iden_n=0;
+	private static int n=0;
+
+	public thread_extends(int _iden_n){
+		iden_n= _iden_n;
+	}	
+
+	@Override
+	public void run(){
+		f();
+	}
+
+	public void f(){
+		synchronized(thread_extends.class)
+		{
+			for(int i=0; i<100; i++){
+				System.out.print(iden_n+"aaaaaaaaaaaaaaaaaaaaaaaaaa");			
+				System.out.println(iden_n+"b");
+				System.out.println(i);
+				
+
+				//n=iden_n;
+				//System.out.println(iden_n +"'s n="+n);			
+			}
+		}
+	}
+}

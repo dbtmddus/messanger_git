@@ -120,7 +120,7 @@ public class login_frame_swing extends JFrame{
 				int id_n;
 				id_n = Integer.parseInt(listen.readLine());
 				f_open_main_frame(connected_socket, listen, send, id_n );
-				f_create_chat_socket();
+				//f_create_chat_socket();
 				setVisible(false);
 			}else{
 				JOptionPane.showMessageDialog(null, "일치하는 정보가 없습니다.", "로그인", JOptionPane.INFORMATION_MESSAGE);

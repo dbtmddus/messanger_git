@@ -169,16 +169,16 @@ public class DB_obj {
 		return size_info;
 	}
 	
-	public Vector send_all_info(){
-		Vector<int[]> info= new Vector(0);
+	public Vector<int[]> get_all_info_old_v(){
+		Vector<int[]> info= new Vector<int[]>(0);
 		//int info_size=0;
 		try{
 			String sql="select * from t_test";
-			info.set(0, new int[]{0,0,0,0});
+			//info.set(0, new int[]{0,0,0,0});d에러
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
-			if (rs.next()){
+			while (rs.next()){
 				//info_size++;
 				int[] t_arr = new int[4];
 				t_arr[0] = rs.getInt("id_n");
@@ -194,7 +194,53 @@ public class DB_obj {
 			e.printStackTrace();
 		}
 		//info.elementAt(0)[0] = info_size;
+		System.out.println("size at db : "+ info.size());
 		return info;
+	}
+	
+	
+	public Vector<int[]> get_all_info(){
+		Vector<int[]> info= new Vector<int[]>(0);
+		//int info_size=0;
+		try{
+			String sql="select * from db_05";
+			//info.set(0, new int[]{0,0,0,0});d에러
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()){
+				//info_size++;
+				int[] t_arr = new int[4];
+				t_arr[0] = rs.getInt("PPI_CO");
+				t_arr[1] = rs.getInt("PPI_SMOKE");
+				//t_arr[2] = rs.getInt("den_2");
+				//t_arr[3] = rs.getInt("den_3");
+				info.add(t_arr);
+			}
+			rs.close();
+			pstmt.close();					
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+		//info.elementAt(0)[0] = info_size;
+		System.out.println("size at db : "+ info.size());
+		return info;
+	}
+	
+	public void set_b_table(int b){
+		try{
+			String sql = "update b_table set bool=? where n = 1";
+	
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b);
+			pstmt.executeUpdate();
+			
+			pstmt.close();					
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
 	}
 	
 	

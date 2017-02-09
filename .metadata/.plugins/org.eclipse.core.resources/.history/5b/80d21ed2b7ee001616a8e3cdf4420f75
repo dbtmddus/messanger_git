@@ -1,0 +1,40 @@
+package thread_sync;
+
+
+class TestThreadClass extends Thread {
+    private String threadName;
+    
+    public TestThreadClass(String threadName, thread_obj Obj1) {
+        this.threadName = threadName;
+        System.out.println("Creating " + threadName);
+    }
+
+    public synchronized void decrement(){
+        try {
+            for (int i = 100; i > 0; i--) {
+                System.out.println("Thread " + i);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void run() {
+        System.out.println("Running " + threadName);
+        decrement();
+        System.out.println("End of " + threadName);
+    }    
+}
+
+public class test2 {
+
+    public static void main(String[] args) {
+        thread_obj obj1 = new thread_obj();
+
+        TestThreadClass t1 = new TestThreadClass("Thread 1", obj1);
+        TestThreadClass t2 = new TestThreadClass("Thread 2", obj1);
+
+        t1.start();
+        t2.start();
+    }
+}

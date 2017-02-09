@@ -6,15 +6,13 @@ public class db_main {
 	public static void main(String[] args) throws SQLException {
 		DB_obj db = new DB_obj();
 		db.connect();
+	
+		db.show_all_db6();
 		
-		//db.insert_new_client(1,5,6,7);
-		//db.insert_new_client(2,5,6,7);
-		db.show_all();
 		
-		/*System.out.println("-----------------------------------------");
-		db.delete_all();
-		db.show_all();
-*/		
-		db.disconnect();
+		System.out.println("CO 남은 시간 : "+db.get_expected_time("CO"));
+		System.out.println("SMOKE 남은 시간 : "+db.get_expected_time("SMOKE"));
+		System.out.println("gas 남은 시간 : "+db.get_expected_time("GAS"));
+			
 	}
 }

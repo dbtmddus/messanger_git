@@ -26,12 +26,12 @@ import java.net.Socket;
 import java.util.Vector;
 import java.util.concurrent.locks.ReentrantLock;
 
+import common_use.CC;
 import common_use.command;
 
 public class server_obj extends Thread {
 
 	//static (thread)
-	static ReentrantLock locker = new ReentrantLock();				// 동기화
 	static DB_obj db = new DB_obj();
 	static final int max_client_num = 100000;
 	static String[][] ip_and_port = new String[max_client_num][2];
@@ -41,18 +41,17 @@ public class server_obj extends Thread {
 	int logged_in_id_n=0;
 	String logged_in_id ="";
 
-	ServerSocket server_socket = null;	//static 선언시 thread끼리 공유 (향후 분산처리 가능하므로 static x)
-	Socket soc = null;
+	private ServerSocket server_socket = null;	//static 선언시 thread끼리 공유 (향후 분산처리 가능하므로 static x)
+	private Socket soc = null;
 	int open_port_num;
-	BufferedReader listen;
+	private BufferedReader listen;
 	PrintWriter send;
 	//
 	private Socket socket_for_chat;
 	private PrintWriter send_for_chat ;		//추가
 	private BufferedReader listen_for_chat;
-	
-	//함수 호출 명령어
-	
+
+	static ReentrantLock locker = new ReentrantLock();				// 동기화
 
 	public server_obj(ServerSocket ss) throws IOException{
 		server_socket = ss;
@@ -69,19 +68,30 @@ public class server_obj extends Thread {
 
 	public void receive_new_client_connection(){
 		try {
-			soc = server_socket.accept(); //새 고객 접속 대기
-			System.out.println("client is admitted");
-			listen = new BufferedReader(new InputStreamReader(soc.getInputStream()));
-			send = new PrintWriter(new BufferedWriter(new OutputStreamWriter(soc.getOutputStream())));
-			show_connection_info(soc);
-			
-			socket_for_chat = server_socket.accept(); //새 고객 접속 대기
-			System.out.println("통신 소켓 연결 성공(서버측)");
+
+			locker.lock();
+			try{
+				soc = server_socket.accept(); //새 고객 접속 대기
+				System.out.println("client is admitted");
+				listen = new BufferedReader(new InputStreamReader(soc.getInputStream()));
+				send = new PrintWriter(new BufferedWriter(new OutputStreamWriter(soc.getOutputStream())));
+				show_connection_info(soc);
+
+				socket_for_chat = server_socket.accept(); //이렇게 열면 완전 새 클라이언트용이랑 이것중 아무거나 선택해서 들어감.
+				System.out.println("통신 소켓 연결 성공(서버측)");
+			}catch(Exception ee){
+				soc.close();
+				socket_for_chat.close();
+			}finally{
+				locker.unlock();
+			}
+
 			//set_chat_socket();
 			while (soc !=null){		// 이동 등으로 ip주소가 바뀌는 경우 (일시적으로 인터넷이 끊기는 경우 //위 listen, send 포함 함수화 하고 catch 부분에서 해당 함수 계속 다시 시도하도록 변경
 				String client_request;
-				client_request = listen.readLine();
-				System.out.println("client command : "+client_request);
+				client_request = listen_and_record(CC.client_command);
+				//client_request = listen.readLine();
+				//System.out.println("client command : "+client_request);
 				call_func(client_request);
 			}
 		}
@@ -89,7 +99,7 @@ public class server_obj extends Thread {
 			e.printStackTrace();
 		}		
 	}
-	
+
 	public void set_chat_socket() throws IOException{
 		socket_for_chat = server_socket.accept(); //새 고객 접속 대기
 		System.out.println("통신 소켓 연결 성공(서버측)");
@@ -142,28 +152,36 @@ public class server_obj extends Thread {
 
 	public void login() throws IOException{
 		System.out.println("enter log-in func");
-		String id = listen.readLine();
-		int password = Integer.parseInt(listen.readLine());
+		String id = listen_and_record(CC.Login_Id);
+		int password = Integer.parseInt(listen_and_record(CC.Login_Pw));
+		//String id = listen.readLine();	
+		//int password = Integer.parseInt(listen.readLine());
 
 		boolean b_approved = db.confirm_login(id, password);
-		send.println(b_approved);	//make client open main_frame
-		send.flush();
+		send_and_record(Boolean.toString(b_approved), CC.b_approved+"at login()");
+		//send.println(b_approved);	//make client open main_frame
+		//send.flush();
 		if (b_approved){
 			logged_in_id = id;
 			logged_in_id_n = db.get_id_n_from_id(id);			
 			ip_and_port[logged_in_id_n][0] = soc.getInetAddress().toString().substring(1);
 			ip_and_port[logged_in_id_n][1] = Integer.toString( soc.getPort() );
 			socket_by_id_n[logged_in_id_n] = soc;
-			send.println(logged_in_id_n);
-			send.flush();
+
+			send_and_record(Integer.toString(logged_in_id_n), CC.logged_in_id_n+"at login()");
+			//send.println(logged_in_id_n);
+			//send.flush();
 		}
 		System.out.println("finish log-in func");
 	}
 
 	public void sign_up() throws IOException{
 		System.out.println("enter sign up func");
-		String id = listen.readLine();
-		int pw = Integer.parseInt(listen.readLine());
+		String id = listen_and_record(CC.SignUp_Id);
+		int pw = Integer.parseInt(listen_and_record(CC.SignUp_Pw));
+		//String id = listen.readLine();
+		//int pw = Integer.parseInt(listen.readLine());
+
 		while(db.inspect_id_n_exist_already(next_available_id_n)){		//고유번호 지정 (이미 채워진 고유번호는 넘어감)
 			next_available_id_n++;						//만일 모든 고객 수가 다 찰 경우, 무한루트로 돌 수 있음	(오류 가능성)
 		}
@@ -174,10 +192,13 @@ public class server_obj extends Thread {
 
 	public void add_friend() throws IOException {
 		System.out.println("enter add friend func");
-		String f_id = listen.readLine();
+		String f_id = listen_and_record(CC.AddFriend_Fid);
+		//String f_id = listen.readLine();
+
 		boolean b_approved = db.add_friend(logged_in_id_n, logged_in_id, f_id); 
-		send.println(b_approved);
-		send.flush();	
+		send_and_record(Boolean.toString(b_approved), CC.b_approved+" at add_friend");
+		//send.println(b_approved);
+		//send.flush();	
 		System.out.println("finish add friend func");
 	}
 
@@ -187,8 +208,9 @@ public class server_obj extends Thread {
 
 		//친구 명수, detail_info 값 전송
 		int num_of_friend = temp_f_info[0].size();
-		send.println(num_of_friend);
-		send.flush();
+		send_and_record(Integer.toString(num_of_friend), CC.num_of_friend+"at send_friend_detail_info");
+		//send.println(num_of_friend);
+		//send.flush();
 		for(int i=0; i<num_of_friend; i++){
 			send.println(temp_f_info[0].elementAt(i));
 			send.println(temp_f_info[1].elementAt(i));
@@ -226,7 +248,7 @@ public class server_obj extends Thread {
 		int _file_len = (int)_file.length();
 		send.println(_file_len);
 		send.flush();
-		
+
 		//file data load
 		if(_file_len!=0){
 			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(_file));
@@ -244,15 +266,17 @@ public class server_obj extends Thread {
 			bis.close();
 		}
 	}
-	
+
 	public void listen_normal_message() throws NumberFormatException, IOException{
-		int _f_id_n= Integer.parseInt(listen.readLine());
-		String m = listen.readLine();
-		System.out.println("to "+ _f_id_n+" - " + m);
-		
-		send_normal_message(_f_id_n, m);
+		int _f_id_n= Integer.parseInt(listen_and_record(CC.ListenNormalMessage_FIdN));
+		String m = listen_and_record("ListenNormalMessage_M");
+		//int _f_id_n= Integer.parseInt(listen.readLine());
+		//String m = listen.readLine();
+
+		System.out.println("from "+ _f_id_n+" - " + m);
+		//send_normal_message(_f_id_n, m);
 	}
-	
+
 	public void send_normal_message(int _f_id_n, String msg) throws NumberFormatException, IOException{
 		Socket f_soc = socket_by_id_n[_f_id_n];
 		if (f_soc != null){
@@ -266,18 +290,23 @@ public class server_obj extends Thread {
 
 
 	public void send_friend_ip_and_port() throws IOException{
-		String f_id = listen.readLine();
+		String f_id = listen_and_record(CC.SendFriendIpAndPort_FId);
+		//String f_id = listen.readLine();
 		int f_id_n = db.get_id_n_from_id(f_id);
-		send.println(ip_and_port[f_id_n][0]);	//friend ip
-		send.println(ip_and_port[f_id_n][1]); 	//firned port
-		send.flush();
+		send_and_record(ip_and_port[f_id_n][0], " at send_friend_ip_and_port()");	//friend ip
+		send_and_record(ip_and_port[f_id_n][1], " at send_friend_ip_and_port()"); 	//firned port
+		//send.println(ip_and_port[f_id_n][0]);	//friend ip
+		//send.println(ip_and_port[f_id_n][1]); 	//firned port
+		//send.flush();
 	}
-	
+
 	public void send_id_n_from_id() throws IOException{
-		String _id = listen.readLine();
+		String _id = listen_and_record(CC.SendIdNFromId__id);
+		//String _id = listen.readLine();
 		int _id_n = db.get_id_n_from_id(_id); 
-		send.println(_id_n);
-		send.flush();
+		send_and_record(Integer.toString(_id_n), " at send_id_n_from_id()");
+		//send.println(_id_n);
+		//send.flush();
 	}
 
 	public void connect_db(){
@@ -299,6 +328,18 @@ public class server_obj extends Thread {
 		System.out.println("server 정보 : "+_soc.getLocalSocketAddress());
 		System.out.println("client 정보 : "+_soc.getRemoteSocketAddress());
 		System.out.println("server socket 정보 : " + server_socket.toString());
+	}
+	public String listen_and_record(String str_record) throws IOException{
+		String str_listen = listen.readLine();
+		//String str = listen.readLine();
+
+		System.out.println("listen : "+str_record +"	/ "+str_record);
+		return str_listen;
+	}
+	public void send_and_record(String str_send,String str_record) throws IOException{
+		send.println(str_send);
+		send.flush();
+		System.out.println("send : "+str_send + "	/ " + str_record);
 	}
 }
 

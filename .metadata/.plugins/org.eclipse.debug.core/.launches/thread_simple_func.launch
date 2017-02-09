@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/archieve/src/thread_test/thread_simple_func.java"/>
+<listEntry value="/archieve/src/thread_sync/thread_simple_func.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
 </listAttribute>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="thread_test.thread_simple_func"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="thread_sync.thread_simple_func"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="archieve"/>
 </launchConfiguration>
