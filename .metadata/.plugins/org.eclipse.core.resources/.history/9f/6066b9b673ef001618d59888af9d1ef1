@@ -1,0 +1,17 @@
+package client_obj;
+
+
+//아마 class인듯
+	public void run(){
+		try {
+			while(true){
+				System.out.println("채팅 소켓 대기중..");
+				BufferedReader listen_chat = new BufferedReader(new InputStreamReader(socket_for_chat.getInputStream()));
+				String str_msg = listen_chat.readLine();
+				System.out.println("채팅 소켓 input : "+str_msg);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+});

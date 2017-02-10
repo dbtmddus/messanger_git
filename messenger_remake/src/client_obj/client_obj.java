@@ -17,9 +17,9 @@ public class client_obj {
 	static int server_port;
 	static PrintWriter send;
 	static BufferedReader listen;
-	
+
 	static Socket socket_for_chat = null;
-	
+
 	public client_obj(String ip){//, int port_n) {
 		server_ip = ip;
 		server_port=1244;
@@ -31,7 +31,7 @@ public class client_obj {
 				connected_socket = new Socket(server_ip, server_port);
 				send = new PrintWriter(new BufferedWriter(new OutputStreamWriter(connected_socket.getOutputStream()))); //추가
 				listen = new BufferedReader(new InputStreamReader(connected_socket.getInputStream()));
-				
+
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -52,16 +52,37 @@ public class client_obj {
 
 		System.out.println("입장되셨습니다");
 		show_info();
-		
+
 		open_login_frame();
 	}
 	public void open_login_frame() throws IOException{
+		/*Thread t1 = new Thread(new Runnable() {	//아마 class인듯
+			public void run(){
+				try {
+					while(true){
+						System.out.println("채팅 소켓 대기중..");
+						BufferedReader listen_chat = new BufferedReader(new InputStreamReader(socket_for_chat.getInputStream()));
+						String str_msg = listen_chat.readLine();
+						System.out.println("채팅 소켓 input : "+str_msg);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		t1.start();
+	*/
+		chatting chatting1 =new chatting(socket_for_chat);
+		
+		Thread t1 = new Thread(chatting1);
+		t1.start();
+		
 		login_frame_swing lf = new login_frame_swing(connected_socket,socket_for_chat );
 	}
-	
+
 	public void show_info(){
 		System.out.println("client 정보 : "+connected_socket.getLocalSocketAddress());
 		System.out.println("server 정보 : "+connected_socket.getRemoteSocketAddress());
 	}
-		
+
 }//end

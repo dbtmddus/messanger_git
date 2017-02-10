@@ -130,7 +130,6 @@ public class chat_frame extends JFrame {
 				send_message(text);
 				ta.setText("");
 			}
-			
 		}
 	};
 	public void send_message(String _text){
@@ -140,7 +139,6 @@ public class chat_frame extends JFrame {
 		send.println(f_id_n);
 		send.println(ta.getText());
 		send.flush();
-		
 	}
 }
 

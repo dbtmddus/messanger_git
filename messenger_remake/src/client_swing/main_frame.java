@@ -40,6 +40,8 @@ public class main_frame extends Thread{
 	public static Vector<String> already_exist_chat_v = new Vector<String>(0);	//사용자가 열어둔 채팅창 목록 //얘는 thread가 아니라 static사용 가능
 
 	public main_frame(Socket _connected_socket, int _id_n ) throws IOException, ClassNotFoundException {
+		super(Integer.toString(_id_n));
+		
 		/*********************************************************///
 		connected_socket = _connected_socket;
 		listen = new BufferedReader(new InputStreamReader(connected_socket.getInputStream()));
@@ -48,7 +50,7 @@ public class main_frame extends Thread{
 		id_n = _id_n;
 		/*********************************************************///
 	}
-	public void run(){
+	public void run(){	//?? 이거 왜 run으로 만들어놨지...
 		/*********************************************************///
 		main_frame = new JFrame();
 		//fp = new friend_panel(_connected_socket, _listen, _send, _id_n, this);
@@ -99,7 +101,8 @@ public class main_frame extends Thread{
 				contentPane.removeAll();
 				try {
 					fp = new friend_panel(connected_socket, id_n, main_frame);	// 친구 목록 많을시 시간 걸림, 새로고침 키 추가 시 이 줄만 없애면 됨
-				} catch (IOException e1) {
+				}
+				catch (IOException e1) {
 					e1.printStackTrace();
 				}
 				catch (ClassNotFoundException e1) {
@@ -108,6 +111,22 @@ public class main_frame extends Thread{
 				contentPane.add(fp.get_spanel());
 				main_frame.revalidate();
 				main_frame.repaint();		//2개 같이 쓰기 권장
+			}
+			else if(obj==b_chat_record_list){
+				contentPane.removeAll();
+				chat_record cr = null;
+				try {
+					cr = new chat_record(connected_socket, id_n, main_frame);	// 친구 목록 많을시 시간 걸림, 새로고침 키 추가 시 이 줄만 없애면 됨
+					contentPane.add(cr.get_spanel());
+					main_frame.revalidate();
+					main_frame.repaint();		//2개 같이 쓰기 권장
+				}
+				catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				}
 			}
 			else if(obj==b_add_friend){
 				try {

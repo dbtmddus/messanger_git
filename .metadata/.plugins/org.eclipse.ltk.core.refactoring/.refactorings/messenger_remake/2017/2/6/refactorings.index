@@ -20,3 +20,4 @@
 1486646135520	Rename local variable 'str_record'
 1486646145018	Rename local variable 'str_record'
 1486647470623	Rename field 'socket_for_chat'
+1486718540917	Rename local variable 'f_soc'
