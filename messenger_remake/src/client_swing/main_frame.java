@@ -52,7 +52,7 @@ public class main_frame extends Thread{
 	}
 	public void run(){	//?? 이거 왜 run으로 만들어놨지...
 		/*********************************************************///
-		main_frame = new JFrame();
+		main_frame = new JFrame(Integer.toString(id_n));
 		//fp = new friend_panel(_connected_socket, _listen, _send, _id_n, this);
 		menuBar = new JMenuBar();
 		main_frame.setJMenuBar(menuBar);

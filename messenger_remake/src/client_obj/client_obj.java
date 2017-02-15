@@ -72,10 +72,9 @@ public class client_obj {
 		});
 		t1.start();
 	*/
-		chatting chatting1 =new chatting(socket_for_chat);
-		
-		Thread t1 = new Thread(chatting1);
-		t1.start();
+		//chatting chatting1 =new chatting(socket_for_chat, id);
+		//Thread t1 = new Thread(chatting1);
+		//t1.start();
 		
 		login_frame_swing lf = new login_frame_swing(connected_socket,socket_for_chat );
 	}

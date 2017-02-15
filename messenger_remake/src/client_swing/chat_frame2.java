@@ -71,7 +71,8 @@ public class chat_frame2 extends JFrame {
 		b_configuration.addActionListener(action);
 		menuBar.add(b_configuration);
 		/***********************************************************************/
-
+		
+		setTitle(Integer.toString(id_n)+" to "+Integer.toString(f_id_n));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 410, 638);
 

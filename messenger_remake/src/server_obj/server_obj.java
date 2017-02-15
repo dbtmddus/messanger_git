@@ -260,11 +260,12 @@ public class server_obj extends Thread {
 	}
 
 	public void listen_normal_message() throws NumberFormatException, IOException{
+		
 		int _f_id_n= Integer.parseInt(listen_and_record(CC.f_id_n));
 		String m = listen_and_record(CC.chatting_msg);
-
+		
 		System.out.println(m+" to "+ _f_id_n+" from "+ logged_in_id_n);
-
+		
 		if(socket_by_id_n[_f_id_n][1]!=null){
 			send_normal_message(_f_id_n, m);
 		}else{
@@ -275,11 +276,14 @@ public class server_obj extends Thread {
 
 	public void send_normal_message(int _f_id_n, String msg) throws NumberFormatException, IOException{
 		Socket f_soc_chat = socket_by_id_n[_f_id_n][1];
+		//String _f_id = db.get_id_from_id_n(_f_id_n);
+		
 		if (f_soc_chat != null){
 			System.out.println("friend being connected");			
-			PrintWriter _f_send = new PrintWriter(new BufferedWriter(new OutputStreamWriter(f_soc_chat.getOutputStream())));
-			_f_send.println(msg);
-			_f_send.flush();
+			PrintWriter send_to_fr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(f_soc_chat.getOutputStream())));
+			send_to_fr.println(logged_in_id);
+			send_to_fr.println(msg);
+			send_to_fr.flush();
 		}else{
 			System.out.println("friend being not connected");			
 		}

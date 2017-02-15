@@ -18,9 +18,7 @@ import java.util.Iterator;
 public class test {
 
 	public static void main(String[] args) throws UnknownHostException, IOException {
-	
 		record_txt("dd");
-		
 	}
 	
 	public static void record_txt(String str) throws IOException{
@@ -34,8 +32,5 @@ public class test {
 		/*Path p = Paths.get(str_p);
 		Files.createDirectories(p);	¿Ã∑∏∞‘µµ µ . it also works well
 		*/
-		
 	}	
-	
-	
 }

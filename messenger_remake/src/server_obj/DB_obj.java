@@ -261,6 +261,32 @@ public class DB_obj {
 		}
 		return -1;	//에러 경우 리턴값
 	}
+
+	public String get_id_from_id_n(int _id_n){
+		String return_v = null;
+		try{
+			String sql = "select id from login where id_n=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, _id_n);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()){
+				return_v = rs.getString("id");
+				rs.close();
+				pstmt.close();					
+				return return_v;
+			}else{
+				System.out.println("id 오류 at db");
+				rs.close();
+				pstmt.close();					
+			}
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+		return null;	//에러 경우 리턴값
+	}
+
 	public boolean inspect_id_n_exist_already(int _id_n){
 		try{
 			String sql = "select id_n from login where id_n=?";

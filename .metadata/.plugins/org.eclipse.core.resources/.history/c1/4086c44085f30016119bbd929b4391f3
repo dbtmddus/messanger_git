@@ -1,0 +1,53 @@
+package client_obj;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.nio.charset.Charset;
+
+import client_swing.friend_panel;
+
+public class chatting implements Runnable{
+
+	private Socket soc_chat =null;
+	
+	public chatting(Socket _soc_chat){
+		soc_chat = _soc_chat;
+	}
+
+	public void run(){
+		try {
+			while(true){
+				System.out.println("채팅 소켓 대기중..");
+				BufferedReader listen_chat = new BufferedReader(new InputStreamReader(soc_chat.getInputStream()));
+				String str_msg = listen_chat.readLine();
+				try{
+					friend_panel.chat_f.add_chat_record(str_msg, false);
+				}catch(Exception ee){
+					ee.printStackTrace();
+					System.out.println("ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
+				}
+				System.out.println("채팅 소켓 input : "+str_msg);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void record_txt(String str) throws IOException{
+		String str_dir = "C:\\Users\\dbtmddus\\Desktop\\qwe";
+		File f = new File(str_dir+"\\dd.txt");		
+		new File(str_dir).mkdirs();
+		FileOutputStream f_out = new FileOutputStream(f, true);	//이어 쓰기
+		f_out.write(str.getBytes(Charset.forName("UTF-8")));
+		f_out.close();
+		
+		/*Path p = Paths.get(str_p);
+		Files.createDirectories(p);	이렇게도 됨. it also works well
+		*/
+		
+	}	
+}
