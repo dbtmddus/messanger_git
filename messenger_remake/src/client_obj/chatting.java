@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+import client_swing.friend_panel;
+
 public class chatting implements Runnable{
 
 	private Socket soc_chat =null;
@@ -19,6 +21,12 @@ public class chatting implements Runnable{
 				System.out.println("채팅 소켓 대기중..");
 				BufferedReader listen_chat = new BufferedReader(new InputStreamReader(soc_chat.getInputStream()));
 				String str_msg = listen_chat.readLine();
+				try{
+					friend_panel.chat_f.add_chat_record(str_msg, false);
+				}catch(Exception ee){
+					ee.printStackTrace();
+					System.out.println("ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
+				}
 				System.out.println("채팅 소켓 input : "+str_msg);
 			}
 		} catch (IOException e) {

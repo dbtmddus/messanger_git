@@ -231,9 +231,9 @@ public class chat_record {
 			int _f_id_n = Integer.parseInt(listen.readLine());
 
 			if (!main_frame.already_exist_chat_v.contains(f_id)){
-				chat_frame chat_f = new chat_frame(connected_socket, id_n, _f_id_n);
+				chat_frame2 chat_f = new chat_frame2(connected_socket, id_n, _f_id_n);	//여기서 수정
 				main_frame.already_exist_chat_v.addElement(f_id);
-			}
+			}		
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		} catch (ClassNotFoundException e1) {

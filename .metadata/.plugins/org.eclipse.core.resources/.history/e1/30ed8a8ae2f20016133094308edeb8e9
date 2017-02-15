@@ -1,0 +1,23 @@
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+class Grid_test2{
+	public static void main(String args[]){
+		JFrame f = new JFrame("ScrollPaneTestttt");
+		JScrollPane sp = new JScrollPane();
+		JPanel p = new JPanel();   
+
+		f.setSize(349, 243);
+
+		sp.setBounds(0,0,f.getContentPane().getWidth(),500);
+
+		sp.setViewportView(p);
+
+		f.getContentPane().add(sp);    
+
+		f.setVisible(true);             
+
+	}
+}
+

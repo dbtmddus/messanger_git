@@ -1,0 +1,43 @@
+package Swing_sample;
+import java.awt.GridLayout;
+import java.awt.Panel;
+import java.awt.ScrollPane;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+class GridLayout_and_JScrollPanel_sample{
+       public static void main(String args[]){
+             JFrame f = new JFrame("ScrollPaneTest");
+             f.setVisible(true);             
+             f.setSize(349, 243);
+             
+             JScrollPane sp = new JScrollPane();
+             sp.setBounds(f.getContentPane().getBounds());
+       
+             JPanel p = new JPanel();   
+             sp.setViewportView(p);
+             
+             //p.setSize(500,500);
+             //p.setBounds(0,0,sp.getWidth(),5000);
+             p.setLayout(new GridLayout(0, 2, 0, 0));
+             JButton button = new JButton("첫번째");
+             p.add(button);
+             JButton button_1 = new JButton("두번째");
+             p.add(button_1);      
+             JButton button_2 = new JButton("세번째");
+             p.add(button_2);
+             JButton button_3 = new JButton("네번째");
+             p.add(button_3);
+             
+             //p.setBounds(f.getContentPane().getBounds());
+             
+             f.getContentPane().add(sp);    
+             
+//             f.setVisible(true);             
+             
+       }
+}
+

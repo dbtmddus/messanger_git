@@ -1,0 +1,31 @@
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.Vector;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+public class test {
+
+	public static void main(String[] args) throws UnknownHostException, IOException {
+	
+		JFrame f = new JFrame("ScrollPaneTestttt");
+		JScrollPane sp = new JScrollPane();
+		JPanel p = new JPanel();   
+
+		f.setSize(349, 243);
+
+		sp.setBounds(0,0,f.getContentPane().getWidth(),500);
+
+		sp.setViewportView(p);
+
+		f.getContentPane().add(sp);    
+
+		f.setVisible(true);     
+		
+	}
+
+}

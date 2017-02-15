@@ -9,21 +9,19 @@ package server_obj;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
+import java.nio.charset.Charset;
 import java.util.Vector;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -340,5 +338,12 @@ public class server_obj extends Thread {
 		System.out.println("send msg : "+str_send +"	/	"+str_var+"	/	at "+stack[2]);
 		System.out.println("---------------------------------------------------------");
 	}
-}
+	
+	public void record_txt(String str) throws IOException{
+		File f = new File("dd.txt");
+		FileOutputStream f_out = new FileOutputStream(f);
+		f_out.write(str.getBytes(Charset.forName("UTF-8")));
+		f_out.close();
+	}
+}//end class
 

@@ -1,0 +1,31 @@
+
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+class testt{
+	public static void main(String args[]){
+		JFrame f = new JFrame("ScrollPaneTestttt");
+		JScrollPane sp = new JScrollPane();
+		JPanel p = new JPanel();   
+
+		f.setSize(350, 100);
+
+		sp.setBounds(0,0,f.getContentPane().getWidth(),500);
+		sp.setLayout(null);
+		sp.setViewportView(p);
+
+		p.setBounds(0,0,f.getContentPane().getWidth(),1000);
+		p.setLayout(null);
+		p.add(new JButton("1"));
+		p.add(new JButton("2"));
+		p.add(new JButton("3"));
+		
+		f.getContentPane().add(sp);    
+		f.setVisible(true);             
+
+	}
+}
+

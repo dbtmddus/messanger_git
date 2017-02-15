@@ -49,6 +49,8 @@ public class friend_panel {
 	private JScrollPane spanel;
 	private JPanel big_panel; 	//each panels add되는 panel
 	private static Vector<JPanel> each_panels = new Vector<JPanel>(0); //친구 1명값 표시되는 panel
+	
+	public static chat_frame2 chat_f;
 
 	public friend_panel(Socket _connected_socket, int _id_n, JFrame m_frame ) throws IOException, ClassNotFoundException{		
 
@@ -88,7 +90,9 @@ public class friend_panel {
 
 		f_info = new Vector<friend_info>(0);
 		for(int i=0; i<num_of_friend; i++){
+			System.out.println("1111111111111111111111111111111111111111111");
 			friend_info f_info_ele = new friend_info();
+			System.out.println("2222222222222222222222222222222222222222222");
 
 			f_info_ele.id = listen.readLine();
 			System.out.println("id : "+f_info_ele.id);
@@ -231,7 +235,8 @@ public class friend_panel {
 			int _f_id_n = Integer.parseInt(listen.readLine());
 
 			if (!main_frame.already_exist_chat_v.contains(f_id)){
-				chat_frame chat_f = new chat_frame(connected_socket, id_n, _f_id_n);
+				//chat_frame2 chat_f = new chat_frame2(connected_socket, id_n, _f_id_n);
+				chat_f = new chat_frame2(connected_socket, id_n, _f_id_n);
 				main_frame.already_exist_chat_v.addElement(f_id);
 			}
 		} catch (IOException e1) {

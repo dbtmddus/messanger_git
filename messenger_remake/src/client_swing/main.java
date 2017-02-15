@@ -16,7 +16,21 @@ public class main {
 
 	public static void main(String[] args) throws IOException {
 
-	//	main_frame mf = new main_frame(connected_socket, listen, send, frame);
-
+		/*
+		main_frame mf;
+		try {
+			mf = new main_frame(null, 1);
+			mf.start();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		*/
+		try {
+			chat_frame2 f = new chat_frame2(null, 0, 0);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}//end main
 }

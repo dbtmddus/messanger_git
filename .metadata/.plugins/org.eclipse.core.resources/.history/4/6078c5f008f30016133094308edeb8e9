@@ -1,0 +1,28 @@
+package client_obj;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+
+public class chatting implements Runnable{
+
+	private Socket soc_chat =null;
+	
+	public chatting(Socket _soc_chat){
+		soc_chat = _soc_chat;
+	}
+
+	public void run(){
+		try {
+			while(true){
+				System.out.println("채팅 소켓 대기중..");
+				BufferedReader listen_chat = new BufferedReader(new InputStreamReader(soc_chat.getInputStream()));
+				String str_msg = listen_chat.readLine();
+				System.out.println("채팅 소켓 input : "+str_msg);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

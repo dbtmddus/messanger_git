@@ -1,0 +1,60 @@
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
+
+public class th{// extends JFrame {
+
+	private static JFrame f;
+	private static JPanel contentPane;
+	private static JScrollPane sp;
+	private static JPanel p;
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					
+					p.add(new JPanel());
+					p.add(new JPanel());
+					p.add(new JPanel());
+					
+					//
+					f.getContentPane().add(sp);    
+					f.setVisible(true);             
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public th() {
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		f.setContentPane(contentPane);
+		//
+		JFrame f = new JFrame("ScrollPaneTestttt");
+		JScrollPane sp = new JScrollPane();
+		JPanel p = new JPanel();   
+
+		f.setSize(349, 243);
+		sp.setBounds(f.getContentPane().getBounds());
+		sp.setViewportView(p);
+
+		f.setLayout(new BoxLayout(f, BoxLayout.Y_AXIS));
+
+	}
+
+}

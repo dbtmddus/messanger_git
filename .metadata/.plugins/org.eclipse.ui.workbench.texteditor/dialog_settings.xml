@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="TestThreadClass2" key="selection"/>
+		<item value="Grid" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="TestThreadClass"/>
-			<item value="client is admitted"/>
-			<item value="send"/>
-			<item value="listen"/>
-			<item value="listen_normal_message"/>
-			<item value="f_create_chat_socket"/>
-			<item value="login"/>
-			<item value="chat_f"/>
+			<item value="grid"/>
+			<item value="lay"/>
+			<item value="f_stmt_msg"/>
+			<item value="fp"/>
+			<item value="chat_frame"/>
+			<item value="start"/>
+			<item value="socket_by_id_n"/>
+			<item value="normal_message"/>
 		</list>
 		<list key="replacehistory">
 			<item value="TestThreadClass2"/>
@@ -32,7 +32,7 @@
 		<item value="309" key="DIALOG_WIDTH"/>
 		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
 		<item value="444" key="DIALOG_HEIGHT"/>
-		<item value="1269" key="DIALOG_X_ORIGIN"/>
-		<item value="328" key="DIALOG_Y_ORIGIN"/>
+		<item value="1277" key="DIALOG_X_ORIGIN"/>
+		<item value="417" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

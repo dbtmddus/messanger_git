@@ -1,0 +1,53 @@
+
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.text.html.ListView;
+
+import java.awt.Component;
+import java.awt.FlowLayout;
+
+class testt{
+	public static void main(String args[]){
+		JFrame f = new JFrame("ScrollPaneTestttt");
+		JScrollPane sp = new JScrollPane();
+		JPanel p = new JPanel();   
+		FlowLayout flowLayout = (FlowLayout) p.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+
+		ListView list = new ListView(null);
+		f.setSize(350, 157);
+		sp.setBounds(f.getContentPane().getBounds());
+		p.setBounds(0,0,f.getContentPane().getWidth(),1000);
+
+		sp.setViewportView(p);
+		//p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+
+		//
+		int len_str=0;
+		JTextPane tp1 = new JTextPane();
+		tp1.setText("1111111\n1");
+		p.add(tp1);
+		len_str = tp1.getText().length();
+		tp1.setBounds(0, 0, 5*len_str, 30);
+		tp1.setAlignmentX(1);
+		//
+		
+		JTextPane tp2 = new JTextPane();
+		tp2.setText("22\n1");
+		p.add(tp2);
+		len_str = tp2.getText().length();
+		tp1.setBounds(0, 0, 5*len_str, 30);
+		tp2.setAlignmentX(1);
+		//
+		
+		f.getContentPane().add(sp);    
+		f.setVisible(true);             
+	}
+}
+

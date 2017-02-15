@@ -21,3 +21,6 @@
 1486646145018	Rename local variable 'str_record'
 1486647470623	Rename field 'socket_for_chat'
 1486718540917	Rename local variable 'f_soc'
+1486721751021	Copy compilation unit
+1486722218310	Delete element
+1486722223639	Rename compilation unit 'chat_frame3.java'

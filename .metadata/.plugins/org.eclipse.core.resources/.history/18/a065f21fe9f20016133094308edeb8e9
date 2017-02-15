@@ -1,0 +1,73 @@
+import java.awt.EventQueue;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
+
+public class th{// extends JFrame {
+
+	private static JFrame f;
+	private static JPanel contentPane;
+	private static JScrollPane sp;
+	private static JPanel p;
+	
+	public static void main(String[] args) {
+		//th();
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					th frame = new th();
+
+					//sp.setBounds(contentPane.getBounds());
+
+					//th t1 = new th();
+					JPanel p1 = new JPanel();
+					//p1.setBounds(contentPane.getBounds());
+					p1.setSize(800,50);
+					//p1.add(new JButton("11"));
+					p.add(p1);
+					
+					JPanel p2 = new JPanel();
+					//p2.add(new JButton("22222222"));
+					p.add(p2);
+					
+					p.add(new JPanel());
+					
+					//
+					f.getContentPane().add(sp);    
+					f.setVisible(true);             
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public th() {
+		f = new JFrame("ScrollPaneTestttt");
+		f.setSize(349, 243);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		f.setContentPane(contentPane);
+		
+		sp = new JScrollPane();
+		sp.setBounds(contentPane.getBounds());	
+		contentPane.add(sp);
+		
+		p = new JPanel();   
+		sp.setViewportView(p);
+		
+		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+		p.setBounds(contentPane.getBounds());
+		
+	}
+
+}
