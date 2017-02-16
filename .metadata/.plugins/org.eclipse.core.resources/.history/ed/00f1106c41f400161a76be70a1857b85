@@ -1,0 +1,50 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.UnknownHostException;
+import java.nio.charset.Charset;
+import java.util.Vector;
+
+
+public class read_file_and_dir_reverse {
+
+	public static void main(String[] args) throws UnknownHostException, IOException {
+		read_one_line();
+	}
+	
+	public static void read_one_line() throws IOException{
+		String str_dir = ".\\qwe";
+		File f = new File(str_dir+"\\dd.txt");		
+		
+		Vector<String> v = new Vector<String>(0);
+		try (BufferedReader br = new BufferedReader(new FileReader(f))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+		       System.out.println(line);
+		       System.out.println(line.charAt(line.length()-1));
+			  
+		       if(line.charAt(line.length()-1)=='N'){
+			       v.add(line);
+		       }
+		    }
+		}				
+		System.out.println(v.toString());
+	}	
+	
+	public static void record_txt(String str) throws IOException{
+		//File f = new File("C:\\Users\\dbtmddus\\Desktop\\qwerty\\dd.txt");		
+		File f = new File(".\\qwerty\\dd.txt");		
+		
+		String ss = f.getParentFile().toString();
+		System.out.println(ss);
+		new File(ss).mkdirs();
+
+//		FileOutputStream f_out = new FileOutputStream(f, true);
+		FileOutputStream f_out = new FileOutputStream(f, false);
+		f_out.write(str.getBytes(Charset.forName("EUC-KR")));	//EUC-KR-윈도우, UTF-8 리눅스.
+		f_out.close();
+	}	
+	
+}

@@ -18,19 +18,16 @@ import java.util.Iterator;
 public class test {
 
 	public static void main(String[] args) throws UnknownHostException, IOException {
-		record_txt("dd");
-	}
+		String str ="";
 	
-	public static void record_txt(String str) throws IOException{
-		String str_dir = "C:\\Users\\dbtmddus\\Desktop\\qwe";
-		File f = new File(str_dir+"\\dd.txt");		
-		new File(str_dir).mkdirs();
-		FileOutputStream f_out = new FileOutputStream(f);
-		f_out.write(str.getBytes(Charset.forName("UTF-8")));
-		f_out.close();
-		
-		/*Path p = Paths.get(str_p);
-		Files.createDirectories(p);	¿Ã∑∏∞‘µµ µ . it also works well
-		*/
-	}	
+		for (int i=0; i<1000; i++){
+			str+=i;
+			str+="aaaaaaaaaaaaaaa";
+			if (i%10==0){
+				str+="\n";
+			}
+		}
+		System.out.println(str);
+	}//end main
+	
 }

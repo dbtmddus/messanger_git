@@ -16,3 +16,30 @@
 1487163496493	Rename type 'test2'
 1487163505327	Copy compilation unit
 1487170006612	Copy compilation unit
+1487240984189	Copy compilation unit
+1487242422312	Copy compilation unit
+1487242561973	Copy compilation unit
+1487245043737	Copy compilation unit
+1487247540199	Rename local variable 'v'
+1487247547219	Rename local variable 'br'
+1487247577281	Rename local variable 'str_dir'
+1487247586325	Rename local variable 'f'
+1487248663029	Rename local variable 'str'
+1487248745151	Copy compilation unit
+1487250130503	Rename local variable 'line2'
+1487250139514	Rename local variable 'line'
+1487250317718	Copy compilation units
+1487250324443	Rename type 'read_file_and_dir_reverse_for_write'
+1487250331050	Rename type 'read_file_and_dir_reverse'
+1487251111353	Rename type 'read_file_and_dir_reverse_for_write'
+1487251147611	Delete element
+1487251153142	Delete element
+1487251314107	Copy compilation units
+1487251319982	Delete elements
+1487251690610	Copy compilation units
+1487251707196	Copy compilation units
+1487251784029	Delete element
+1487251790243	Delete element
+1487251968400	Copy package
+1487252672071	Rename local variable 'server_StrDir'
+1487252689086	Rename local variable 'client_StrDir'

@@ -25,11 +25,12 @@ public class make_file_and_dir {
 	
 	public static void record_txt(String str) throws IOException{
 		//String str_dir = "C:\\Users\\dbtmddus\\Desktop\\qwe";
-		String str_dir = ".\\qwe";
-		File f = new File(str_dir+"\\dd.txt");		
-		new File(str_dir).mkdirs();
+		File f = new File(".\\qwerty\\dd.txt");		
+		String dir_path = f.getParentFile().toString();
+		System.out.println(dir_path);
+		new File(dir_path).mkdirs();
+
 		FileOutputStream f_out = new FileOutputStream(f, true);
-		
 		f_out.write(str.getBytes(Charset.forName("EUC-KR")));	//EUC-KR-윈도우, UTF-8 리눅스.
 		f_out.close();
 		

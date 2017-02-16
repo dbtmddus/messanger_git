@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.nio.charset.Charset;
 
-import client_swing.friend_panel;
+import client_swing.JScrollPanel_friends_in_main;
 
 public class chatting implements Runnable{
 
@@ -28,7 +28,7 @@ public class chatting implements Runnable{
 				String f_id = listen_chat.readLine();
 				String str_msg = listen_chat.readLine();
 				try{
-					friend_panel.chat_f.add_chat_record(str_msg, false);	//true = msg from me, false = from others
+					JScrollPanel_friends_in_main.chat_f.add_chat_record(str_msg, false);	//true = msg from me, false = from others
 				}catch(Exception ee){
 					ee.printStackTrace();
 					System.out.println("ばばばばばばばばばばばばばばばば");

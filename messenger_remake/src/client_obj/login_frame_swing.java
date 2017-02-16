@@ -17,7 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import client_swing.main_frame;
+import client_swing.JFrame_Main;
 import common_use.command;
 
 public class login_frame_swing extends JFrame{
@@ -149,7 +149,7 @@ public class login_frame_swing extends JFrame{
 //		main_frame mf = new main_frame(_connected_socket, _listen, _send, _id_n );				
 	}
 	public void f_open_main_frame(Socket _connected_socket, BufferedReader _listen, PrintWriter _send, int _id_n ) throws ClassNotFoundException, IOException{
-		main_frame mf = new main_frame(_connected_socket, _id_n);
+		JFrame_Main mf = new JFrame_Main(_connected_socket, _id_n);
 		mf.start();
 	}
 	public void f_create_chat_socket(){

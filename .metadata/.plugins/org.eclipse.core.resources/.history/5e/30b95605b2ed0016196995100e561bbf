@@ -1,9 +1,0 @@
-package common_use;
-
-public class CC {
-	public static String client_command = "client command";
-	public static String login_id ="login id";
-	public static String login_pw ="login pw";
-	
-	//public static String 
-}

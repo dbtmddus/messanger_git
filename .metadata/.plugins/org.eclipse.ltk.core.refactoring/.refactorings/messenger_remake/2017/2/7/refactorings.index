@@ -5,3 +5,20 @@
 1487174290825	Rename local variable 'str_f_id'
 1487174293807	Rename local variable '_f_id'
 1487175027352	Rename local variable '_f_send'
+1487236999139	Rename type 'friend_panel'
+1487237114980	Rename method 'one_friend_panel'
+1487238353530	Rename type 'chat_frame2'
+1487238395831	Rename type 'friend_panel_big'
+1487238412098	Rename type 'main_frame'
+1487238426301	Rename type 'add_friend_frame'
+1487238443243	Rename type 'chat_frame'
+1487238516381	Rename type 'main'
+1487238543766	Rename type 'chat_record'
+1487239267836	Rename type 'chat_list_in_main'
+1487239280600	Rename type 'JPanel_friends'
+1487239439498	Rename type 'JPanel_friends_in_main'
+1487239449331	Rename type 'JPanel_chat_list_in_main'
+1487241175161	Rename method 'record_txt'
+1487251176643	Copy compilation unit
+1487251187477	Copy compilation unit
+1487251429340	Copy compilation units
